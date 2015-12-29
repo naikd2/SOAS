@@ -1,0 +1,87 @@
+
+<%@ page import="com.thinksoas.Course" %>
+<%@ page import="com.thinksoas.Class" %>
+<%@ page import="com.thinksoas.Programs" %>
+
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta name="layout" content="main">
+		<g:set var="entityName" value="${message(code: 'course.label', default: 'Course')}" />
+		<title><g:message code="default.show.label" args="[entityName]" /></title>
+	</head>
+	<body>
+
+<div class="container-fluid">
+      <div class="row">
+        <div class="col-sm-3 col-md-2 sidebar">
+          <ul class="nav nav-sidebar">
+            <li class="active"><a href="${createLink(controller:'Programs', action:'show', params:[id:session.currentProgram])}">View Courses <span class="sr-only">(current)</span></a></li>
+            <li><a href="${createLink(controller:'Course', action:'create')}">New Course</a></li>
+            <li><a href="${createLink(controller:'Class', action:'create')}">Add Section</a></li>
+          </ul>
+          <ul class="nav nav-sidebar">
+            <li><a href="${createLink(controller:'Course', action:'edit', params:[id:courseInstance.id])}">Edit Course</a></li>
+            <li><g:link controller="Course" action="delete" params="[id:courseInstance.id]" onclick="return confirm('${message(code: 'default.button.delete.confirm.message', default: 'Are you sure?')}');"><g:message code="course.button.delete.label" default="Delete Course"/> </g:link></li>
+            <li><a href="">Dummy</a></li>
+            <li><a href="">Dummy</a></li>
+            <li><a href="">Dummy</a></li>
+          </ul>
+          <ul class="nav nav-sidebar">
+            <li><a href="">Dummy</a></li>
+            <li><a href="">Dummy</a></li>
+            <li><a href="">Dummy</a></li>
+          </ul>
+        </div>
+
+
+<div class="col-md-10 main">
+<g:set var="programList" value="${Programs.getAll()}" />
+          <h1><g:each in="${programList}" var="program"> <g:if test="${program.id =~ session.currentProgram}">${program.programName}</g:if></g:each></h1>
+		<ul class="list-group">
+  			<li class="list-group-item active"> Course - 
+  					<g:fieldValue bean="${courseInstance}" field="subject"/>: <g:fieldValue bean="${courseInstance}" field="name"/>
+  					<g:fieldValue bean="${courseInstance}" field="number"/>
+  			</li>
+
+  			<li class="list-group-item">
+  					<g:fieldValue bean="${courseInstance}" field="offered"/>: <g:fieldValue bean="${courseInstance}" field="units"/>
+  			</li>
+
+  			<li class="list-group-item"><g:fieldValue bean="${courseInstance}" field="description"/>
+  			</li>
+  			<li class="list-group-item">Objectives:</li>
+  			<li class="list-group-item">
+				<g:each in="${courseInstance.objectives}" var="o">
+				<span class="property-value" aria-labelledby="objectives-label">${o?.encodeAsHTML()}</span>
+				</g:each>
+			</li>
+		</ul>
+
+    <table class="table table-striped">
+      <thead>
+          <tr>
+          
+      <g:sortableColumn property="classSections" title="${message(code: 'programs.classes.label', default: 'Class Sections')}" />
+          
+          
+          </tr>
+        </thead>
+        <tbody>
+        <g:set var="classList" value="${Class.getAll()}" />
+        <g:each in="${classList}" status="i" var="section">
+          <tr class="${(i % 2) == 0 ? 'even' : 'odd'}">
+          <g:if test="${section.course =~ courseInstance}">
+            <td><a href="${createLink(controller:'Class', action:'show', params:[id:section.id])}" role="button">${fieldValue(bean: section, field: "section")}</a></td>
+            </g:if>
+          </tr>
+        </g:each>
+        </tbody>
+
+      </table>
+		
+		</div>
+		</div>
+	</div>
+	</body>
+</html>
