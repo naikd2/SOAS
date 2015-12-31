@@ -40,7 +40,7 @@ class StudentOutcomeController {
         request.withFormat {
             form multipartForm {
                 flash.message = message(code: 'default.created.message', args: [message(code: 'studentOutcome.label', default: 'StudentOutcome'), studentOutcomeInstance.id])
-                redirect studentOutcomeInstance
+                redirect view:'index'
             }
             '*' { respond studentOutcomeInstance, [status: CREATED] }
         }
@@ -67,7 +67,7 @@ class StudentOutcomeController {
         request.withFormat {
             form multipartForm {
                 flash.message = message(code: 'default.updated.message', args: [message(code: 'StudentOutcome.label', default: 'StudentOutcome'), studentOutcomeInstance.id])
-                redirect studentOutcomeInstance
+                redirect view:'index'
             }
             '*'{ respond studentOutcomeInstance, [status: OK] }
         }

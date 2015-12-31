@@ -1,17 +1,15 @@
 dataSource {
     pooled = true
-    
     //driverClassName = "com.mysql.jdbc.Driver"
-
-   jmxExport = true
-   driverClassName = "org.h2.Driver"
-   username = "sa"
-   password = ""
+    jmxExport = true
+    driverClassName = "org.h2.Driver"
+    username = "sa"
+    password = ""
 }
 hibernate {
     cache.use_second_level_cache = true
     cache.use_query_cache = false
-//    cache.region.factory_class = 'org.hibernate.cache.SingletonEhCacheRegionFactory' // Hibernate 3
+    //cache.region.factory_class = 'org.hibernate.cache.SingletonEhCacheRegionFactory' // Hibernate 3
     cache.region.factory_class = 'org.hibernate.cache.ehcache.SingletonEhCacheRegionFactory' // Hibernate 4
     singleSession = true // configure OSIV singleSession mode
     flush.mode = 'manual' // OSIV session flush mode outside of transactional context
@@ -22,10 +20,8 @@ environments {
     development {
         dataSource {
             dbCreate = "update" // one of 'create', 'create-drop', 'update', 'validate', ''
-            
             url = "jdbc:h2:mem:devDb;MVCC=TRUE;LOCK_TIMEOUT=10000;DB_CLOSE_ON_EXIT=FALSE"
             //url = "jdbc:mysql://localhost/soasonli_beta?useUnicode=yes&characterEncoding=UTF-8"
-            
             //url = "jdbc:mysql://localhost/soas?useUnicode=yes&characterEncoding=UTF-8&autoReconnect=true&autoReconnectForPools=true"
             //username = "soasonli_beta"
             //password = "46sdzXx1Db"

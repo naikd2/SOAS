@@ -8,7 +8,7 @@
 		<g:message code="studentOutcome.prefix.label" default="Prefix" />
 		<span class="required-indicator">*</span>
 	</label>
-	<input type="text" name="prefix" required="" value="${studentOutcomeInstance?.prefix}"/>
+	<g:select name="prefix" required="" from="${['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm']}" value="${studentOutcomeInstance?.prefix}"/>
 
 </div>
 

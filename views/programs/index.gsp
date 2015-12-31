@@ -13,8 +13,9 @@
         <div class="col-sm-3 col-md-2 sidebar">
           <ul class="nav nav-sidebar">
             <li class="active"><a href="${createLink(controller:'Programs', action:'index')}">Overview <span class="sr-only">(current)</span></a></li>
-            <li><a href="${createLink(controller:'Programs', action:'create')}">Add</a></li>
-            <li><a href="${createLink(controller:'Programs', action:'index')}">Index</a></li>
+            <li><hr style="border: 1px solid white; width: 85%; margin-top: 10px; margin-bottom:10px;"></li>
+            <li><a href="${createLink(controller:'Programs', action:'create')}">New Program</a></li>
+            <li><a href="${createLink(controller:'Programs', action:'index')}">Dummy</a></li>
             <li><a href="#">Dummy</a></li>
           </ul>
           <ul class="nav nav-sidebar">

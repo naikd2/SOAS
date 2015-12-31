@@ -16,8 +16,9 @@
         <div class="col-sm-3 col-md-2 sidebar">
           <ul class="nav nav-sidebar">
             <li class="active"><a href="${createLink(controller:'Course', action:'show', params:[id:classInstance.course.id])}">Course Overview <span class="sr-only">(current)</span></a></li>
-            <li><a href="${createLink(controller:'Class', action:'create')}">New Section</a></li>
-            <li><a href="${createLink(controller:'Class', action:'edit', params:[id:classInstance.id])}">Edit Section</a></li>
+                                    <li><hr style="border: 1px solid white; width: 85%; margin-top: 10px; margin-bottom:10px;"></li>
+
+            <li><a href="${createLink(controller:'Class', action:'edit', params:[id:classInstance.id])}">Edit Class</a></li>
             <li><g:link controller="Class" action="delete" params="[id:classInstance.id]" onclick="return confirm('${message(code: 'default.button.delete.confirm.message', default: 'Are you sure?')}');"><g:message code="class.button.delete.label" default="Delete Class"/> </g:link></li>
           </ul>
           <ul class="nav nav-sidebar">
@@ -66,11 +67,6 @@
 
 			
 			</ol>
-			<g:form url="[resource:classInstance, action:'delete']" method="DELETE">
-				<fieldset class="buttons">
-					<g:actionSubmit class="delete" action="delete" value="${message(code: 'default.button.delete.label', default: 'Delete')}" onclick="return confirm('${message(code: 'default.button.delete.confirm.message', default: 'Are you sure?')}');" />
-				</fieldset>
-			</g:form>
 		</div>
 		</div>
 		</div>

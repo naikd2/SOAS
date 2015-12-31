@@ -16,13 +16,14 @@
       <div class="row">
         <div class="col-sm-3 col-md-2 sidebar">
           <ul class="nav nav-sidebar">
-            <li class="active"><a href="${createLink(controller:'Programs', action:'show', params:[id:session.currentProgram])}">View Courses <span class="sr-only">(current)</span></a></li>
-            <li><a href="${createLink(controller:'Course', action:'create')}">New Course</a></li>
+            <li class="active"><a href="${createLink(controller:'Course', action:'index')}">Return to Courses <span class="sr-only">(current)</span></a></li>
+            <li><hr style="border: 1px solid white; width: 85%; margin-top: 10px; margin-bottom:10px;"></li>
+            <li><a href="${createLink(controller:'Course', action:'edit', params:[id:courseInstance.id])}">Edit Course</a></li>
+            <li><g:link controller="Course" action="delete" params="[id:courseInstance.id]" onclick="return confirm('${message(code: 'course.button.delete.confirm.message', default: 'Are you sure? All class sections of this course will be deleted as well.')}');"><g:message code="course.button.delete.label" default="Delete Course"/> </g:link></li>
+             <li><hr style="border: 1px solid white; width: 85%; margin-top: 10px; margin-bottom:10px;"></li>
             <li><a href="${createLink(controller:'Class', action:'create')}">Add Section</a></li>
           </ul>
           <ul class="nav nav-sidebar">
-            <li><a href="${createLink(controller:'Course', action:'edit', params:[id:courseInstance.id])}">Edit Course</a></li>
-            <li><g:link controller="Course" action="delete" params="[id:courseInstance.id]" onclick="return confirm('${message(code: 'default.button.delete.confirm.message', default: 'Are you sure?')}');"><g:message code="course.button.delete.label" default="Delete Course"/> </g:link></li>
             <li><a href="">Dummy</a></li>
             <li><a href="">Dummy</a></li>
             <li><a href="">Dummy</a></li>
@@ -33,11 +34,9 @@
             <li><a href="">Dummy</a></li>
           </ul>
         </div>
-
-
 <div class="col-md-10 main">
 <g:set var="programList" value="${Programs.getAll()}" />
-          <h1><g:each in="${programList}" var="program"> <g:if test="${program.id =~ session.currentProgram}">${program.programName}</g:if></g:each></h1>
+          <h1><g:each in="${programList}" var="program"><g:if test="${program.id =~ session.currentProgram}">${program.programName}</g:if></g:each></h1>
 		<ul class="list-group">
   			<li class="list-group-item active"> Course - 
   					<g:fieldValue bean="${courseInstance}" field="subject"/>: <g:fieldValue bean="${courseInstance}" field="name"/>
@@ -71,7 +70,7 @@
         <g:set var="classList" value="${Class.getAll()}" />
         <g:each in="${classList}" status="i" var="section">
           <tr class="${(i % 2) == 0 ? 'even' : 'odd'}">
-          <g:if test="${section.course =~ courseInstance}">
+          <g:if test="${section.course.name =~ courseInstance.name && section.course.subject =~ courseInstance.subject}">
             <td><a href="${createLink(controller:'Class', action:'show', params:[id:section.id])}" role="button">${fieldValue(bean: section, field: "section")}</a></td>
             </g:if>
           </tr>

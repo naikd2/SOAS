@@ -99,7 +99,9 @@ body {
   background-color: #428bca;
 }
 
-
+hr .navRule {
+  border: 1px solid black;
+}
 /*
  * Main content
  */

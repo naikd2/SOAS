@@ -6,14 +6,14 @@
 		<title><g:message code="default.create.label" args="[entityName]" /></title>
 	</head>
 	<body>
-
 		<div class="container-fluid">
       <div class="row">
         <div class="col-sm-3 col-md-2 sidebar">
           <ul class="nav nav-sidebar">
-            <li class="active"><a href="${createLink(controller:'StudentOutcome', action:'index')}">Overview <span class="sr-only">(current)</span></a></li>
-            <li><a href="${createLink(controller:'StudentOutcome', action:'create')}">Add</a></li>
-            <li><a href="${createLink(controller:'StudentOutcome', action:'index')}">Index</a></li>
+            <li class="active"><a href="${createLink(controller:'StudentOutcome', action:'index')}">All Student Outcomes <span class="sr-only">(current)</span></a></li>
+            <li><hr style="border: 1px solid white; width: 85%; margin-top: 10px; margin-bottom:10px;"></li>
+            <li><a href="${createLink(controller:'StudentOutcome', action:'create')}">Dummy</a></li>
+            <li><a href="${createLink(controller:'StudentOutcome', action:'index')}">Dummy</a></li>
             <li><a href="#">Dummy</a></li>
           </ul>
           <ul class="nav nav-sidebar">
@@ -29,10 +29,12 @@
             <li><a href="">Dummy</a></li>
           </ul>
         </div>
+<div class="container">
+			<h1>Create a Student Outcome</h1>
 
 %{-- 
 		<div id="create-studentOutcome" class="content scaffold-create" role="main">
-			<h1><g:message code="default.create.label" args="[entityName]" /></h1>
+			<h1><g:message code="default.create.label" args="[entityName]"/></h1>
 			<g:if test="${flash.message}">
 			<div class="message" role="status">${flash.message}</div>
 			</g:if>
@@ -51,6 +53,7 @@
 					<g:submitButton name="create" class="save" value="${message(code: 'default.button.create.label', default: 'Create')}" />
 				</fieldset>
 			</g:form>
+		</div>
 		</div>
 		</div>
 		</div>

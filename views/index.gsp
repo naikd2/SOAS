@@ -16,25 +16,24 @@
         <p><a class="btn btn-primary btn-lg" href="#" role="button">Learn more &raquo;</a></p>
       </div>
     </div>  
-
+    <div class="container">
     <g:if test="${request.getSession(false) && session.user}">
-       <div class="container">
         <g:if test="${Programs.count() == 0}">
-        <p><a class="btn btn-link btn-lg" href="${createLink(controller:'Programs', action:'create')}" role="button">Create a program to get started&raquo;</a></p>
+          <p><a class="btn btn-link btn-lg" href="${createLink(controller:'Programs', action:'create')}" role="button">Create a program to get started&raquo;</a></p>
         </g:if>
         <g:else>
-      		<g:set var="programList" value="${Programs.getAll()}" />
+        	<g:set var="programList" value="${Programs.getAll()}" />
           Programs
           <g:each in="${programList}" status="i" var="program">
-            <li><a class="btn btn-link btn-lg" href="${createLink(controller:'Programs', action:'show', params:[id:program.id])}" role="button">${program}</a></li>
+              <li><a class="btn btn-link btn-lg" href="${createLink(controller:'Programs', action:'show', params:[id:program.id])}" role="button">${program}</a></li>
           </g:each>
-          </g:else>
-	</g:if>
-	<g:else>
-		<h3>Please Login</h3>
-	</g:else>
-    
-      <hr>
+        </g:else>
+	  </g:if>
+	  <g:else>
+  		<h3>Please Login</h3>
+	  </g:else>
+
+    <hr>
       <footer>
         <p>&copy; 2015 ThinkSOAS, Inc.</p>
       </footer>

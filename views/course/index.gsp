@@ -1,5 +1,5 @@
-
 <%@ page import="com.thinksoas.Course" %>
+<%@ page import="com.thinksoas.Programs" %>
 <!DOCTYPE html>
 <html>
 	<head>
@@ -13,9 +13,10 @@
       <div class="row">
         <div class="col-sm-3 col-md-2 sidebar">
           <ul class="nav nav-sidebar">
-            <li class="active"><a href="${createLink(controller:'Course', action:'index')}">Overview <span class="sr-only">(current)</span></a></li>
-            <li><a href="${createLink(controller:'Course', action:'create')}">Add</a></li>
-            <li><a href="${createLink(controller:'Course', action:'index')}">Index</a></li>
+            <li class="active"><a href="${createLink(controller:'Programs', action:'show', params:[id:session.currentProgram])}">Return to Program <span class="sr-only">(current)</span></a></li>
+                        <li><hr style="border: 1px solid white; width: 85%; margin-top: 10px; margin-bottom:10px;"></li>
+            <li><a href="${createLink(controller:'Course', action:'create')}">New Course</a></li>
+            <li><a href="${createLink(controller:'Course', action:'index')}">Dummy</a></li>
             <li><a href="#">Dummy</a></li>
           </ul>
           <ul class="nav nav-sidebar">
@@ -32,7 +33,8 @@
           </ul>
         </div>
         <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
-          <h1 class="page-header">Dashboard</h1>
+          <g:set var="programList" value="${Programs.getAll()}" />
+          <h1 class="page-header"><g:each in="${programList}" var="program"> <g:if test="${program.id =~ session.currentProgram}">${program.programName}</g:if></g:each></h1>
           <h2 class="sub-header">Course List</h2>
           <div class="table-responsive">
             <table class="table table-striped">
@@ -56,19 +58,19 @@
 				<tbody>
 				<g:each in="${courseInstanceList}" status="i" var="courseInstance">
 					<tr class="${(i % 2) == 0 ? 'even' : 'odd'}">
-					
-						<td><g:link action="show" id="${courseInstance.id}">${fieldValue(bean: courseInstance, field: "subject")}</g:link></td>
-					
-						<td>${fieldValue(bean: courseInstance, field: "number")}</td>
-					
-						<td>${fieldValue(bean: courseInstance, field: "name")}</td>
-					
-						<td>${fieldValue(bean: courseInstance, field: "description")}</td>
-					
-						<td>${fieldValue(bean: courseInstance, field: "units")}</td>
-					
-						<td>${fieldValue(bean: courseInstance, field: "offered")}</td>
-					
+						<g:if test="${courseInstance.program =~ session.currentProgram}">
+							<td><g:link action="show" id="${courseInstance.id}">${fieldValue(bean: courseInstance, field: "subject")}</g:link></td>
+						
+							<td>${fieldValue(bean: courseInstance, field: "number")}</td>
+						
+							<td>${fieldValue(bean: courseInstance, field: "name")}</td>
+						
+							<td>${fieldValue(bean: courseInstance, field: "description")}</td>
+						
+							<td>${fieldValue(bean: courseInstance, field: "units")}</td>
+						
+							<td>${fieldValue(bean: courseInstance, field: "offered")}</td>
+						</g:if>
 					</tr>
 				</g:each>
 				</tbody>
@@ -76,26 +78,10 @@
 			<div class="pagination">
 				<g:paginate total="${courseInstanceCount ?: 0}" />
 			</div>
-            </table>
           </div>
         </div>
       </div>
     </div>
 
-	%{-- 
-		<a href="#list-course" class="skip" tabindex="-1"><g:message code="default.link.skip.label" default="Skip to content&hellip;"/></a>
-		<div class="nav" role="navigation">
-			<ul>
-				<li><a class="home" href="${createLink(uri: '/')}"><g:message code="default.home.label"/></a></li>
-				<li><g:link class="create" action="create"><g:message code="default.new.label" args="[entityName]" /></g:link></li>
-				<li><g:link class="create" controller="courseObjective" action="index"><g:message code="Course Objectives" /></g:link></li>
-			</ul>
-		</div>
-		<div id="list-course" class="content scaffold-list" role="main">
-			<h1><g:message code="default.list.label" args="[entityName]" /></h1>
-			<g:if test="${flash.message}">
-				<div class="message" role="status">${flash.message}</div>
-			</g:if>
-		</div> --}%
 	</body>
 </html>
