@@ -35,8 +35,7 @@
           </ul>
         </div>
 <div class="col-md-10 main">
-<g:set var="programList" value="${Programs.getAll()}" />
-          <h1><g:each in="${programList}" var="program"><g:if test="${program.id =~ session.currentProgram}">${program.programName}</g:if></g:each></h1>
+          
 		<ul class="list-group">
   			<li class="list-group-item active"> Course - 
   					<g:fieldValue bean="${courseInstance}" field="subject"/>: <g:fieldValue bean="${courseInstance}" field="name"/>

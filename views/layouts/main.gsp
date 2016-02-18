@@ -43,7 +43,6 @@
         <div id="navbar" class="collapse navbar-collapse">
           <ul class="nav navbar-nav">
             <li class="active"><a href="/soas">Home</a></li>
-            <li><a href="/soas/programs/index">Programs</a></li>
             <li><a href="#about">About</a></li> 
           </ul>
         	<g:if test="${request.getSession(false) && session.user}">

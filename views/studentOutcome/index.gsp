@@ -21,7 +21,7 @@
       <div class="row">
         <div class="col-sm-3 col-md-2 sidebar">
           <ul class="nav nav-sidebar">
-            <li class="active"><a href="${createLink(controller:'Programs', action:'show', params:[id:session.currentProgram])}">Return to Program<span class="sr-only">(current)</span></a></li>
+            <li class="active"><a href="${createLink(controller:'Programs', action:'index')}">Return to Overview<span class="sr-only">(current)</span></a></li>
             <li><hr style="border: 1px solid white; width: 85%; margin-top: 10px; margin-bottom:10px;"></li>
             <li><a href="${createLink(controller:'StudentOutcome', action:'create')}">New Student Outcome</a></li>
             <li><a href="${createLink(controller:'StudentOutcome', action:'index')}">Dummy</a></li>
@@ -42,7 +42,7 @@
         </div>
         <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
         <g:set var="programList" value="${Programs.getAll()}" />
-          <h1 class="page-header"><g:each in="${programList}" var="program"> <g:if test="${program.id =~ session.currentProgram}">${program.programName}</g:if></g:each></h1>
+          <h1 class="page-header"></h1>
           <h2 class="sub-header">Student Outcome List</h2>
           <div class="table-responsive">
             <table class="table table-striped">
