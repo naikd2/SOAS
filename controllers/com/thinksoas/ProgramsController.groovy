@@ -12,7 +12,6 @@ class ProgramsController {
 
     def index(Integer max) {
         params.max = Math.min(max ?: 10, 100)
-        respond Programs.list(params), model:[programsInstanceCount: Programs.count()]
     }
 
     def show(Programs programsInstance) {

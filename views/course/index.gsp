@@ -57,7 +57,6 @@
 				<tbody>
 				<g:each in="${courseInstanceList}" status="i" var="courseInstance">
 					<tr class="${(i % 2) == 0 ? 'even' : 'odd'}">
-						<g:if test="${courseInstance.program =~ session.currentProgram}">
 							<td><g:link action="show" id="${courseInstance.id}">${fieldValue(bean: courseInstance, field: "subject")}</g:link></td>
 						
 							<td>${fieldValue(bean: courseInstance, field: "number")}</td>
@@ -69,7 +68,6 @@
 							<td>${fieldValue(bean: courseInstance, field: "units")}</td>
 						
 							<td>${fieldValue(bean: courseInstance, field: "offered")}</td>
-						</g:if>
 					</tr>
 				</g:each>
 				</tbody>

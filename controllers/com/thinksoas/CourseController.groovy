@@ -85,7 +85,7 @@ class CourseController {
         }
 
         courseInstance.delete flush:true
-        redirect controller:"programs", action:"show", params:[id:session.currentProgram]
+        redirect controller:"courses", action:"index"
 
         request.withFormat {
             form multipartForm {

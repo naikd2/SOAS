@@ -6,7 +6,6 @@
 <html>
   <head>
     <meta name="layout" content="main">
-    <g:set var="entityName" value="${message(code: 'programs.label', default: 'Programs')}" />
     <title><g:message code="default.show.label" args="[entityName]" /></title>
   </head>
   <body>
@@ -30,7 +29,7 @@
           </ul>
         </div>
         <div class="container">
-                  <h1 class="page-header">Computer Engineering Department</h1>
+                  <h1 class="page-header">Computer Engineering Program</h1>
 
         <div class="main">
           <div class="table-responsive">
@@ -69,7 +68,7 @@
                 <g:set var="studentOutcomeList" value="${StudentOutcome.getAll()}" />
                 <g:each in="${studentOutcomeList}" status="i" var="studentOutcome">
                   <tr class="${(i % 2) == 0 ? 'even' : 'odd'}">
-                      <td><a href="${createLink(controller:'StudentOutcome', action:'show', params:[id:i+1])}" >${fieldValue(bean: studentOutcome, field: "prefix")}</a></td>
+                      <td><a href="${createLink(controller:'StudentOutcome', action:'show', params:[id:studentOutcome.id])}" >${fieldValue(bean: studentOutcome, field: "prefix")}</a></td>
                       <td>${fieldValue(bean: studentOutcome, field: "description")}</td>
                   </tr>
                 </g:each>

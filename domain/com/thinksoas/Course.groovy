@@ -8,7 +8,6 @@ class Course {
 	String description
 	String units
 	String offered
-    String program
     List<CourseObjective> objectives = []
     
 	static  hasMany = [prereqs: Course, classes: Class, objectives: CourseObjective]
@@ -20,7 +19,6 @@ class Course {
     	description(blank:false)
     	units(blank:false)
     	offered(blank:false)
-        program(blank:false)
     }
 
     String toString() {

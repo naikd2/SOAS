@@ -27,9 +27,10 @@ jQuery(document).ready( function() {
     $(document).on("click", ".deleteObjective",function(event) {  
  
         var tableBody = $('#objectivesListTableBody');
-        var rowToDelete = $(this).closest('tr');    
+        var rowToDelete = $(this).parents('p');    
  
         $(rowToDelete).remove();
+
         updateNames(tableBody);
         return false;
     });
@@ -46,35 +47,94 @@ jQuery(document).ready( function() {
                 });
                 rowId = maxId+1;
         }           
- 
-         $("#objectivesListTableBody").append( '<p><tr  rowId="' + rowId  + '">' +                                     
-                 '<td><label>Prefix<input type="text" class="form-control" required="true" name="objectives[' + rowId + '].prefix" value=""/></td>' +
-                 '<td><label>Description<input type="text" class="form-control" required="true" name="objectives[' + rowId + '].description" value=""/></td>' +
-
-                  '<br><td><label>a<select name="objectives[' + rowId + '].a" >' +
-        '<g:each in="${com.thinksoas.CourseObjective.Level.values()}" var="a"> <option value="${a}">${a}</option></g:each></select></td>' +
-             '<br><td><label>b<select name="objectives[' + rowId + '].b" >' +
-        '<g:each in="${com.thinksoas.CourseObjective.Level.values()}" var="b"> <option value="${b}">${b}</option></g:each></select></td>' +
-             '<br><td><label>c<select name="objectives[' + rowId + '].c" >' +
-        '<g:each in="${com.thinksoas.CourseObjective.Level.values()}" var="c"> <option value="${c}">${c}</option></g:each></select></td>' +
-             '<br><td><label>d<select name="objectives[' + rowId + '].d" >' +
-        '<g:each in="${com.thinksoas.CourseObjective.Level.values()}" var="d"> <option value="${d}">${d}</option></g:each></select></td>' +
-             '<br><td><label>e<select name="objectives[' + rowId + '].e" >' +
-        '<g:each in="${com.thinksoas.CourseObjective.Level.values()}" var="e"> <option value="${e}">${e}</option></g:each></select></td>' +
-             '<br><td><label>f<select name="objectives[' + rowId + '].f" >' +
-        '<g:each in="${com.thinksoas.CourseObjective.Level.values()}" var="f"> <option value="${f}">${f}</option></g:each></select></td>' +
-             '<br><tr><td><label>g<select name="objectives[' + rowId + '].g" >' +
-        '<g:each in="${com.thinksoas.CourseObjective.Level.values()}" var="g"> <option value="${g}">${g}</option></g:each></select></td>' +
-             '<br><td><label>h<select name="objectives[' + rowId + '].h" >' +
-        '<g:each in="${com.thinksoas.CourseObjective.Level.values()}" var="h"> <option value="${h}">${h}</option></g:each></select></td>' +
-             '<br><td><label>i<select name="objectives[' + rowId + '].i" >' +
-        '<g:each in="${com.thinksoas.CourseObjective.Level.values()}" var="i"> <option value="${i}">${i}</option></g:each></select></td>' +
-             '<br><td><label>j<select name="objectives[' + rowId + '].j" >' +
-        '<g:each in="${com.thinksoas.CourseObjective.Level.values()}" var="j"> <option value="${j}">${j}</option></g:each></select></td>' +
-             '<br><td><label>k<select name="objectives[' + rowId + '].k" >' +
-        '<g:each in="${com.thinksoas.CourseObjective.Level.values()}" var="k"> <option value="${k}">${k}</option></g:each></select></td>' +
-        '<br><button><td  class="moveRow"><a href="#" class="deleteObjective">Delete</a></td></button>');
- 
+          $("#objectivesListTableBody").append( '<p><tr  rowId="' + rowId  + '">' +                                     
+			
+	
+			'<label>'+
+			'Prefix'+
+			'</label>'+
+			'<input type="text" class="form-control"required="true" name="objectives[' + rowId + '].prefix" value=""/>'+
+			'<label>'+
+			'Description'+
+			'</label>'+
+			'<textarea  class="form-control" row="5" required="true" name="objectives[' + rowId + '].description" value=""></textarea>'+
+			'<table class="table table-condensed">'+
+			'<thead>'+
+			'<tr>'+
+			'<th>Outcome</th>'+
+			'<th>Level</th>'+
+			'</tr>'+
+			'</thead>'+
+			'<tbody>'+
+			'<tr>'+
+			'<tr>'+
+			'<td>a</td>'+
+			'<td><select name="objectives[' + rowId + '].a" >'+
+			'<g:each in="${com.thinksoas.CourseObjective.Level.values()}" var="a">'+
+			'<option value="${a}">${a}</option></g:each></select></td>'+
+			'</tr>'+
+			'<tr>'+
+			'<td>b</td>'+
+			'<td><select name="objectives[' + rowId + '].b" >'+
+			'<g:each in="${com.thinksoas.CourseObjective.Level.values()}" var="b">'+
+			'<option value="${b}">${b}</option></g:each></select></td>'+
+			'</tr>'+
+			'<tr>'+
+			'<td>c</td>'+
+			'<td><select name="objectives[' + rowId + '].c" >'+
+			'<g:each in="${com.thinksoas.CourseObjective.Level.values()}" var="c">'+
+			'<option value="${c}">${c}</option></g:each></select></td>'+
+			'</tr>'+
+			'<tr>'+
+			'<td>d</td>'+
+			'<td><select name="objectives[' + rowId + '].d" >'+
+			'<g:each in="${com.thinksoas.CourseObjective.Level.values()}" var="d">'+
+			'<option value="${d}">${d}</option></g:each></select></td>'+
+			'</tr>'+
+			'<tr>'+
+			'<td>e</td>'+
+			'<td><select name="objectives[' + rowId + '].e" >'+
+			'<g:each in="${com.thinksoas.CourseObjective.Level.values()}" var="e">'+
+			'<option value="${e}">${e}</option></g:each></select></td>'+
+		    '</tr>'+
+		    '<tr>'+
+		  	'<td>f</td>'+
+		  	'<td><select name="objectives[' + rowId + '].f" >'+
+        	'<g:each in="${com.thinksoas.CourseObjective.Level.values()}" var="f">'+
+        	'<option value="${f}">${f}</option></g:each></select></td>'+
+		    '</tr>'+
+		    '<tr>'+
+		    '<td>g</td>'+
+	     	'<td><select name="objectives[' + rowId + '].g" >'+
+        	'<g:each in="${com.thinksoas.CourseObjective.Level.values()}" var="g">'+
+        	'<option value="${g}">${g}</option></g:each></select></td>'+
+		    '</tr>'+
+		  	'<tr>'+
+		    '<td>h</td>'+
+		    '<td><select name="objectives[' + rowId + '].h" >'+
+        	'<g:each in="${com.thinksoas.CourseObjective.Level.values()}" var="h">'+
+        	'<option value="${h}">${h}</option></g:each></select></td>'+
+		    '</tr>'+
+       		'<tr>'+
+        	'<td>i</td>'+
+        	'<td><select name="objectives[' + rowId + '].i" >'+
+   			'<g:each in="${com.thinksoas.CourseObjective.Level.values()}" var="i">'+
+   			'<option value="${i}">${i}</option></g:each></select></td>'+
+		    '</tr>'+
+		   	'<tr>'+
+		    '<td>j</td>'+
+		    '<td><select name="objectives[' + rowId + '].j" >'+
+        	'<g:each in="${com.thinksoas.CourseObjective.Level.values()}" var="j">'+
+        	'<option value="${j}">${j}</option></g:each></select></td>'+
+		    '</tr>'+
+		    '<tr>'+
+		    '<td>k</td>'+
+		    '<td><select name="objectives[' + rowId + '].k" >'+
+        	'<g:each in="${com.thinksoas.CourseObjective.Level.values()}" var="k">'+
+        	'<option value="${k}">${k}</option></g:each></select></td>'+
+		    '</tr>'+
+		    '</tbody>'+
+		    '</table>'); 
         return false;
     });
  
@@ -84,7 +144,6 @@ jQuery(document).ready( function() {
 
 
 <div class="col-md-10 main">
-
 
 <div class="form-group ${hasErrors(bean: courseInstance, field: 'subject', 'error')} required">
 	<label for="subject">
@@ -121,6 +180,9 @@ jQuery(document).ready( function() {
 	<textarea class="form-control" rows="5" name="description" required="" value="${courseInstance?.description}"></textarea>
 </div>
 
+
+
+
 <div class="form-group ${hasErrors(bean: courseInstance, field: 'units', 'error')} required">
 	<label for="units">
 		<g:message code="course.units.label" default="Units" />
@@ -137,7 +199,110 @@ jQuery(document).ready( function() {
 	</label>
 	<input type="text" class="form-control" name="offered" required="" value="${courseInstance?.offered}"/>
 
-</div>
+</div>     
+
+
+	
+
+
+%{-- 
+		
+			<div class="form-group">
+	<label for="prefix">
+		Prefix
+	</label>
+		<input type="text" class="form-control" name="prefix"required="true" name="objectives[' + rowId + '].prefix" value=""/>
+</div>  
+	
+				<div class="form-group">
+	<label for="description">
+		Description
+	</label>
+<textarea  class="form-control" row="5" name="description"equired="true" name="objectives[' + rowId + '].description" value=""></textarea>
+		       
+</div>  	     --}%	
+     		 
+     				
+		       	 
+%{-- 		    <table class="table table-condensed">
+		        <thead>
+		        	<tr>
+		                <th>Outcome</th>
+		                <th>Level</th>
+		            </tr>
+		        </thead>
+		        <tbody>
+
+		            <tr>
+		            	<td>a</td>
+		            	<td><select name="objectives[' + rowId + '].a" >
+        				<g:each in="${com.thinksoas.CourseObjective.Level.values()}" var="a">
+        				<option value="${a}">${a}</option></g:each></select></td>
+		            </tr>
+		           	<tr>
+		            	<td>b</td>
+		            	<td><select name="objectives[' + rowId + '].b" >
+        				<g:each in="${com.thinksoas.CourseObjective.Level.values()}" var="b">
+        				<option value="${b}">${b}</option></g:each></select></td>
+		            </tr>
+		            <tr>
+		            	<td>c</td>
+		            	<td><select name="objectives[' + rowId + '].c" >
+        				<g:each in="${com.thinksoas.CourseObjective.Level.values()}" var="c">
+        				<option value="${c}">${c}</option></g:each></select></td>
+		            </tr>
+		           	<tr>
+		            	<td>d</td>
+		            	<td><select name="objectives[' + rowId + '].d" >
+        				<g:each in="${com.thinksoas.CourseObjective.Level.values()}" var="d">
+        				<option value="${d}">${d}</option></g:each></select></td>
+		            </tr>
+		            <tr>
+		            	<td>e</td>
+		            	<td><select name="objectives[' + rowId + '].e" >
+        				<g:each in="${com.thinksoas.CourseObjective.Level.values()}" var="e">
+        				<option value="${e}">${e}</option></g:each></select></td>
+		            </tr>
+		           	<tr>
+		            	<td>f</td>
+		            	<td><select name="objectives[' + rowId + '].f" >
+        				<g:each in="${com.thinksoas.CourseObjective.Level.values()}" var="f">
+        				<option value="${f}">${f}</option></g:each></select></td>
+		            </tr>
+		            <tr>
+		            	<td>g</td>
+		            	<td><select name="objectives[' + rowId + '].g" >
+        				<g:each in="${com.thinksoas.CourseObjective.Level.values()}" var="g">
+        				<option value="${g}">${g}</option></g:each></select></td>
+		            </tr>
+		           	<tr>
+		            	<td>h</td>
+		            	<td><select name="objectives[' + rowId + '].h" >
+        				<g:each in="${com.thinksoas.CourseObjective.Level.values()}" var="h">
+        				<option value="${h}">${h}</option></g:each></select></td>
+		            </tr>
+		            <tr>
+		            	<td>i</td>
+		            	<td><select name="objectives[' + rowId + '].i" >
+        				<g:each in="${com.thinksoas.CourseObjective.Level.values()}" var="i">
+        				<option value="${i}">${i}</option></g:each></select></td>
+		            </tr>
+		           	<tr>
+		            	<td>j</td>
+		            	<td><select name="objectives[' + rowId + '].j" >
+        				<g:each in="${com.thinksoas.CourseObjective.Level.values()}" var="j">
+        				<option value="${j}">${j}</option></g:each></select></td>
+		            </tr>
+		            <tr>
+		            	<td>k</td>
+		            	<td><select name="objectives[' + rowId + '].k" >
+        				<g:each in="${com.thinksoas.CourseObjective.Level.values()}" var="k">
+        				<option value="${k}">${k}</option></g:each></select></td>
+		            </tr>	            		            		            
+		        </tbody>
+		    </table> --}%
+
+
 
 
 <div class="form-group ${hasErrors(bean: courseInstance, field: 'objectives', 'error')} ">
@@ -148,8 +313,8 @@ jQuery(document).ready( function() {
 	<table class="table table-striped" id="objectivesList">
 		<thead>
 			<tr>
-				<th>Prefix</th>
-				<th>Description</th>
+				<th></th>
+				<th></th>
 				
 			</tr>
 		</thead>
@@ -177,8 +342,6 @@ jQuery(document).ready( function() {
 		</tbody>
 	</table>	
 	<a href="#" class="addNewObjective">ADD NEW OBJECTIVE</a>
-
-	
 
 	 
 </div>

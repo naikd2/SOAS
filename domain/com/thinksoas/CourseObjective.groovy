@@ -18,7 +18,6 @@ class CourseObjective {
 	Level k				
 	static transients = [ 'deleted' ]
 
-	static hasMany = [objOut: ObjectiveOutcome]
 
 	  String toString() {
        "$prefix: $description"
@@ -30,9 +29,9 @@ class CourseObjective {
     }
 
     enum Level {
-	
-	LOW,
-	MEDIUM,
-	HIGH
+	NONE,
+	INTRODUCE,
+	REINFORCE,
+	EMPHASIZE
 	} 
 }

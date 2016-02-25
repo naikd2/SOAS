@@ -60,13 +60,14 @@ grails.project.dependency.resolution = {
       
     	//compile ":ckeditor:4.5.4.0"
         // plugins for the compile step
-        compile ":scaffolding:2.1.2"
+        compile "org.grails.plugins:scaffolding:2.1.2"
         compile ':cache:1.1.8'
         compile ":asset-pipeline:2.2.3"
         compile "org.grails.plugins:jquery-ui:1.10.4"
         compile "org.grails.plugins:twitter-bootstrap:3.3.5"
         compile "org.grails.plugins:jquery:1.11.1"
         compile "org.grails.plugins:resources:1.2.14"
+        //compile "org.grails.plugins:settings:1.4"
 
         //compile ":webflow:2.1.0"
         // plugins needed at runtime but not for compilation

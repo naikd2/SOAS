@@ -41,7 +41,6 @@
           </ul>
         </div>
         <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
-        <g:set var="programList" value="${Programs.getAll()}" />
           <h1 class="page-header"></h1>
           <h2 class="sub-header">Student Outcome List</h2>
           <div class="table-responsive">
@@ -58,11 +57,9 @@
 				<tbody>
 				<g:each in="${studentOutcomeInstanceList}" status="i" var="studentOutcomeInstance">
 					<tr class="${(i % 2) == 0 ? 'even' : 'odd'}">
-					<g:if test="${studentOutcomeInstance.program =~ session.currentProgram}">
 						<td><g:link action="edit" id="${studentOutcomeInstance.id}">${fieldValue(bean: studentOutcomeInstance, field: "prefix")}</g:link></td>
 					
 						<td>${fieldValue(bean: studentOutcomeInstance, field: "description")}</td>
-					</g:if>
 					</tr>
 				</g:each>
 				</tbody>

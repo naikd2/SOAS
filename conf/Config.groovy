@@ -58,7 +58,8 @@ grails {
         // filteringCodecForContentType.'text/html' = 'html'
     }
 }
-
+//used in the settings plugin
+//settings.cache.size.kb = 32
 
 grails.converters.encoding = "UTF-8"
 // scaffolding templates configuration

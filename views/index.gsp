@@ -11,8 +11,8 @@
     <div class="jumbotron">
       <div class="container">
         <h1>Welcome To SOAS!</h1>
-        <p>Computer Engineering Department</p>
-        <p><a class="btn btn-primary btn-lg" href="${createLink(controller:'Programs', action:'index')}" role="button">Learn more &raquo;</a></p>
+        <p>Computer Engineering Program</p>
+        <p><a class="btn btn-primary btn-lg" href="${createLink(controller:'Programs', action:'index')}" role="button">Go To Overview &raquo;</a></p>
       </div>
     </div>  
 
