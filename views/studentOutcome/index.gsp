@@ -24,20 +24,20 @@
             <li class="active"><a href="${createLink(controller:'Programs', action:'index')}">Return to Overview<span class="sr-only">(current)</span></a></li>
             <li><hr style="border: 1px solid white; width: 85%; margin-top: 10px; margin-bottom:10px;"></li>
             <li><a href="${createLink(controller:'StudentOutcome', action:'create')}">New Student Outcome</a></li>
-            <li><a href="${createLink(controller:'StudentOutcome', action:'index')}">Dummy</a></li>
-            <li><a href="#">Dummy</a></li>
+            <li><a href="${createLink(controller:'StudentOutcome', action:'index')}"> </a></li>
+            <li><a href="#"> </a></li>
           </ul>
           <ul class="nav nav-sidebar">
-            <li><a href="">Dummy</a></li>
-            <li><a href="">Dummy</a></li>
-            <li><a href="">Dummy</a></li>
-            <li><a href="">Dummy</a></li>
-            <li><a href="">Dummy</a></li>
+            <li><a href=""> </a></li>
+            <li><a href=""> </a></li>
+            <li><a href=""> </a></li>
+            <li><a href=""> </a></li>
+            <li><a href=""> </a></li>
           </ul>
           <ul class="nav nav-sidebar">
-            <li><a href="">Dummy</a></li>
-            <li><a href="">Dummy</a></li>
-            <li><a href="">Dummy</a></li>
+            <li><a href=""> </a></li>
+            <li><a href=""> </a></li>
+            <li><a href=""> </a></li>
           </ul>
         </div>
         <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">

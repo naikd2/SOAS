@@ -19,19 +19,19 @@
 
             <li><a href="${createLink(controller:'Course', action:'create')}">Add</a></li>
             <li><a href="${createLink(controller:'Course', action:'index')}">Index</a></li>
-            <li><a href="#"> </a></li>
+            <li><a href="#">Dummy</a></li>
           </ul>
           <ul class="nav nav-sidebar">
-            <li><a href=""> </a></li>
-            <li><a href=""> </a></li>
-            <li><a href=""> </a></li>
-            <li><a href=""> </a></li>
-            <li><a href=""> </a></li>
+            <li><a href="">Dummy</a></li>
+            <li><a href="">Dummy</a></li>
+            <li><a href="">Dummy</a></li>
+            <li><a href="">Dummy</a></li>
+            <li><a href="">Dummy</a></li>
           </ul>
           <ul class="nav nav-sidebar">
-            <li><a href=""> </a></li>
-            <li><a href=""> </a></li>
-            <li><a href=""> </a></li>
+            <li><a href="">Dummy</a></li>
+            <li><a href="">Dummy</a></li>
+            <li><a href="">Dummy</a></li>
           </ul>
         </div>
 

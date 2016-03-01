@@ -22,16 +22,16 @@
             <li><g:link controller="Class" action="delete" params="[id:classInstance.id]" onclick="return confirm('${message(code: 'default.button.delete.confirm.message', default: 'Are you sure?')}');"><g:message code="class.button.delete.label" default="Delete Class"/> </g:link></li>
           </ul>
           <ul class="nav nav-sidebar">
-            <li><a href=""> </a></li>
-            <li><a href=""> </a></li>
-            <li><a href=""> </a></li>
-            <li><a href=""> </a></li>
-            <li><a href=""> </a></li>
+            <li><a href="">Dummy</a></li>
+            <li><a href="">Dummy</a></li>
+            <li><a href="">Dummy</a></li>
+            <li><a href="">Dummy</a></li>
+            <li><a href="">Dummy</a></li>
           </ul>
           <ul class="nav nav-sidebar">
-            <li><a href=""> </a></li>
-            <li><a href=""> </a></li>
-            <li><a href=""> </a></li>
+            <li><a href="">Dummy</a></li>
+            <li><a href="">Dummy</a></li>
+            <li><a href="">Dummy</a></li>
           </ul>
         </div>
 
