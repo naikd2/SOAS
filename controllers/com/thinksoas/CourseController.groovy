@@ -1,10 +1,10 @@
 package com.thinksoas
 
-
-
 import static org.springframework.http.HttpStatus.*
 import grails.transaction.Transactional
+import grails.plugin.springsecurity.annotation.Secured
 
+@Secured(['ROLE_ADMIN'])
 @Transactional(readOnly = true)
 class CourseController {
 
@@ -25,6 +25,7 @@ class CourseController {
 
     @Transactional
     def save(Course courseInstance) {
+
         if (courseInstance == null) {
             notFound()
             return
@@ -50,7 +51,7 @@ class CourseController {
         respond courseInstance
     }
 
-    @Transactional
+   //@Transactional
     def update(Course courseInstance) {
         if (courseInstance == null) {
             notFound()
@@ -85,15 +86,15 @@ class CourseController {
         }
 
         courseInstance.delete flush:true
-        redirect controller:"courses", action:"index"
-
-        request.withFormat {
-            form multipartForm {
-                flash.message = message(code: 'default.deleted.message', args: [message(code: 'Course.label', default: 'Course'), courseInstance.id])
-                redirect action:"index", method:"GET"
-            }
-            '*'{ render status: NO_CONTENT }
-        }
+        redirect action:"index", method:"GET"
+        
+        // request.withFormat {
+        //     form multipartForm {
+        //         flash.message = message(code: 'default.deleted.message', args: [message(code: 'Course.label', default: 'Course'), courseInstance.id])
+        //         redirect action:"index", method:"GET"
+        //     }
+        //     '*'{ render status: NO_CONTENT }
+        // }
     }
 
     protected void notFound() {

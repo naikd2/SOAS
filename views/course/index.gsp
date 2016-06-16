@@ -13,8 +13,8 @@
       <div class="row">
         <div class="col-sm-3 col-md-2 sidebar">
           <ul class="nav nav-sidebar">
-            <li class="active"><a href="${createLink(controller:'Programs', action:'index', params:[id:session.currentProgram])}">Return to Overview <span class="sr-only">(current)</span></a></li>
-                        <li><hr style="border: 1px solid white; width: 85%; margin-top: 10px; margin-bottom:10px;"></li>
+            <li class="active"><a href="${createLink(controller:'Programs', action:'index', params:[id:session.currentProgram])}">Overview <span class="sr-only">(current)</span></a></li>
+			  <li><hr style="border: 1px solid white; width: 85%; margin-top: 10px; margin-bottom:10px;"></li>
             <li><a href="${createLink(controller:'Course', action:'create')}">New Course</a></li>
             <li><a href="${createLink(controller:'Course', action:'index')}">Dummy</a></li>
             <li><a href="#">Dummy</a></li>
@@ -73,7 +73,7 @@
 				</tbody>
 			</table>
 			<div class="pagination">
-				<g:paginate total="${courseInstanceCount ?: 0}" />
+				%{-- <g:paginate total="${courseInstanceCount ?: 0}" /> --}%
 			</div>
           </div>
         </div>

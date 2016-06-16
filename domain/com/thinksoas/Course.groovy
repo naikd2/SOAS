@@ -10,7 +10,7 @@ class Course {
 	String offered
     List<CourseObjective> objectives = []
     
-	static  hasMany = [prereqs: Course, classes: Class, objectives: CourseObjective]
+	static  hasMany = [classes: Class, objectives: CourseObjective]
 
     static constraints = {
     	subject(blank:false)
@@ -20,6 +20,11 @@ class Course {
     	units(blank:false)
     	offered(blank:false)
     }
+
+    static mapping = {
+        objectives cascade:"all-delete-orphan"    
+        description sqlType:"text"
+    }   
 
     String toString() {
         "$name"

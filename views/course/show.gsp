@@ -12,6 +12,11 @@
 	</head>
 	<body>
 
+<g:if test="${errorMessage}">
+  <div class="alert alert-danger alert-dismissable" >
+  </div>
+</g:if>
+
 <div class="container-fluid">
       <div class="row">
         <div class="col-sm-3 col-md-2 sidebar">
@@ -43,15 +48,45 @@
   			</li>
 
   			<li class="list-group-item">
-  					<g:fieldValue bean="${courseInstance}" field="offered"/>: <g:fieldValue bean="${courseInstance}" field="units"/>
+  					<g:fieldValue bean="${courseInstance}" field="offered"/>: <g:fieldValue bean="${courseInstance}" field="units"/> 
   			</li>
 
   			<li class="list-group-item"><g:fieldValue bean="${courseInstance}" field="description"/>
   			</li>
   			<li class="list-group-item">Objectives:</li>
   			<li class="list-group-item">
-				<g:each in="${courseInstance.objectives}" var="o">
-				<span class="property-value" aria-labelledby="objectives-label">${o?.encodeAsHTML()}</span>
+				<g:each in="${courseInstance.objectives}" status="i" var="o">
+        <tr class="${(i % 2) == 0 ? 'even' : 'odd'}">
+        <dl>
+        <dt><span class="property-value" aria-labelledby="objectives-label">${o?.encodeAsHTML()}</span></dt>
+
+            <div>
+                <h5>Introduce Outcomes</h5>
+            <g:each in="${o.introduceOutcomes}" var="intro">
+                <div>
+                <span class="property-value" aria-labelledby="articles-label">${intro?.encodeAsHTML()}</span>
+                </div>
+            </g:each>
+             </div>
+            <div>
+                <h5>Reinforce Outcomes</h5>
+            <g:each in="${o.reinforceOutcomes}" var="rein">
+                <div>
+                <span class="property-value" aria-labelledby="articles-label">${rein?.encodeAsHTML()}</span>
+                </div>
+            </g:each>
+            </div>
+                <div>
+                    <h5>Emphasize Outcomes</h5>
+            <g:each in="${o.emphasizeOutcomes}" var="emph">
+                <div>
+                <span class="property-value" aria-labelledby="articles-label">${emph?.encodeAsHTML()}</span>
+                </div>
+            </g:each>
+                </div>
+        </dl>
+      <div></div>
+          </tr>
 				</g:each>
 			</li>
 		</ul>
@@ -59,10 +94,7 @@
     <table class="table table-striped">
       <thead>
           <tr>
-          
       <g:sortableColumn property="classSections" title="${message(code: 'programs.classes.label', default: 'Class Sections')}" />
-          
-          
           </tr>
         </thead>
         <tbody>

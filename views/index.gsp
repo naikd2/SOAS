@@ -14,9 +14,9 @@
         <p>Computer Engineering Program</p>
         <p><a class="btn btn-primary btn-lg" href="${createLink(controller:'Programs', action:'index')}" role="button">Go To Overview &raquo;</a></p>
       </div>
-    </div>  
+    </div>
 
-    <g:if test="${request.getSession(false) && session.user}">
+	<sec:ifLoggedIn>
    		 <div class="container">
       		<!-- Example row of columns -->
       		<div class="row">
@@ -37,15 +37,13 @@
           		<p><a class="btn btn-default" href="${createLink(controller:'Class', action:'index')}"  role="button">Go To &raquo;</a></p>
         	</div>
       	</div>
-	</g:if>
-	<g:else>
-		<h3>Please Login</h3>
-	</g:else>
-      
-      <hr>
+	</sec:ifLoggedIn>
+
+
       <footer>
-        <p>&copy; 2015 ThinkSOAS, Inc.</p>
+        <p>&copy; 2016 ThinkSOAS, Inc.</p>
       </footer>
+
     </div> <!-- /container -->
 	</body>
 </html>

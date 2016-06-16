@@ -67,6 +67,7 @@ grails.project.dependency.resolution = {
         compile "org.grails.plugins:twitter-bootstrap:3.3.5"
         compile "org.grails.plugins:jquery:1.11.1"
         compile "org.grails.plugins:resources:1.2.14"
+        compile "org.grails.plugins:spring-security-core:2.0.0"
         //compile "org.grails.plugins:settings:1.4"
 
         //compile ":webflow:2.1.0"

@@ -2,12 +2,41 @@
 
 <div class="col-md-10 main">
 
-<div class="form-group ${hasErrors(bean: programsInstance, field: 'programName', 'error')} required">
-	<label for="programName">
-		<g:message code="programs.title.label" default="Program Title" />
+<div class="form-group ${hasErrors(bean: programsInstance, field: 'assessmentPeriod', 'error')} required">
+	<label for="assessmentPeriod">
+		<g:message code="programs.assessmentPeriod.label" default="Course Assessment Period" />
 		<span class="required-indicator">*</span>
 	</label>
-	<g:textField name="programName" required="" value="${programsInstance?.programName}"/>
+	<g:textField name="assessmentPeriod" required="" value="${programsInstance?.assessmentPeriod}"/>
 
 </div>
+
+<div class="form-group ${hasErrors(bean: programsInstance, field: 'performanceTarget', 'error')} required">
+	<label for="performanceTarget">
+		<g:message code="programs.performanceTarget.label" default="Course Performance Target" />
+		<span class="required-indicator">*</span>
+	</label>
+	<g:textField name="performanceTarget" required="" value="${programsInstance?.performanceTarget}"/>
+
+</div>
+
+<div class="form-group ${hasErrors(bean: programsInstance, field: 'performanceThreshold', 'error')} required">
+	<label for="performanceThreshold">
+		<g:message code="programs.performanceThreshold.label" default="Minimum Performance Threshold" />
+		<span class="required-indicator">*</span>
+	</label>
+	<g:textField name="performanceThreshold" required="" value="${programsInstance?.performanceThreshold}"/>
+
+</div>
+
+<div class="form-group ${hasErrors(bean: programsInstance, field: 'deltaValue', 'error')} required">
+	<label for="deltaValue">
+		<g:message code="programs.deltaValue.label" default="Maximum Assessment Delta Value" />
+		<span class="required-indicator">*</span>
+	</label>
+	<g:textField name="deltaValue" required="" value="${programsInstance?.deltaValue}"/>
+
+</div>
+
+
 

@@ -43,30 +43,35 @@
         <div id="navbar" class="collapse navbar-collapse">
           <ul class="nav navbar-nav">
             <li class="active"><a href="/soas">Home</a></li>
-            <li><a href="#about">About</a></li> 
+            <li><a href="#about">About</a></li>
           </ul>
-        	<g:if test="${request.getSession(false) && session.user}">
-      			<ul class="nav navbar-nav navbar-right">
-        		  <li><a href="#"><span class="glyphicon glyphicon-user"></span> ${session.user}</a></li>
-        		  <li><a href='${createLink(controller:'User', action:'logout')}'><span class="glyphicon glyphicon-log-out"></span> Logout</a></li>
-     			  </ul>
-			    </g:if>
-		      <g:elseif test="${request.forwardURI == '/soas/user/create'}">
-            DEV MODE
-          </g:elseif>
-          <g:else>
-		        <form class="navbar-form navbar-right" action="user/validate">
+
+
+
+<sec:ifLoggedIn>
+    <ul class="nav navbar-nav navbar-right">
+        <li><a href='${createLink(controller:'Programs', action:'settings')}'> Settings </a></li>
+        <li><a href="#"><span class="glyphicon glyphicon-user"></span>  <sec:username/></a></li>
+        <li>
+            <a name="logout" href="${createLink(controller:'logout') }"><span class="glyphicon glyphicon-log-out"></span> Logout</a>
+        </li>
+    </ul>
+</sec:ifLoggedIn>
+
+<sec:ifNotLoggedIn>
+<ul class="nav navbar-nav navbar-right">
+<form class="navbar-form navbar-right" action="${createLink(uri: '/j_spring_security_check')}" method = "POST" id="loginForm" class="cssform" >
               <div class="form-group">
-                <input type="username" id="username" name="username" class="form-control" placeholder="Username" required autofocus/>
+                <input type="j_username" id="j_username" name="j_username" class="form-control" placeholder="Username" required autofocus/>
               </div>
               <div class="form-group">
-                <input type="password" id="password" name="password" class="form-control" placeholder="Password" required/>
+                <input type="password" id="j_password" name="j_password" class="form-control" placeholder="Password" required/>
               </div>
               <button type="submit" class="btn btn-success">Sign in</button>
-          		<input type="hidden" name="cName" value="${cName}"/> 
-				      <input type="hidden" name="aName" value="${aName}"/>
             </form>
-		      </g:else>
+ </ul>
+</sec:ifNotLoggedIn>
+
         </div>
       </div> 
     </nav>

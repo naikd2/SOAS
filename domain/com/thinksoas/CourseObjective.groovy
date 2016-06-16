@@ -5,29 +5,32 @@ class CourseObjective {
 	String prefix
 	String description
 	boolean deleted
-	Level a
-	Level b
-	Level c
-	Level d	
-	Level e
-	Level f
-	Level g
-	Level h
-	Level i
-	Level j
-	Level k				
-	static transients = [ 'deleted' ]
 
-
-	  String toString() {
-       "$prefix: $description"
-    }
+	List<StudentOutcome> introduceOutcomes = []
+	List<StudentOutcome> reinforceOutcomes = []
+	List<StudentOutcome> emphasizeOutcomes = []		
 
     static constraints = {
     	prefix(blank:false)
     	description(blank:false)
     }
 
+	static  hasMany = [introduceOutcomes:StudentOutcome ,reinforceOutcomes:StudentOutcome ,emphasizeOutcomes:StudentOutcome ]
+
+    static mapping = {
+    	introduceOutcomes joinTable: [name: 'objective_introduce']
+    	reinforceOutcomes joinTable: [name: 'objective_reinforce']
+    	emphasizeOutcomes joinTable: [name: 'objective_emphasize']
+        description sqlType:"text"
+    }   
+
+	static transients = [ 'deleted' ]
+
+
+	String toString() {
+       "$prefix: $description"
+    }
+    
     enum Level {
 	NONE,
 	INTRODUCE,

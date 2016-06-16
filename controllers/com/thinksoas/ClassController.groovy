@@ -4,7 +4,9 @@ package com.thinksoas
 
 import static org.springframework.http.HttpStatus.*
 import grails.transaction.Transactional
+import grails.plugin.springsecurity.annotation.Secured
 
+@Secured(['ROLE_ADMIN'])
 @Transactional(readOnly = true)
 class ClassController {
 
@@ -17,13 +19,15 @@ class ClassController {
     }
 
  @Transactional
-    def signUpClass(String section, String course) {
+    def signUpClass(String year, String semester, String section, String course) {
+        println year
+        println semester
         println section
         println course
         Course course1 = Course.findByName(course)
         print course1.id
         def user = session.user
-        new Class(section:section,course:course1, user:user).save()
+        new Class(year:year,semester:semester,section:section,course:course1,user:user).save()
 
         redirect controller:'Course', action:'show', params:[id:course1.id]
     }

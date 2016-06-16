@@ -46,9 +46,16 @@
 		<g:form url="[resource:courseInstance, action:'save', params:[program:session.currentProgram]]" >
 			<fieldset class="form">
 				<g:render template="form"/>
+
+						<fieldset class="buttons">
+	
+			
+
+<button type="button" class="btn btn-secondary btn-lg">		
+<g:submitButton name="create" class="save" value="${message(code: 'default.button.create.label', default: 'Create')}" />
+</button>
 			</fieldset>
-			<fieldset class="buttons">
-					<g:submitButton name="create" class="save" value="${message(code: 'default.button.create.label', default: 'Create')}" />
+
 			</fieldset>
 
 		</g:form>	

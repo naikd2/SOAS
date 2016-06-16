@@ -2,6 +2,8 @@ package com.thinksoas
 
 class Class {
 
+    String year
+    String semester
 	String section
     Course course
     User user

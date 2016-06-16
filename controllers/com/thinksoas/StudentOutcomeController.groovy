@@ -4,14 +4,16 @@ package com.thinksoas
 
 import static org.springframework.http.HttpStatus.*
 import grails.transaction.Transactional
+import grails.plugin.springsecurity.annotation.Secured
 
+@Secured('ROLE_ADMIN')
 @Transactional(readOnly = true)
 class StudentOutcomeController {
 
     static allowedMethods = [save: "POST", update: "PUT"]
 
     def index(Integer max) {
-        params.max = Math.min(max ?: 10, 100)
+        params.max = 100
         respond StudentOutcome.list(params), model:[studentOutcomeInstanceCount: StudentOutcome.count()]
     }
 

@@ -1,25 +1,55 @@
 package com.thinksoas
 
-class User {
+import groovy.transform.EqualsAndHashCode
+import groovy.transform.ToString
 
+@EqualsAndHashCode(includes='username')
+@ToString(includes='username', includeNames=true, includePackage=false)
+class User implements Serializable {
 
-	String userId
+	private static final long serialVersionUID = 1
+
+	transient springSecurityService
+
+	String username
 	String password
-	
-    
-	static hasOne = [profile: Profile]
-    static hasMany = [classes: Class]
+	boolean enabled = true
+	boolean accountExpired
+	boolean accountLocked
+	boolean passwordExpired
 
-   
-    static constraints = {
-    	userId(size:3..20, unique: true)
-    	password(size: 3..20, validator: 
-    			{passwd, user -> passwd != user.userId })
+	User(String username, String password) {
+		this()
+		this.username = username
+		this.password = password
+	}
 
-    	profile(nullable:true)
-    }
-       String toString() {
-        "$userId"
-    }
-    
+	Set<Role> getAuthorities() {
+		UserRole.findAllByUser(this)*.role
+	}
+
+	def beforeInsert() {
+		encodePassword()
+	}
+
+	def beforeUpdate() {
+		if (isDirty('password')) {
+			encodePassword()
+		}
+	}
+
+	protected void encodePassword() {
+		password = springSecurityService?.passwordEncoder ? springSecurityService.encodePassword(password) : password
+	}
+
+	static transients = ['springSecurityService']
+
+	static constraints = {
+		username blank: false, unique: true
+		password blank: false
+	}
+
+	static mapping = {
+		password column: '`password`'
+	}
 }
