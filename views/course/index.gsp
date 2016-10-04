@@ -1,5 +1,6 @@
 <%@ page import="com.thinksoas.Course" %>
 <%@ page import="com.thinksoas.Programs" %>
+
 <!DOCTYPE html>
 <html>
 	<head>

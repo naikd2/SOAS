@@ -11,7 +11,7 @@ class CourseController {
     static allowedMethods = [save: "POST", update: "PUT"]
 
     def index(Integer max) {
-        params.max = Math.min(max ?: 10, 100)
+        params.max = Math.min(max  ?: 10, 100)
         respond Course.list(params), model:[courseInstanceCount: Course.count()]
     }
 
@@ -25,7 +25,6 @@ class CourseController {
 
     @Transactional
     def save(Course courseInstance) {
-
         if (courseInstance == null) {
             notFound()
             return

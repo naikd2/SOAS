@@ -2,6 +2,7 @@ package com.thinksoas
 
 class CourseObjective {
 
+	Course course
 	String prefix
 	String description
 	boolean deleted
@@ -15,6 +16,7 @@ class CourseObjective {
     	description(blank:false)
     }
 
+	static belongsTo = [course: Course]
 	static  hasMany = [introduceOutcomes:StudentOutcome ,reinforceOutcomes:StudentOutcome ,emphasizeOutcomes:StudentOutcome ]
 
     static mapping = {

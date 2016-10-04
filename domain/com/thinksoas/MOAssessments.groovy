@@ -2,11 +2,13 @@ package com.thinksoas
 
 class MOAssessments {
 
-    String prefix
-    String description
-    String target
-    String whenCollected
+    String methods
 
     static constraints = {
+
+    }
+
+    String toString() {
+        "$methods"
     }
 }

@@ -7,36 +7,54 @@
 		<g:set var="entityName" value="${message(code: 'SO_Report.label', default: 'SO_Report')}" />
 		<title><g:message code="default.list.label" args="[entityName]" /></title>
 	</head>
-	<body>
-		<a href="#list-SO_Report" class="skip" tabindex="-1"><g:message code="default.link.skip.label" default="Skip to content&hellip;"/></a>
-		<div class="nav" role="navigation">
-			<ul>
-				<li><a class="home" href="${createLink(uri: '/')}"><g:message code="default.home.label"/></a></li>
-				<li><g:link class="create" action="create"><g:message code="default.new.label" args="[entityName]" /></g:link></li>
+<body>
+<div class="container-fluid">
+	<div class="row">
+		<div class="col-sm-3 col-md-2 sidebar">
+			<ul class="nav nav-sidebar">
+				<li class="active"><a href="${createLink(controller:'Programs', action:'index', params:[id:session.currentProgram])}">Overview <span class="sr-only">(current)</span></a></li>
+				<li><hr style="border: 1px solid white; width: 85%; margin-top: 10px; margin-bottom:10px;"></li>
+				<li><a href="${createLink(controller:'Course', action:'index')}">Dummy</a></li>
+				<li><a href="#">Dummy</a></li>
+			</ul>
+			<ul class="nav nav-sidebar">
+				<li><a href="">Dummy</a></li>
+				<li><a href="">Dummy</a></li>
+				<li><a href="">Dummy</a></li>
+				<li><a href="">Dummy</a></li>
+				<li><a href="">Dummy</a></li>
+			</ul>
+			<ul class="nav nav-sidebar">
+				<li><a href="">Dummy</a></li>
+				<li><a href="">Dummy</a></li>
+				<li><a href="">Dummy</a></li>
 			</ul>
 		</div>
-		<div id="list-SO_Report" class="content scaffold-list" role="main">
-			<h1><g:message code="default.list.label" args="[entityName]" /></h1>
-			<g:if test="${flash.message}">
-				<div class="message" role="status">${flash.message}</div>
-			</g:if>
-			<table>
-			<thead>
+		<div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+			<h1 class="page-header"></h1>
+			<h2 class="sub-header">Outcome Assessment Plan</h2>
+			<div class="table-responsive">
+				<table class="table table-striped">
+					<thead>
 					<tr>
-					
+
+						<th><g:message code="SO_Report.outcome.label" default="Outcome" /></th>
+
 					</tr>
-				</thead>
-				<tbody>
-				<g:each in="${SO_ReportInstanceList}" status="i" var="SO_ReportInstance">
-					<tr class="${(i % 2) == 0 ? 'even' : 'odd'}">
-					
-					</tr>
-				</g:each>
-				</tbody>
-			</table>
-			<div class="pagination">
-				<g:paginate total="${SO_ReportInstanceCount ?: 0}" />
+					</thead>
+					<tbody>
+						<g:each in="${SO_ReportInstanceList}" status="i" var="SO_ReportInstance">
+							<tr class="${(i % 2) == 0 ? 'even' : 'odd'}">
+								<td><g:link action="show" id="${SO_ReportInstance.id}">${fieldValue(bean: SO_ReportInstance, field: "outcome")}</g:link></td>
+							</tr>
+						</g:each>
+					</tbody>
+				</table>
+
 			</div>
 		</div>
-	</body>
+	</div>
+</div>
+
+</body>
 </html>

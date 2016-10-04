@@ -4,24 +4,33 @@ package com.thinksoas
 
 import static org.springframework.http.HttpStatus.*
 import grails.transaction.Transactional
+import grails.plugin.springsecurity.annotation.Secured
+import com.thinksoas.Course
+import com.thinksoas.CourseObjective
 
+@Secured('ROLE_ADMIN')
 @Transactional(readOnly = true)
 class SO_ReportController {
 
     static allowedMethods = [save: "POST", update: "PUT", delete: "DELETE"]
 
     def index(Integer max) {
+
         params.max = Math.min(max ?: 10, 100)
         respond SO_Report.list(params), model:[SO_ReportInstanceCount: SO_Report.count()]
     }
 
     def show(SO_Report SO_ReportInstance) {
+
+
         respond SO_ReportInstance
     }
 
     def create() {
+
         respond new SO_Report(params)
     }
+
 
     @Transactional
     def save(SO_Report SO_ReportInstance) {

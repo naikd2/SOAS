@@ -7,7 +7,9 @@ class Programs {
     String assessmentPeriod
     String performanceThreshold
     String deltaValue
+    List methods
 
+    static hasMany = [ methods: String ]
     static constraints = {
     	programName(blank:false)
     }

@@ -5,6 +5,7 @@ package com.thinksoas
 import static org.springframework.http.HttpStatus.*
 import grails.transaction.Transactional
 import grails.plugin.springsecurity.annotation.Secured
+import com.thinksoas.*
 
 @Secured(['ROLE_ADMIN'])
 @Transactional(readOnly = true)

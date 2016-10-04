@@ -1,14 +1,17 @@
 package com.thinksoas
 
-
-
 import static org.springframework.http.HttpStatus.*
 import grails.transaction.Transactional
+import grails.plugin.springsecurity.annotation.Secured
+import com.thinksoas.*
 
+
+
+@Secured('ROLE_ADMIN')
 @Transactional(readOnly = true)
 class PerformanceCriteriaController {
 
-    static allowedMethods = [save: "POST", update: "PUT", delete: "DELETE"]
+    static allowedMethods = [save: "POST", update: "PUT"]
 
     def index(Integer max) {
         params.max = Math.min(max ?: 10, 100)
@@ -20,7 +23,20 @@ class PerformanceCriteriaController {
     }
 
     def create() {
-        respond new PerformanceCriteria(params)
+
+        def report = SO_Report.findById(params.reportId)
+
+        def selectedOutcome = report.outcome
+
+        def queryReinforce = CourseObjective.findAll {
+            reinforceOutcomes.prefix == selectedOutcome.prefix
+        }
+        def queryEmpasized = CourseObjective.findAll {
+            emphasizeOutcomes.prefix == selectedOutcome.prefix
+        }
+        def objectives = queryReinforce + queryEmpasized
+
+        respond new PerformanceCriteria(params), model:[objectiveQuery: objectives, soReport: report.id]
     }
 
     @Transactional
@@ -40,7 +56,7 @@ class PerformanceCriteriaController {
         request.withFormat {
             form multipartForm {
                 flash.message = message(code: 'default.created.message', args: [message(code: 'performanceCriteria.label', default: 'PerformanceCriteria'), performanceCriteriaInstance.id])
-                redirect performanceCriteriaInstance
+                redirect (controller: "SO_Report", action: "index")
             }
             '*' { respond performanceCriteriaInstance, [status: CREATED] }
         }
@@ -50,7 +66,7 @@ class PerformanceCriteriaController {
         respond performanceCriteriaInstance
     }
 
-    @Transactional
+   // @Transactional
     def update(PerformanceCriteria performanceCriteriaInstance) {
         if (performanceCriteriaInstance == null) {
             notFound()

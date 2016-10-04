@@ -1,6 +1,8 @@
 import com.thinksoas.Role
 import com.thinksoas.User
 import com.thinksoas.UserRole
+import com.thinksoas.Course
+import com.thinksoas.CourseObjective
 
 class BootStrap {
     def init = { servletContext ->
@@ -11,5 +13,17 @@ class BootStrap {
         assert User.count() == 1
         assert Role.count() == 2
         assert UserRole.count() == 1
+
+
+
+
+
+
+        def queryQ = Course.findAll {
+        	objectives.introduceOutcomes.prefix == "1"
+    	}
+
+    	println queryQ
     }
+
 }
