@@ -15,19 +15,19 @@
             <li class="active"><a href="${createLink(controller:'Class', action:'index')}">Overview <span class="sr-only">(current)</span></a></li>
             <li><a href="${createLink(controller:'Class', action:'create')}">Add</a></li>
             <li><a href="${createLink(controller:'Class', action:'index')}">Index</a></li>
-            <li><a href="#"></a></li>
+            <li><a href="#">Dummy</a></li>
           </ul>
           <ul class="nav nav-sidebar">
-            <li><a href=""></a></li>
-            <li><a href=""></a></li>
-            <li><a href=""></a></li>
-            <li><a href=""></a></li>
-            <li><a href=""></a></li>
+            <li><a href="">Dummy</a></li>
+            <li><a href="">Dummy</a></li>
+            <li><a href="">Dummy</a></li>
+            <li><a href="">Dummy</a></li>
+            <li><a href="">Dummy</a></li>
           </ul>
           <ul class="nav nav-sidebar">
-            <li><a href=""></a></li>
-            <li><a href=""></a></li>
-            <li><a href=""></a></li>
+            <li><a href="">Dummy</a></li>
+            <li><a href="">Dummy</a></li>
+            <li><a href="">Dummy</a></li>
           </ul>
         </div>
 
