@@ -59,6 +59,7 @@
         <tr class="${(i % 2) == 0 ? 'even' : 'odd'}">
         <dl>
         <dt><span class="property-value" aria-labelledby="objectives-label">${o?.encodeAsHTML()}</span></dt>
+            <g:link controller="courseObjective" action="edit" id="${o.id}">edit</g:link>
 
             <div>
                 <h5>Introduce Outcomes</h5>

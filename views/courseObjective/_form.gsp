@@ -1,49 +1,47 @@
 <%@ page import="com.thinksoas.CourseObjective" %>
 
-
-
-<div class="fieldcontain ${hasErrors(bean: courseObjectiveInstance, field: 'prefix', 'error')} required">
-	<label for="prefix">
-		<g:message code="courseObjective.prefix.label" default="Prefix" />
+<div class="form-group ${hasErrors(bean: courseObjectiveInstance, field: 'prefix', 'error')} required">
+	<label for="name">
+		<g:message code="course.name.label" default="Name" />
 		<span class="required-indicator">*</span>
 	</label>
-	<g:textField name="prefix" required="" value="${courseObjectiveInstance?.prefix}"/>
+	<input type="text" class="form-control" name="prefix" required="" value="${courseObjectiveInstance?.prefix}"/>
 
 </div>
 
-<div class="fieldcontain ${hasErrors(bean: courseObjectiveInstance, field: 'description', 'error')} required">
+<div class="form-group ${hasErrors(bean: courseObjectiveInstance, field: 'description', 'error')} required">
 	<label for="description">
-		<g:message code="courseObjective.description.label" default="Description" />
+		<g:message code="course.description.label" default="Description" />
 		<span class="required-indicator">*</span>
 	</label>
-	<g:textField name="description" required="" value="${courseObjectiveInstance?.description}"/>
-
+	<g:textArea class="form-control" rows="5" name="description" required="" value="${courseObjectiveInstance?.description}"/>
 </div>
 
-<div class="fieldcontain ${hasErrors(bean: courseObjectiveInstance, field: 'course', 'error')} required">
-	<label for="course">
-		<g:message code="courseObjective.course.label" default="Course" />
-		<span class="required-indicator">*</span>
-	</label>
-	<g:select id="course" name="course.id" from="${com.thinksoas.Course.list()}" optionKey="id" required="" value="${courseObjectiveInstance?.course?.id}" class="many-to-one"/>
 
+<div class="col-xs-4">
+	<h5 class="text-center">Reinforce</h5>
+	<g:each in="${com.thinksoas.StudentOutcome.list(sort: 'id', order: 'asc')}" var="outcome" status="i">
+		<div class="list-group-item">
+			<g:checkBox class="pull-right" name="introduceOutcomes" value="${outcome.id}" checked="false"  />
+			<label for="outcome" > ${outcome.prefix}   </label>
+		</div>
+	</g:each>
 </div>
-
-<div class="fieldcontain ${hasErrors(bean: courseObjectiveInstance, field: 'objOut', 'error')} ">
-	<label for="objOut">
-		<g:message code="courseObjective.objOut.label" default="Obj Out" />
-		
-	</label>
-	
-<ul class="one-to-many">
-<g:each in="${courseObjectiveInstance?.objOut?}" var="o">
-    <li><g:link controller="objectiveOutcome" action="show" id="${o.id}">${o?.encodeAsHTML()}</g:link></li>
-</g:each>
-<li class="add">
-<g:link controller="objectiveOutcome" action="create" params="['courseObjective.id': courseObjectiveInstance?.id]">${message(code: 'default.add.label', args: [message(code: 'objectiveOutcome.label', default: 'ObjectiveOutcome')])}</g:link>
-</li>
-</ul>
-
-
+<div class="col-xs-4">
+	<h5 class="text-center">Reinforce</h5>
+	<g:each in="${com.thinksoas.StudentOutcome.list(sort: 'id', order: 'asc')}" var="outcome" status="i">
+		<div class="list-group-item">
+			<g:checkBox class="pull-right" name="reinforceOutcomes" value="${outcome.id}" checked="false" />
+			<label for="outcome" > ${outcome.prefix}   </label>
+		</div>
+	</g:each>
 </div>
-
+<div class="col-xs-4">
+	<h5 class="text-center">Emphasize</h5>
+	<g:each in="${com.thinksoas.StudentOutcome.list(sort: 'id', order: 'asc')}" var="outcome" status="i">
+		<div class="list-group-item">
+			<g:checkBox class="pull-right" name="emphasizeOutcomes" value="${outcome.id}" checked="false" />
+			<label for="outcome" > ${outcome.prefix}   </label>
+		</div>
+	</g:each>
+</div>

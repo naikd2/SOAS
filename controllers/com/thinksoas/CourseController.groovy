@@ -50,7 +50,7 @@ class CourseController {
         respond courseInstance
     }
 
-   //@Transactional
+   @Transactional
     def update(Course courseInstance) {
         if (courseInstance == null) {
             notFound()
@@ -62,7 +62,7 @@ class CourseController {
             return
         }
 
-        courseInstance.objectives.clear()
+      //  courseInstance.objectives.clear()
         courseInstance.properties = params
 
         courseInstance.save flush:true

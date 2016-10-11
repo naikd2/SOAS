@@ -51,7 +51,7 @@
 			<g:form url="[resource:courseInstance, action:'update']" method="PUT" >
 				<g:hiddenField name="version" value="${courseInstance?.version}" />
 				<fieldset class="form">
-					<g:render template="form"/>
+					<g:render template="formEdit"/>
 				</fieldset>
 				<fieldset class="buttons">
 					<g:actionSubmit class="save" action="update" value="${message(code: 'default.button.update.label', default: 'Update')}" />

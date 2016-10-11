@@ -7,8 +7,7 @@ class PerformanceCriteria {
     List<MOAssessments> assessments = []
 
     static belongsTo = [report: SO_Report]
-    static  hasMany = [assessments: MOAssessments]
-
+    static hasMany = [assessments: MOAssessments]
 
     static constraints = {
     }

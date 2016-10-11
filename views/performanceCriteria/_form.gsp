@@ -55,13 +55,10 @@ jQuery(document).ready( function() {
 			'<label>'+
 			'Method Description'+
 			'</label>'+
-			'<select class="form-control" required="true" name="assessments[' + rowId + '].methods" value="">' +
-            '<option value = "Faculty Evaluations">' +
-                            'Faculty Evaluations<option>' +
-            '<option value = "Student Surveys">' +
-                            'Student Surveys' +
-                            '<option>' +
-             '</select>'+
+		    '<select  class="form-control" required="true"  value="" name="assessments[' + rowId + '].methods" >'+
+            '<g:each in="${com.thinksoas.Programs.findBySettings("SETTINGS").methods}" var="m">'+
+            '<option value="${m.toString()}" > ${m.toString()} </option>'+
+            '</g:each>'+
 			'</p>');
         return false;
     });

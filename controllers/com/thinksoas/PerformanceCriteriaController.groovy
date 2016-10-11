@@ -96,16 +96,13 @@ class PerformanceCriteriaController {
             notFound()
             return
         }
+        def reportId = performanceCriteriaInstance.reportId
 
+        performanceCriteriaInstance.report.removeFromCriteria(performanceCriteriaInstance)
         performanceCriteriaInstance.delete flush:true
 
-        request.withFormat {
-            form multipartForm {
-                flash.message = message(code: 'default.deleted.message', args: [message(code: 'PerformanceCriteria.label', default: 'PerformanceCriteria'), performanceCriteriaInstance.id])
-                redirect action:"index", method:"GET"
-            }
-            '*'{ render status: NO_CONTENT }
-        }
+        forward (controller: "SO_Report", action: "show", id: reportId)
+
     }
 
     protected void notFound() {

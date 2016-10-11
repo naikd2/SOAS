@@ -34,8 +34,8 @@
         <div class="main">
           <div class="table-responsive">
           <h2 class="sub-header">Program Settings</h2>
-            <g:form url="[resource:courseInstance, action:'update']" method="PUT" >
-              <g:hiddenField name="version" value="${courseInstance?.version}" />
+            <g:form url="[resource:programsInstance, action:'update']" method="PUT" >
+              <g:hiddenField name="version" value="${programsInstance?.version}" />
               <fieldset class="form">
                 <g:render template="form"/>
               </fieldset>

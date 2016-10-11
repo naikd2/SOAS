@@ -1,5 +1,7 @@
 <%@ page import="com.thinksoas.Programs" %>
 
+
+
 <div class="col-md-10 main">
 
 <div class="form-group ${hasErrors(bean: programsInstance, field: 'assessmentPeriod', 'error')} required">
@@ -35,7 +37,17 @@
 		<span class="required-indicator">*</span>
 	</label>
 	<g:textField name="deltaValue" required="" value="${programsInstance?.deltaValue}"/>
+</div>
 
+<div class="form-group ${hasErrors(bean: programsInstance, field: 'deltaValue', 'error')} required">
+
+	<tbody id="mListTableBody">
+	<g:each in="${programsInstance.methods}" var="o" status="i">
+	<div class="list-group">
+	<label for="outcome" > -- ${o}   </label>
+	</div>
+	</g:each>
+	</tbody>
 </div>
 
 

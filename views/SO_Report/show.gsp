@@ -48,6 +48,7 @@
 							<th class="text-center">Target</th>
 							<th class="text-center">Length</th>
 							<th class="text-center">When</th>
+							<th class="text-center">Delete</th>
 						</tr>
 						</thead>
 						<tbody>
@@ -70,6 +71,13 @@
 							<td>
 								${c.objective.course.offered}
 							</td>
+							<td>
+								<p>
+									<g:link controller="performanceCriteria" action="delete" id="${c.id}">
+										<span class="glyphicon glyphicon-trash"></span>
+									</g:link>
+								</p>
+							</td>
 							</tbody>
 						</g:each>
 					</table>
@@ -79,16 +87,3 @@
 	</div>
 	</body>
 </html>
-
-%{--<td>--}%
-	%{--${c.assessments.prefix.join(':::').encodeAsHTML().replace(':::',"<div />").encodeAsRaw()}--}%
-%{--</td>--}%
-%{--<td>--}%
-	%{--${c.assessments.collected.join(':::').encodeAsHTML().replace(':::',"<div />").encodeAsRaw()}--}%
-%{--</td>--}%
-%{--<td>--}%
-	%{--${c.assessments.description.join(':::').encodeAsHTML().replace(':::',"<div />").encodeAsRaw()}--}%
-%{--</td>--}%
-%{--<td>--}%
-	%{--${c.assessments.target.join(':::').encodeAsHTML().replace(':::',"<div />").encodeAsRaw()}--}%
-%{--</td>--}%
