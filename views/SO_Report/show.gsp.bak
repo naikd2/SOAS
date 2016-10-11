@@ -16,20 +16,20 @@
 				<ul class="nav nav-sidebar">
 					<li class="active"><a href="${createLink(controller:'Programs', action:'index', params:[id:session.currentProgram])}">Overview <span class="sr-only">(current)</span></a></li>
 					<li><hr style="border: 1px solid white; width: 85%; margin-top: 10px; margin-bottom:10px;"></li>
-					<li><a href="${createLink(controller:'SO_Report', action:'index')}"></a></li>
-					<li><a href="#"></a></li>
+					<li><a href="${createLink(controller:'SO_Report', action:'index')}">Dummy</a></li>
+					<li><a href="#">Dummy</a></li>
 				</ul>
 				<ul class="nav nav-sidebar">
-					<li><a href=""></a></li>
-					<li><a href=""></a></li>
-					<li><a href=""></a></li>
-					<li><a href=""></a></li>
-					<li><a href=""></a></li>
+					<li><a href="">Dummy</a></li>
+					<li><a href="">Dummy</a></li>
+					<li><a href="">Dummy</a></li>
+					<li><a href="">Dummy</a></li>
+					<li><a href="">Dummy</a></li>
 				</ul>
 				<ul class="nav nav-sidebar">
-					<li><a href=""></a></li>
-					<li><a href=""></a></li>
-					<li><a href=""></a></li>
+					<li><a href="">Dummy</a></li>
+					<li><a href="">Dummy</a></li>
+					<li><a href="">Dummy</a></li>
 				</ul>
 			</div>
 			<div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
@@ -48,7 +48,6 @@
 							<th class="text-center">Target</th>
 							<th class="text-center">Length</th>
 							<th class="text-center">When</th>
-							<th class="text-center">Delete</th>
 						</tr>
 						</thead>
 						<tbody>
@@ -71,13 +70,6 @@
 							<td>
 								${c.objective.course.offered}
 							</td>
-							<td>
-								<p>
-									<g:link controller="performanceCriteria" action="delete" id="${c.id}">
-										<span class="glyphicon glyphicon-trash"></span>
-									</g:link>
-								</p>
-							</td>
 							</tbody>
 						</g:each>
 					</table>
@@ -86,9 +78,6 @@
 		</div>
 	</div>
 	</body>
-<<<<<<< HEAD
-</html>
-=======
 </html>
 
 %{--<td>--}%
@@ -103,4 +92,3 @@
 %{--<td>--}%
 	%{--${c.assessments.target.join(':::').encodeAsHTML().replace(':::',"<div />").encodeAsRaw()}--}%
 %{--</td>--}%
->>>>>>> origin/AF

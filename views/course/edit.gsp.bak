@@ -19,19 +19,19 @@
 
             <li><a href="${createLink(controller:'Course', action:'create')}">Add</a></li>
             <li><a href="${createLink(controller:'Course', action:'index')}">Index</a></li>
-            <li><a href="#"></a></li>
+            <li><a href="#">Dummy</a></li>
           </ul>
           <ul class="nav nav-sidebar">
-            <li><a href=""></a></li>
-            <li><a href=""></a></li>
-            <li><a href=""></a></li>
-            <li><a href=""></a></li>
-            <li><a href=""></a></li>
+            <li><a href="">Dummy</a></li>
+            <li><a href="">Dummy</a></li>
+            <li><a href="">Dummy</a></li>
+            <li><a href="">Dummy</a></li>
+            <li><a href="">Dummy</a></li>
           </ul>
           <ul class="nav nav-sidebar">
-            <li><a href=""></a></li>
-            <li><a href=""></a></li>
-            <li><a href=""></a></li>
+            <li><a href="">Dummy</a></li>
+            <li><a href="">Dummy</a></li>
+            <li><a href="">Dummy</a></li>
           </ul>
         </div>
 
@@ -51,7 +51,7 @@
 			<g:form url="[resource:courseInstance, action:'update']" method="PUT" >
 				<g:hiddenField name="version" value="${courseInstance?.version}" />
 				<fieldset class="form">
-					<g:render template="formEdit"/>
+					<g:render template="form"/>
 				</fieldset>
 				<fieldset class="buttons">
 					<g:actionSubmit class="save" action="update" value="${message(code: 'default.button.update.label', default: 'Update')}" />
