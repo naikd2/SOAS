@@ -38,9 +38,9 @@
             <li><a href=""></a></li>
             <li><a href=""></a></li>
             <li><a href=""></a></li>
+            <li><a href=""></a></li>
           </ul>
         </div>
-        <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
           <h1 class="page-header"></h1>
           <h2 class="sub-header">Student Outcome List</h2>
           <div class="table-responsive">
@@ -58,7 +58,7 @@
 				<g:each in="${studentOutcomeInstanceList}" status="i" var="studentOutcomeInstance">
 					<tr class="${(i % 2) == 0 ? 'even' : 'odd'}">
 						<td><g:link action="edit" id="${studentOutcomeInstance.id}">${fieldValue(bean: studentOutcomeInstance, field: "prefix")}</g:link></td>
-					
+
 						<td>${fieldValue(bean: studentOutcomeInstance, field: "description")}</td>
 					</tr>
 				</g:each>
@@ -70,7 +70,6 @@
             </table>
           </div>
         </div>
-      </div>
     </div>
 
 %{-- 		<div id="list-studentOutcome" class="content scaffold-list" role="main">

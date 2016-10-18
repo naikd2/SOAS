@@ -78,10 +78,15 @@ jQuery(document).ready( function() {
         <label for="objective">
             <g:message code="SO_Report.report.label" default="Course Objective: " />
         </label>
+        <select  id ="objective" name="objective" class="form-control" required="true" >
+        <g:each in="${objectiveQuery}" var="o">
+                <option  name="objective" value="${o.id}">${o}</option>
+        </g:each>
+        </select>
 
-        <g:radioGroup name="objective" values="${objectiveQuery.id}" value="${performanceCriteriaInstance?.objective}" labels="${objectiveQuery}" >
-            <p><g:message code="${it.label}" /> ${it.radio}</p>
-        </g:radioGroup>
+        %{--<g:radioGroup name="objective" values="${objectiveQuery.id}" value="${performanceCriteriaInstance?.objective}" labels="${objectiveQuery}" >--}%
+            %{--<p><g:message code="${it.label}" /> ${it.radio}</p>--}%
+        %{--</g:radioGroup>--}%
     </div>
 
 
