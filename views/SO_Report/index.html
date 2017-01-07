@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<head>
+    <link rel="shortcut icon" href="">
+	<title>Bar Graph</title>
+</head>
+
+<body>
+	<div id="graphDiv1" style="float: left; width: 200px"></div> <div id="graphDiv2" style="float: left"></div>
+	<!--[if IE]><script src="excanvas.js"></script><![endif]-->
+	<script src="BarGraph.js"></script>
+	<script>(function () {
+	
+		function createCanvas(divName) {
+			
+			var div = document.getElementById(divName);
+			var canvas = document.createElement('canvas');
+			div.appendChild(canvas);
+			if (typeof G_vmlCanvasManager !== 'undefined') {
+				canvas = G_vmlCanvasManager.initElement(canvas);
+			}	
+			var ctx = canvas.getContext("2d");
+			return ctx;
+		}
+		
+		var ctx = createCanvas("graphDiv1");
+		var ctx2 = createCanvas("graphDiv2");
+                
+		var graph = new BarGraph(ctx);
+		graph.xAxisLabelArr = ["", "Objective 1", ""];
+                graph.update([95, 75, 20]);
+                
+                var graph2 = new BarGraph(ctx2);
+		graph2.xAxisLabelArr = ["", "Objective 2", ""];
+                graph2.update([91, 81, 10]);
+
+	}());</script>
+</body>
+</html>
