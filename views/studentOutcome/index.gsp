@@ -24,23 +24,23 @@
             <li class="active"><a href="${createLink(controller:'Programs', action:'index')}">Return to Overview<span class="sr-only">(current)</span></a></li>
             <li><hr style="border: 1px solid white; width: 85%; margin-top: 10px; margin-bottom:10px;"></li>
             <li><a href="${createLink(controller:'StudentOutcome', action:'create')}">New Student Outcome</a></li>
-            <li><a href="${createLink(controller:'StudentOutcome', action:'index')}">Dummy</a></li>
-            <li><a href="#">Dummy</a></li>
+            <li><a href="${createLink(controller:'StudentOutcome', action:'index')}"></a></li>
+            <li><a href="#"></a></li>
           </ul>
           <ul class="nav nav-sidebar">
-            <li><a href="">Dummy</a></li>
-            <li><a href="">Dummy</a></li>
-            <li><a href="">Dummy</a></li>
-            <li><a href="">Dummy</a></li>
-            <li><a href="">Dummy</a></li>
+            <li><a href=""></a></li>
+            <li><a href=""></a></li>
+            <li><a href=""></a></li>
+            <li><a href=""></a></li>
+            <li><a href=""></a></li>
           </ul>
           <ul class="nav nav-sidebar">
-            <li><a href="">Dummy</a></li>
-            <li><a href="">Dummy</a></li>
-            <li><a href="">Dummy</a></li>
+            <li><a href=""></a></li>
+            <li><a href=""></a></li>
+            <li><a href=""></a></li>
+            <li><a href=""></a></li>
           </ul>
         </div>
-        <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
           <h1 class="page-header"></h1>
           <h2 class="sub-header">Student Outcome List</h2>
           <div class="table-responsive">
@@ -58,7 +58,7 @@
 				<g:each in="${studentOutcomeInstanceList}" status="i" var="studentOutcomeInstance">
 					<tr class="${(i % 2) == 0 ? 'even' : 'odd'}">
 						<td><g:link action="edit" id="${studentOutcomeInstance.id}">${fieldValue(bean: studentOutcomeInstance, field: "prefix")}</g:link></td>
-					
+
 						<td>${fieldValue(bean: studentOutcomeInstance, field: "description")}</td>
 					</tr>
 				</g:each>
@@ -70,7 +70,6 @@
             </table>
           </div>
         </div>
-      </div>
     </div>
 
 %{-- 		<div id="list-studentOutcome" class="content scaffold-list" role="main">

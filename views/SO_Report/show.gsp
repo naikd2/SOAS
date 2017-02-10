@@ -16,23 +16,22 @@
 				<ul class="nav nav-sidebar">
 					<li class="active"><a href="${createLink(controller:'Programs', action:'index', params:[id:session.currentProgram])}">Overview <span class="sr-only">(current)</span></a></li>
 					<li><hr style="border: 1px solid white; width: 85%; margin-top: 10px; margin-bottom:10px;"></li>
-					<li><a href="${createLink(controller:'SO_Report', action:'index')}">Dummy</a></li>
-					<li><a href="#">Dummy</a></li>
+					<li><a href="${createLink(controller:'SO_Report', action:'index')}"></a></li>
+					<li><a href="#"></a></li>
 				</ul>
 				<ul class="nav nav-sidebar">
-					<li><a href="">Dummy</a></li>
-					<li><a href="">Dummy</a></li>
-					<li><a href="">Dummy</a></li>
-					<li><a href="">Dummy</a></li>
-					<li><a href="">Dummy</a></li>
+					<li><a href=""></a></li>
+					<li><a href=""></a></li>
+					<li><a href=""></a></li>
+					<li><a href=""></a></li>
+					<li><a href=""></a></li>
 				</ul>
 				<ul class="nav nav-sidebar">
-					<li><a href="">Dummy</a></li>
-					<li><a href="">Dummy</a></li>
-					<li><a href="">Dummy</a></li>
+					<li><a href=""></a></li>
+					<li><a href=""></a></li>
+					<li><a href=""></a></li>
 				</ul>
 			</div>
-			<div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
 				<h1 class="page-header"></h1>
 				<h2 class="sub-header">Outcome Assessment Plan</h2>
 				<div>
@@ -48,6 +47,7 @@
 							<th class="text-center">Target</th>
 							<th class="text-center">Length</th>
 							<th class="text-center">When</th>
+							<th class="text-center">Delete</th>
 						</tr>
 						</thead>
 						<tbody>
@@ -62,13 +62,20 @@
 								${c.objective.course}
 							</td>
 							<td>
-								70%
+								${settings.performanceTarget}
 							</td>
 							<td>
-								3 years
+								${settings.assessmentPeriod}
 							</td>
 							<td>
 								${c.objective.course.offered}
+							</td>
+							<td>
+								<p>
+									<g:link controller="performanceCriteria" action="delete" id="${c.id}">
+										<span class="glyphicon glyphicon-trash"></span>
+									</g:link>
+								</p>
 							</td>
 							</tbody>
 						</g:each>
@@ -79,16 +86,3 @@
 	</div>
 	</body>
 </html>
-
-%{--<td>--}%
-	%{--${c.assessments.prefix.join(':::').encodeAsHTML().replace(':::',"<div />").encodeAsRaw()}--}%
-%{--</td>--}%
-%{--<td>--}%
-	%{--${c.assessments.collected.join(':::').encodeAsHTML().replace(':::',"<div />").encodeAsRaw()}--}%
-%{--</td>--}%
-%{--<td>--}%
-	%{--${c.assessments.description.join(':::').encodeAsHTML().replace(':::',"<div />").encodeAsRaw()}--}%
-%{--</td>--}%
-%{--<td>--}%
-	%{--${c.assessments.target.join(':::').encodeAsHTML().replace(':::',"<div />").encodeAsRaw()}--}%
-%{--</td>--}%

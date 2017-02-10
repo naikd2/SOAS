@@ -65,12 +65,52 @@ class CourseObjectiveController {
             return
         }
 
+        def newIntroduce = params.introduceOutcomes
+        def newReinforce = params.reinforceOutcomes
+        def newEmphasize = params.emphasizeOutcomes
+
+        // clear lists before updating....
+
+        courseObjectiveInstance.introduceOutcomes.clear()
+        courseObjectiveInstance.reinforceOutcomes.clear()
+        courseObjectiveInstance.emphasizeOutcomes.clear()
+
+        // now update Introduce Outcomes
+        if (newIntroduce != null) {
+            def list = new ArrayList();
+            for(def id : newIntroduce) {
+                def outcome = StudentOutcome.get(id);
+                list.add(outcome);
+            }
+            courseObjectiveInstance.introduceOutcomes.addAll(list)
+        }
+        // update Reinforce Outcomes
+        if (newReinforce != null) {
+            def list = new ArrayList();
+            for(def id : newReinforce) {
+                def outcome = StudentOutcome.get(id);
+                list.add(outcome);
+            }
+            courseObjectiveInstance.reinforceOutcomes.addAll(list)
+        }
+        // update Emphasize Outcomes
+        if (newEmphasize != null) {
+            def list = new ArrayList();
+            for(def id : newEmphasize) {
+                def outcome = StudentOutcome.get(id);
+                list.add(outcome);
+            }
+            courseObjectiveInstance.emphasizeOutcomes.addAll(list)
+        }
+
         courseObjectiveInstance.save flush:true
+
+        def courseId = courseObjectiveInstance.course.id
 
         request.withFormat {
             form multipartForm {
                 flash.message = message(code: 'default.updated.message', args: [message(code: 'CourseObjective.label', default: 'CourseObjective'), courseObjectiveInstance.id])
-                redirect courseObjectiveInstance
+                redirect (controller: "Course", action: "show", id: courseId)
             }
             '*'{ respond courseObjectiveInstance, [status: OK] }
         }

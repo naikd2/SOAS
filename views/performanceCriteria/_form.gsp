@@ -55,13 +55,10 @@ jQuery(document).ready( function() {
 			'<label>'+
 			'Method Description'+
 			'</label>'+
-			'<select class="form-control" required="true" name="assessments[' + rowId + '].methods" value="">' +
-            '<option value = "Faculty Evaluations">' +
-                            'Faculty Evaluations<option>' +
-            '<option value = "Student Surveys">' +
-                            'Student Surveys' +
-                            '<option>' +
-             '</select>'+
+		    '<select  class="form-control" required="true"  value="" name="assessments[' + rowId + '].methods" >'+
+            '<g:each in="${com.thinksoas.Programs.findBySettings("SETTINGS").methods}" var="m">'+
+            '<option value="${m.toString()}" > ${m.toString()} </option>'+
+            '</g:each>'+
 			'</p>');
         return false;
     });
@@ -81,10 +78,15 @@ jQuery(document).ready( function() {
         <label for="objective">
             <g:message code="SO_Report.report.label" default="Course Objective: " />
         </label>
+        <select  id ="objective" name="objective" class="form-control" required="true" >
+        <g:each in="${objectiveQuery}" var="o">
+                <option  name="objective" value="${o.id}">${o}</option>
+        </g:each>
+        </select>
 
-        <g:radioGroup name="objective" values="${objectiveQuery.id}" value="${performanceCriteriaInstance?.objective}" labels="${objectiveQuery}" >
-            <p><g:message code="${it.label}" /> ${it.radio}</p>
-        </g:radioGroup>
+        %{--<g:radioGroup name="objective" values="${objectiveQuery.id}" value="${performanceCriteriaInstance?.objective}" labels="${objectiveQuery}" >--}%
+            %{--<p><g:message code="${it.label}" /> ${it.radio}</p>--}%
+        %{--</g:radioGroup>--}%
     </div>
 
 

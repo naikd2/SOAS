@@ -23,7 +23,11 @@ class ProgramsController {
     }
 
     def settings() {
+        def programsInstance = Programs.findBySettings("SETTINGS")
+
+        respond programsInstance
     }
+
     @Transactional
     def save(Programs programsInstance) {
         if (programsInstance == null) {
@@ -41,7 +45,7 @@ class ProgramsController {
         request.withFormat {
             form multipartForm {
                 //flash.message = message(code: 'default.created.message', args: [message(code: 'programs.label', default: 'Programs'), programsInstance.id])
-                redirect programsInstance
+                redirect(uri: "/")
             }
             '*' { respond programsInstance, [status: CREATED] }
         }
@@ -53,6 +57,7 @@ class ProgramsController {
 
     @Transactional
     def update(Programs programsInstance) {
+
         if (programsInstance == null) {
             notFound()
             return
@@ -62,13 +67,12 @@ class ProgramsController {
             respond programsInstance.errors, view:'edit'
             return
         }
-
         programsInstance.save flush:true
 
         request.withFormat {
             form multipartForm {
                 flash.message = message(code: 'default.updated.message', args: [message(code: 'Programs.label', default: 'Programs'), programsInstance.id])
-                redirect programsInstance
+                redirect(uri: "/")
             }
             '*'{ respond programsInstance, [status: OK] }
         }

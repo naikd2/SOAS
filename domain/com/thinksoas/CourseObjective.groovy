@@ -5,7 +5,6 @@ class CourseObjective {
 	Course course
 	String prefix
 	String description
-	boolean deleted
 
 	List<StudentOutcome> introduceOutcomes = []
 	List<StudentOutcome> reinforceOutcomes = []
@@ -24,10 +23,11 @@ class CourseObjective {
     	reinforceOutcomes joinTable: [name: 'objective_reinforce']
     	emphasizeOutcomes joinTable: [name: 'objective_emphasize']
         description sqlType:"text"
-    }   
+    }
 
-	static transients = [ 'deleted' ]
-
+	def beforeUpdate(){
+		println("----This is before an Update----")
+	}
 
 	String toString() {
        "$prefix: $description"

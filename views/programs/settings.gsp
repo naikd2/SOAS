@@ -18,14 +18,14 @@
             <li><hr style="border: 1px solid white; width: 85%; margin-top: 10px; margin-bottom:10px;"></li>
             <li><a href="${createLink(controller:'studentOutcome', action:'index')}">Student Outcomes</a></li>
             <li><a href="${createLink(controller:'studentOutcome', action:'create')}">New Student Outcome</a></li>
-            <li><a href="">Dummy</a></li>
-            <li><a href="">Dummy</a></li>
-            <li><a href="">Dummy</a></li>
+            <li><a href=""></a></li>
+            <li><a href=""></a></li>
+            <li><a href=""></a></li>
           </ul>
           <ul class="nav nav-sidebar">
-            <li><a href="">Dummy</a></li>
-            <li><a href="">Dummy</a></li>
-            <li><a href="">Dummy</a></li>
+            <li><a href=""></a></li>
+            <li><a href=""></a></li>
+            <li><a href=""></a></li>
           </ul>
         </div>
         <div class="container">
@@ -34,8 +34,8 @@
         <div class="main">
           <div class="table-responsive">
           <h2 class="sub-header">Program Settings</h2>
-            <g:form url="[resource:courseInstance, action:'update']" method="PUT" >
-              <g:hiddenField name="version" value="${courseInstance?.version}" />
+            <g:form url="[resource:programsInstance, action:'update']" method="PUT" >
+              <g:hiddenField name="version" value="${programsInstance?.version}" />
               <fieldset class="form">
                 <g:render template="form"/>
               </fieldset>

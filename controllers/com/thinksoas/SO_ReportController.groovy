@@ -21,9 +21,8 @@ class SO_ReportController {
     }
 
     def show(SO_Report SO_ReportInstance) {
-
-
-        respond SO_ReportInstance
+        def program = Programs.findBySettings("SETTINGS")
+        respond SO_ReportInstance,  model:[settings: program]
     }
 
     def create() {
