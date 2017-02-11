@@ -2,18 +2,22 @@ package com.thinksoas
 
 class Class {
 
-    String year
-    String semester
-	String section
+    Semester semester
     Course course
-    User user
+    User professor
+    String section
+    int students
 
-	static belongsTo = [course: Course, user: User]
+	static belongsTo = [semester: Semester, course: Course, professor: User]
 
-	static fetchMode = [user: 'eager']
+	static fetchMode = [professor: 'eager']
 
     static constraints = {
-    	section(blank:false)
+        semester(blank:false)
+        course(blank:false)
+        professor(blank:false)
+        section(blank:false)
+        students(blank:false)
     }
 
 

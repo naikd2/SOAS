@@ -10,11 +10,13 @@ class BootStrap {
     def init = { servletContext ->
         def adminRole = new Role('ROLE_ADMIN').save()
         def userRole = new Role('ROLE_USER').save()
-        def testUser = new User('admin', 'password').save()
-        UserRole.create testUser, adminRole, true
-        assert User.count() == 1
+        def admin = new User('admin', 'password').save()
+        def faculty = new User('faculty', 'password').save()
+        UserRole.create admin, adminRole, true
+        UserRole.create faculty, userRole, true
+        assert User.count() == 2
         assert Role.count() == 2
-        assert UserRole.count() == 1
+        assert UserRole.count() == 2
 
         def report = new SO_Report(StudentOutcome.findByPrefix("a")).save()
         def report2 = new SO_Report(StudentOutcome.findByPrefix("b")).save()

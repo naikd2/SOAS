@@ -22,7 +22,7 @@
   		<asset:javascript src="jquery.metadata.js"/>
   		<asset:javascript src="jquery.ui.writetable.js"/>
 		<g:layoutHead/>
-		
+
 	</head>
 	<body>
 %{-- 		<div id="Logo" role="banner"><img src="${resource(dir: '/assets/images/', file: 'SOASLogo.png')}"
@@ -50,7 +50,9 @@
 
 <sec:ifLoggedIn>
     <ul class="nav navbar-nav navbar-right">
+        <sec:ifAnyGranted roles="ROLE_ADMIN">
         <li><a href='${createLink(controller:'Programs', action:'settings')}'> Settings </a></li>
+        </sec:ifAnyGranted>
         <li><a href="#"><span class="glyphicon glyphicon-user"></span>  <sec:username/></a></li>
         <li>
             <a name="logout" href="${createLink(controller:'logout') }"><span class="glyphicon glyphicon-log-out"></span> Logout</a>
@@ -73,8 +75,32 @@
 </sec:ifNotLoggedIn>
 
         </div>
-      </div> 
+      </div>
     </nav>
+
+
+    <g:if test="${request.requestURI != '/soas/'}">
+    <sec:ifLoggedIn>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-sm-3 col-md-2 sidebar">
+                <ul class="nav nav-sidebar">
+                    <li class="active"><a href="..">Return <span class="sr-only">(current)</span></a></li>
+                    <li><hr style="border: 1px solid white; width: 85%; margin-top: 10px; margin-bottom:10px;"></li>
+
+                    <sec:ifAnyGranted roles="ROLE_ADMIN">
+                    <li><a href="${createLink(controller:'StudentOutcome', action:'index')}">Student Outcomes</a></li>
+                    <li><a href="${createLink(controller:'Course', action:'index')}">Courses</a></li>
+                    </sec:ifAnyGranted>
+                    <li><a href="${createLink(controller:'Class', action:'index')}">Classes</a></li>
+                    <sec:ifAnyGranted roles="ROLE_ADMIN">
+                    <li><a href="${createLink(controller:'SO_Report', action:'index')}">Student Outcome Report</a></li>
+                    </sec:ifAnyGranted>
+                </ul>
+            </div>
+            </sec:ifLoggedIn>
+    </g:if>
+
 	<g:layoutBody/>
 		<div class="footer" role="contentinfo"></div>
 		<div id="spinner" class="spinner" style="display:none;"><g:message code="spinner.alt" default="Loading&hellip;"/></div>

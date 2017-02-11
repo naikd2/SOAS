@@ -1,46 +1,30 @@
 package com.thinksoas
 
-
+import grails.plugin.springsecurity.annotation.Secured
 
 import static org.springframework.http.HttpStatus.*
 import grails.transaction.Transactional
-import grails.plugin.springsecurity.annotation.Secured
 
-@Secured(['ROLE_ADMIN'])
+@Secured(['ROLE_ADMIN', 'ROLE_USER'])
 @Transactional(readOnly = true)
 class ClassController {
 
-    static allowedMethods = [save: "POST", update: "PUT"]
+    static allowedMethods = [save: "POST", update: "PUT", delete: "DELETE"]
 
+    def classService
+    def semesterService
 
     def index(Integer max) {
         params.max = Math.min(max ?: 10, 100)
         respond Class.list(params), model:[classInstanceCount: Class.count()]
     }
 
- @Transactional
-    def signUpClass(String year, String semester, String section, String course) {
-        println year
-        println semester
-        println section
-        println course
-        Course course1 = Course.findByName(course)
-        print course1.id
-        def user = session.user
-        new Class(year:year,semester:semester,section:section,course:course1,user:user).save()
-
-        redirect controller:'Course', action:'show', params:[id:course1.id]
-    }
-
-
-
-
     def show(Class classInstance) {
         respond classInstance
     }
 
     def create() {
-        respond new Class(params)
+        respond new Class(params), model:[activeSemester : semesterService.getActiveSemester()]
     }
 
     @Transactional
@@ -50,6 +34,8 @@ class ClassController {
             return
         }
 
+        classInstance.setSemester(semesterService.getActiveSemester())
+
         if (classInstance.hasErrors()) {
             respond classInstance.errors, view:'create'
             return
@@ -57,10 +43,13 @@ class ClassController {
 
         classInstance.save flush:true
 
+        def report = classService.generateCourseReport(classInstance.getId())
+        report.save flush:true
+
         request.withFormat {
             form multipartForm {
                 flash.message = message(code: 'default.created.message', args: [message(code: 'class.label', default: 'Class'), classInstance.id])
-                redirect classInstance
+                redirect action:"index", method:"GET"
             }
             '*' { respond classInstance, [status: CREATED] }
         }
@@ -106,7 +95,7 @@ class ClassController {
         request.withFormat {
             form multipartForm {
                 flash.message = message(code: 'default.deleted.message', args: [message(code: 'Class.label', default: 'Class'), classInstance.id])
-                redirect controller: "course", action:"show", params:[id:classInstance.course.id]
+                redirect action:"index", method:"GET"
             }
             '*'{ render status: NO_CONTENT }
         }

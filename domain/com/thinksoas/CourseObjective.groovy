@@ -16,7 +16,7 @@ class CourseObjective {
     }
 
 	static belongsTo = [course: Course]
-	static  hasMany = [introduceOutcomes:StudentOutcome ,reinforceOutcomes:StudentOutcome ,emphasizeOutcomes:StudentOutcome ]
+	static hasMany = [introduceOutcomes:StudentOutcome ,reinforceOutcomes:StudentOutcome ,emphasizeOutcomes:StudentOutcome ]
 
     static mapping = {
     	introduceOutcomes joinTable: [name: 'objective_introduce']
