@@ -19,30 +19,12 @@
 
 		<div class="container-fluid">
       <div class="row">
-        <div class="col-sm-3 col-md-2 sidebar">
-          <ul class="nav nav-sidebar">
-            <li class="active"><a href="${createLink(controller:'Programs', action:'index')}">Return to Overview<span class="sr-only">(current)</span></a></li>
-            <li><hr style="border: 1px solid white; width: 85%; margin-top: 10px; margin-bottom:10px;"></li>
-            <li><a href="${createLink(controller:'StudentOutcome', action:'create')}">New Student Outcome</a></li>
-            <li><a href="${createLink(controller:'StudentOutcome', action:'index')}"></a></li>
-            <li><a href="#"></a></li>
-          </ul>
-          <ul class="nav nav-sidebar">
-            <li><a href=""></a></li>
-            <li><a href=""></a></li>
-            <li><a href=""></a></li>
-            <li><a href=""></a></li>
-            <li><a href=""></a></li>
-          </ul>
-          <ul class="nav nav-sidebar">
-            <li><a href=""></a></li>
-            <li><a href=""></a></li>
-            <li><a href=""></a></li>
-            <li><a href=""></a></li>
-          </ul>
-        </div>
+
           <h1 class="page-header"></h1>
           <h2 class="sub-header">Student Outcome List</h2>
+          <g:link controller="StudentOutcome" action="create">
+             Add Outcome <span class="glyphicon glyphicon-plus"></span>
+          </g:link>
           <div class="table-responsive">
             <table class="table table-striped">
 			<thead>

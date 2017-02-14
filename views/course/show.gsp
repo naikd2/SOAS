@@ -19,34 +19,21 @@
 
 <div class="container-fluid">
       <div class="row">
-        <div class="col-sm-3 col-md-2 sidebar">
-          <ul class="nav nav-sidebar">
-            <li class="active"><a href="${createLink(controller:'Course', action:'index')}">Return to Courses <span class="sr-only">(current)</span></a></li>
-            <li><hr style="border: 1px solid white; width: 85%; margin-top: 10px; margin-bottom:10px;"></li>
-            <li><a href="${createLink(controller:'Course', action:'edit', params:[id:courseInstance.id])}">Edit Course</a></li>
-            <li><g:link controller="Course" action="delete" params="[id:courseInstance.id]" onclick="return confirm('${message(code: 'course.button.delete.confirm.message', default: 'Are you sure? All class sections of this course will be deleted as well.')}');"><g:message code="course.button.delete.label" default="Delete Course"/> </g:link></li>
-             <li><hr style="border: 1px solid white; width: 85%; margin-top: 10px; margin-bottom:10px;"></li>
-            <li><a href="${createLink(controller:'Class', action:'create')}">Add Section</a></li>
-          </ul>
-          <ul class="nav nav-sidebar">
-            <li><a href=""></a></li>
-            <li><a href=""></a></li>
-            <li><a href=""></a></li>
-          </ul>
-          <ul class="nav nav-sidebar">
-            <li><a href=""></a></li>
-            <li><a href=""></a></li>
-            <li><a href=""></a></li>
-          </ul>
-        </div>
-<div class="col-md-10 main">
+
+
+    <div class="col-md-10 main">
           
 		<ul class="list-group">
   			<li class="list-group-item active"> Course - 
   					<g:fieldValue bean="${courseInstance}" field="subject"/>: <g:fieldValue bean="${courseInstance}" field="name"/>
   					<g:fieldValue bean="${courseInstance}" field="number"/>
   			</li>
-
+            <g:link controller="Course" action="edit" id="${courseInstance.id}">
+                Edit <span class="glyphicon glyphicon-cog"></span>
+            </g:link>
+            <g:link controller="Course" action="delete" id="${courseInstance.id}" onclick="return confirm('${message(code: 'course.button.delete.confirm.message', default: 'Are you sure? All class sections of this course will be deleted as well.')}');">
+                 Delete <span class="glyphicon glyphicon-trash"></span>
+            </g:link>
   			<li class="list-group-item">
   					<g:fieldValue bean="${courseInstance}" field="offered"/>: <g:fieldValue bean="${courseInstance}" field="units"/> 
   			</li>

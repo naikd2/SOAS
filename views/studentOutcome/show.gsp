@@ -12,26 +12,7 @@
 
 		<div class="container-fluid">
       <div class="row">
-        <div class="col-sm-3 col-md-2 sidebar">
-          <ul class="nav nav-sidebar">
-            <li class="active"><a href="${createLink(controller:'StudentOutcome', action:'index')}">Overview <span class="sr-only">(current)</span></a></li>
-            <li><a href="${createLink(controller:'StudentOutcome', action:'create')}">Add</a></li>
-            <li><a href="${createLink(controller:'StudentOutcome', action:'index')}">Index</a></li>
-            <li><a href="#"></a></li>
-          </ul>
-          <ul class="nav nav-sidebar">
-            <li><a href=""></a></li>
-            <li><a href=""></a></li>
-            <li><a href=""></a></li>
-            <li><a href=""></a></li>
-            <li><a href=""></a></li>
-          </ul>
-          <ul class="nav nav-sidebar">
-            <li><a href=""></a></li>
-            <li><a href=""></a></li>
-            <li><a href=""></a></li>
-          </ul>
-        </div>
+
 
 
 	<div class="col-md-10 main">

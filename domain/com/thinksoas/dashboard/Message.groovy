@@ -23,5 +23,10 @@ class Message {
         this.type = type
     }
 
-
+    Message(User user, Class inClass, MessageType type) {
+        this()
+        this.user = user
+        this.inClass = inClass
+        this.type = type
+    }
 }

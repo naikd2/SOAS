@@ -13,28 +13,7 @@
 		<g:set var="currentProgram" value="${programsInstance.id}" scope="session"/>
 		<div class="container-fluid">
       <div class="row">
-        <div class="col-sm-3 col-md-2 sidebar">
-          <ul class="nav nav-sidebar">
-            <li class="active"><a href="${createLink(controller:'Programs', action:'index')}">All Programs <span class="sr-only">(current)</span></a></li>
-            <li><hr style="border: 1px solid white; width: 85%; margin-top: 10px; margin-bottom:10px;"></li>
-            <li><g:link class="edit" action="edit" resource="${programsInstance}"><g:message code="program.button.edit.label" default="Edit Program" /></g:link></li>
-            <li><g:link controller="programs" action="delete" params="[id:programsInstance.id]" onclick="return confirm('${message(code: 'programs.button.delete.confirm.message', default: 'Are you sure? Deleting this program will delete all of its courses and outcomes')}');"><g:message code="program.button.delete.label" default="Delete Program"/> </g:link></li>
-           	<li><hr style="border: 1px solid white; width: 85%; margin-top: 10px; margin-bottom:10px;"></li>
-            <li><a href="${createLink(controller:'Course', action:'index')}">Courses</a></li>
-            <li><a href="${createLink(controller:'Course', action:'create')}">New Course</a></li>
-            <li><hr style="border: 1px solid white; width: 85%; margin-top: 10px; margin-bottom:10px;"></li>
-            <li><a href="${createLink(controller:'studentOutcome', action:'index')}">Student Outcomes</a></li>
-            <li><a href="${createLink(controller:'studentOutcome', action:'create')}">New Student Outcome</a></li>
-            <li><a href=""></a></li>
-            <li><a href=""></a></li>
-            <li><a href=""></a></li>
-          </ul>
-          <ul class="nav nav-sidebar">
-            <li><a href=""></a></li>
-            <li><a href=""></a></li>
-            <li><a href=""></a></li>
-          </ul>
-        </div>
+
         <div class="container">
                   <h1 class="page-header">${programsInstance.programName}</h1>
 

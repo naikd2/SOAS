@@ -1,5 +1,6 @@
 package com.thinksoas
 
+import com.google.common.base.Strings
 import com.thinksoas.course.report.CourseReport
 import com.thinksoas.course.report.CourseReportDetail
 import grails.transaction.Transactional
@@ -50,9 +51,9 @@ class ClassService {
             def details = []
             for (CourseObjective o : cObjs) {
                 def d = new CourseReportDetail(report: report, objective: o)
-                d.max = 0.0
-                d.min = 0.0
-                d.instrument = "todo"
+                d.max = BigDecimal.ZERO
+                d.min = BigDecimal.ZERO
+                d.instrument = ""
                 details.add(d)
             }
             report.details = details

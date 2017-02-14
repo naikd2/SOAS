@@ -11,23 +11,7 @@
   <body>
     <div class="container-fluid">
       <div class="row">
-        <div class="col-sm-3 col-md-2 sidebar">
-          <ul class="nav nav-sidebar">
-            <li><a href="${createLink(controller:'Course', action:'index')}">Courses</a></li>
-            <li><a href="${createLink(controller:'Course', action:'create')}">New Course</a></li>
-            <li><hr style="border: 1px solid white; width: 85%; margin-top: 10px; margin-bottom:10px;"></li>
-            <li><a href="${createLink(controller:'studentOutcome', action:'index')}">Student Outcomes</a></li>
-            <li><a href="${createLink(controller:'studentOutcome', action:'create')}">New Student Outcome</a></li>
-            <li><a href=""></a></li>
-            <li><a href=""></a></li>
-            <li><a href=""></a></li>
-          </ul>
-          <ul class="nav nav-sidebar">
-            <li><a href=""></a></li>
-            <li><a href=""></a></li>
-            <li><a href=""></a></li>
-          </ul>
-        </div>
+
         <div class="container">
                   <h1 class="page-header">Computer Engineering Program</h1>
 

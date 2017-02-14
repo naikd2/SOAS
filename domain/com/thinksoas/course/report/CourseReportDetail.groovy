@@ -7,8 +7,8 @@ class CourseReportDetail {
     CourseReport report
     CourseObjective objective
     String instrument
-    Double min
-    Double max
+    BigDecimal min
+    BigDecimal max
 
     static belongsTo = [report: CourseReport]
     static constraints = {

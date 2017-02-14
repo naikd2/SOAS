@@ -12,30 +12,12 @@
 
 	<div class="container-fluid">
 		<div class="row">
-			<div class="col-sm-3 col-md-2 sidebar">
-				<ul class="nav nav-sidebar">
-					<li class="active"><a href="${createLink(controller:'Programs', action:'index', params:[id:session.currentProgram])}">Overview <span class="sr-only">(current)</span></a></li>
-					<li><hr style="border: 1px solid white; width: 85%; margin-top: 10px; margin-bottom:10px;"></li>
-					<li><a href="${createLink(controller:'SO_Report', action:'index')}"></a></li>
-					<li><a href="#"></a></li>
-				</ul>
-				<ul class="nav nav-sidebar">
-					<li><a href=""></a></li>
-					<li><a href=""></a></li>
-					<li><a href=""></a></li>
-					<li><a href=""></a></li>
-					<li><a href=""></a></li>
-				</ul>
-				<ul class="nav nav-sidebar">
-					<li><a href=""></a></li>
-					<li><a href=""></a></li>
-					<li><a href=""></a></li>
-				</ul>
-			</div>
-				<h1 class="page-header"></h1>
-				<h2 class="sub-header">Outcome Assessment Plan</h2>
+
+			<div class="col-sm-10 main">
+
+				<h2>${SO_ReportInstance.outcome}</h2>
 				<div>
-					<a href="${createLink(controller:'performanceCriteria', action:'create', params:[reportId: SO_ReportInstance.id])}">Add New Performance Criteria</a>
+					<a href="${createLink(controller:'performanceCriteria', action:'create', params:[reportId: SO_ReportInstance.id])}">Add New Performance Criterion</a>
 				</div>
 				<div class="table-responsive">
 					<table class="table">

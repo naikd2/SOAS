@@ -80,7 +80,7 @@ jQuery(document).ready( function() {
         </label>
         <select  id ="objective" name="objective" class="form-control" required="true" >
         <g:each in="${objectiveQuery}" var="o">
-                <option  name="objective" value="${o.id}">${o}</option>
+                <option  name="objective" value="${o.id}">${o.course}: ${o.description}</option>
         </g:each>
         </select>
 
@@ -89,53 +89,44 @@ jQuery(document).ready( function() {
         %{--</g:radioGroup>--}%
     </div>
 
+    <div class="form-group ${hasErrors(bean: performanceCriteriaInstance, field: 'assessments', 'error')} ">
+        <label for="objectives">
+            <g:message code="SO_Report.report.label" default="Method of Assessments" />
+        </label>
+        <table class="table table-striped" id="assessmentsList">
+            <thead>
+            <tr>
+                <th></th>
+                <th></th>
+            </tr>
+            </thead>
+            <tbody id="assessmentsListTableBody">
+            %{--<g:each in="${performanceCriteriaInstance.assessments}" var="assessments" status="xyz">--}%
 
+                %{--<p  <g:if test="${!objectives?.id}">newRow="true"</g:if> rowId="${xyz}">--}%
 
+                    %{--<label>--}%
+                        %{--Prefix--}%
+                    %{--</label>--}%
+                    %{--<input type="text" class="form-control"required="true" name="assessments[' + rowId + '].prefix" value="${assessments?.prefix}"/>--}%
+                    %{--<label>--}%
+                        %{--Description--}%
+                    %{--</label>--}%
+                    %{--<g:textArea  class="form-control" row="5" required="true" name="assessments[' + rowId + '].description" value="${assessments?.prefix}"/>--}%
+                %{--<table class="table table-condensed">--}%
+                    %{--<thead>--}%
+                    %{--<tr>--}%
+                        %{--<th>Outcome</th>--}%
+                        %{--<th>Level</th>--}%
+                    %{--</tr>--}%
+                    %{--</thead>--}%
+                    %{--<tbody>--}%
 
+                    %{--</tbody>--}%
+                %{--</table></p>--}%
 
-
-<div class="form-group ${hasErrors(bean: performanceCriteriaInstance, field: 'assessments', 'error')} ">
-    <label for="objectives">
-        <g:message code="SO_Report.report.label" default="Method of Assessments" />
-
-    </label>
-    <table class="table table-striped" id="assessmentsList">
-        <thead>
-        <tr>
-            <th></th>
-            <th></th>
-
-        </tr>
-        </thead>
-        <tbody id="assessmentsListTableBody">
-        %{--<g:each in="${performanceCriteriaInstance.assessments}" var="assessments" status="xyz">--}%
-
-            %{--<p  <g:if test="${!objectives?.id}">newRow="true"</g:if> rowId="${xyz}">--}%
-
-                %{--<label>--}%
-                    %{--Prefix--}%
-                %{--</label>--}%
-                %{--<input type="text" class="form-control"required="true" name="assessments[' + rowId + '].prefix" value="${assessments?.prefix}"/>--}%
-                %{--<label>--}%
-                    %{--Description--}%
-                %{--</label>--}%
-                %{--<g:textArea  class="form-control" row="5" required="true" name="assessments[' + rowId + '].description" value="${assessments?.prefix}"/>--}%
-            %{--<table class="table table-condensed">--}%
-                %{--<thead>--}%
-                %{--<tr>--}%
-                    %{--<th>Outcome</th>--}%
-                    %{--<th>Level</th>--}%
-                %{--</tr>--}%
-                %{--</thead>--}%
-                %{--<tbody>--}%
-
-                %{--</tbody>--}%
-            %{--</table></p>--}%
-
-        %{--</g:each>--}%
-        </tbody>
-    </table>
-
-    <a href="#" class="addNew">ADD NEW Assessments</a>
-
+            %{--</g:each>--}%
+            </tbody>
+        </table>
+    <a href="#" class="addNew">Add New Assessments</a>
 </div>

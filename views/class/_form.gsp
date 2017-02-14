@@ -1,27 +1,29 @@
 <%@ page import="com.thinksoas.Class" %>
 
 
-<div class="col-md-10 main">
+${activeSemester}
+<div class="fieldcontain ${hasErrors(bean: classInstance, field: 'semester', 'error')} required">
+	<g:hiddenField id="semester" name="semester.id" value="${activeSemester}" />
+</div>
 
-<div class="form-group ${hasErrors(bean: classInstance, field: 'year', 'error')} required">
-	<label for="year">
-		<g:message code="class.year.label" default="year" />
+<div class="fieldcontain ${hasErrors(bean: classInstance, field: 'course', 'error')} required">
+	<label for="course">
+		<g:message code="class.course.label" default="Course" />
 		<span class="required-indicator">*</span>
 	</label>
-	<g:textField name="year" required="" value="${classInstance?.year}"/>
+	<g:select id="course" name="course.id" from="${com.thinksoas.Course.list()}" optionKey="id" required="" value="${classInstance?.course?.id}" class="many-to-one"/>
+</div>
+
+<div class="fieldcontain ${hasErrors(bean: classInstance, field: 'professor', 'error')} required">
+	<label for="professor">
+		<g:message code="class.professor.label" default="Professor" />
+		<span class="required-indicator">*</span>
+	</label>
+	<g:select id="professor" name="professor.id" from="${com.thinksoas.User.list()}" optionKey="id" optionValue="username" value="${classInstance?.professor?.id}" class="many-to-one"/>
 
 </div>
 
-<div class="form-group ${hasErrors(bean: classInstance, field: 'semester', 'error')} required">
-	<label for="semester">
-		<g:message code="class.semester.label" default="semester" />
-		<span class="required-indicator">*</span>
-	</label>
-	<g:textField name="semester" required="" value="${classInstance?.semester}"/>
-
-</div>
-
-<div class="form-group ${hasErrors(bean: classInstance, field: 'section', 'error')} required">
+<div class="fieldcontain ${hasErrors(bean: classInstance, field: 'section', 'error')} required">
 	<label for="section">
 		<g:message code="class.section.label" default="Section" />
 		<span class="required-indicator">*</span>
@@ -30,20 +32,12 @@
 
 </div>
 
-<div class="form-group ${hasErrors(bean: classInstance, field: 'course', 'error')} required">
-	<label for="course">
-		<g:message code="class.course.label" default="Course" />
+<div class="fieldcontain ${hasErrors(bean: classInstance, field: 'students', 'error')} required">
+	<label for="students">
+		<g:message code="class.students.label" default="Students" />
 		<span class="required-indicator">*</span>
 	</label>
-	<g:select id="course" name="course" from="${com.thinksoas.Course.list()}" optionKey="" required="" value="" class="many-to-one"/>
+	<g:field name="students" type="number" value="${classInstance.students}" required=""/>
 
 </div>
-
-
-
-
-
-</div>
-
-
 

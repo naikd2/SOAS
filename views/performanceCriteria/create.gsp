@@ -8,28 +8,9 @@
 	<body>
 	<div class="container-fluid">
 		<div class="row">
-			<div class="col-sm-3 col-md-2 sidebar">
-				<ul class="nav nav-sidebar">
-					<li class="active"><a href="${createLink(controller:'Course', action:'index')}">Return to Courses <span class="sr-only">(current)</span></a></li>
-					<li><a href="${createLink(controller:'Course', action:'create')}">Add</a></li>
-					<li><a href="${createLink(controller:'Course', action:'index')}">Index</a></li>
-					<li><a href="#"></a></li>
-				</ul>
-				<ul class="nav nav-sidebar">
-					<li><a href=""></a></li>
-					<li><a href=""></a></li>
-					<li><a href=""></a></li>
-					<li><a href=""></a></li>
-					<li><a href=""></a></li>
-				</ul>
-				<ul class="nav nav-sidebar">
-					<li><a href=""></a></li>
-					<li><a href=""></a></li>
-					<li><a href=""></a></li>
-				</ul>
-			</div>
+r
 			<div class="container">
-				<h1>Create Performance Criteria</h1>
+				<h1>Create Performance Criterion</h1>
 				<div id="create-performanceCriteria" class="content scaffold-create" role="main">
 					<g:if test="${flash.message}">
 						<div class="message" role="status">${flash.message}</div>

@@ -1,6 +1,5 @@
 
 <%@ page import="com.thinksoas.Class" %>
-<%@ page import="com.thinksoas.Course" %>
 <!DOCTYPE html>
 <html>
 	<head>
@@ -9,43 +8,47 @@
 		<title><g:message code="default.show.label" args="[entityName]" /></title>
 	</head>
 	<body>
-
-
-		<div class="container-fluid">
-      <div class="row">
-        <div class="col-sm-3 col-md-2 sidebar">
-          <ul class="nav nav-sidebar">
-            <li class="active"><a href="${createLink(controller:'Course', action:'show', params:[id:classInstance.course.id])}">Course Overview <span class="sr-only">(current)</span></a></li>
-                                    <li><hr style="border: 1px solid white; width: 85%; margin-top: 10px; margin-bottom:10px;"></li>
-
-            <li><a href="${createLink(controller:'Class', action:'edit', params:[id:classInstance.id])}">Edit Class</a></li>
-            <li><g:link controller="Class" action="delete" params="[id:classInstance.id]" onclick="return confirm('${message(code: 'default.button.delete.confirm.message', default: 'Are you sure?')}');"><g:message code="class.button.delete.label" default="Delete Class"/> </g:link></li>
-          </ul>
-          <ul class="nav nav-sidebar">
-            <li><a href=""></a></li>
-            <li><a href=""></a></li>
-            <li><a href=""></a></li>
-            <li><a href=""></a></li>
-            <li><a href=""></a></li>
-          </ul>
-          <ul class="nav nav-sidebar">
-            <li><a href=""></a></li>
-            <li><a href=""></a></li>
-            <li><a href=""></a></li>
-          </ul>
-        </div>
-
-<div class="col-md-10 main">
-<g:set var="courseList" value="${Course.getAll()}" />
-          <h1><g:each in="${courseList}" var="course"> <g:if test="${course =~ classInstance.course}">${course.name}</g:if></g:each></h1>
-		<ul class="list-group">
-  			<li class="list-group-item active"> Section - 
-  					<g:fieldValue bean="${classInstance}" field="section"/>
-  			</li>
-  		</ul>
-
-%{-- 			</g:if>
+		<a href="#show-class" class="skip" tabindex="-1"><g:message code="default.link.skip.label" default="Skip to content&hellip;"/></a>
+		<div class="nav" role="navigation">
+			<ul>
+				<li><a class="home" href="${createLink(uri: '/')}"><g:message code="default.home.label"/></a></li>
+				<li><g:link class="list" action="index"><g:message code="default.list.label" args="[entityName]" /></g:link></li>
+				<li><g:link class="create" action="create"><g:message code="default.new.label" args="[entityName]" /></g:link></li>
+			</ul>
+		</div>
+		<div id="show-class" class="content scaffold-show" role="main">
+			<h1><g:message code="default.show.label" args="[entityName]" /></h1>
+			<g:if test="${flash.message}">
+			<div class="message" role="status">${flash.message}</div>
+			</g:if>
 			<ol class="property-list class">
+			
+				<g:if test="${classInstance?.semester}">
+				<li class="fieldcontain">
+					<span id="semester-label" class="property-label"><g:message code="class.semester.label" default="Semester" /></span>
+					
+						<span class="property-value" aria-labelledby="semester-label"><g:link controller="semester" action="show" id="${classInstance?.semester?.id}">${classInstance?.semester?.encodeAsHTML()}</g:link></span>
+					
+				</li>
+				</g:if>
+			
+				<g:if test="${classInstance?.course}">
+				<li class="fieldcontain">
+					<span id="course-label" class="property-label"><g:message code="class.course.label" default="Course" /></span>
+					
+						<span class="property-value" aria-labelledby="course-label"><g:link controller="course" action="show" id="${classInstance?.course?.id}">${classInstance?.course?.encodeAsHTML()}</g:link></span>
+					
+				</li>
+				</g:if>
+			
+				<g:if test="${classInstance?.professor}">
+				<li class="fieldcontain">
+					<span id="professor-label" class="property-label"><g:message code="class.professor.label" default="Professor" /></span>
+					
+						<span class="property-value" aria-labelledby="professor-label"><g:link controller="user" action="show" id="${classInstance?.professor?.id}">${classInstance?.professor?.encodeAsHTML()}</g:link></span>
+					
+				</li>
+				</g:if>
 			
 				<g:if test="${classInstance?.section}">
 				<li class="fieldcontain">
@@ -54,21 +57,24 @@
 						<span class="property-value" aria-labelledby="section-label"><g:fieldValue bean="${classInstance}" field="section"/></span>
 					
 				</li>
-				</g:if> --}%
+				</g:if>
 			
-%{-- 				<g:if test="${classInstance?.course}">
+				<g:if test="${classInstance?.students}">
 				<li class="fieldcontain">
-					<span id="course-label" class="property-label"><g:message code="class.course.label" default="Course" /></span>
+					<span id="students-label" class="property-label"><g:message code="class.students.label" default="Students" /></span>
 					
-						<span class="property-value" aria-labelledby="course-label"><g:link controller="course" action="show" id="${classInstance?.course?.id}">${classInstance?.course?.encodeAsHTML()}</g:link></span>
+						<span class="property-value" aria-labelledby="students-label"><g:fieldValue bean="${classInstance}" field="students"/></span>
 					
 				</li>
-				</g:if> --}%
-
+				</g:if>
 			
 			</ol>
-		</div>
-		</div>
+			<g:form url="[resource:classInstance, action:'delete']" method="DELETE">
+				<fieldset class="buttons">
+					<g:link class="edit" action="edit" resource="${classInstance}"><g:message code="default.button.edit.label" default="Edit" /></g:link>
+					<g:actionSubmit class="delete" action="delete" value="${message(code: 'default.button.delete.label', default: 'Delete')}" onclick="return confirm('${message(code: 'default.button.delete.confirm.message', default: 'Are you sure?')}');" />
+				</fieldset>
+			</g:form>
 		</div>
 	</body>
 </html>

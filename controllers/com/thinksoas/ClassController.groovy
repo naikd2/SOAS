@@ -13,6 +13,7 @@ class ClassController {
 
     def classService
     def semesterService
+    def messageService
 
     def index(Integer max) {
         params.max = Math.min(max ?: 10, 100)
@@ -41,10 +42,14 @@ class ClassController {
             return
         }
 
+        // Create Class
         classInstance.save flush:true
-
+        // Create Report
         def report = classService.generateCourseReport(classInstance.getId())
-        report.save flush:true
+        report.save()
+        // Create Message for user input
+        messageService.createMessagesForClassReport(classInstance.getId(), classInstance.professor)
+        flush:true
 
         request.withFormat {
             form multipartForm {
