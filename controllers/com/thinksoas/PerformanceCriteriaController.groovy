@@ -1,11 +1,11 @@
 package com.thinksoas
 
-import static org.springframework.http.HttpStatus.*
-import grails.transaction.Transactional
+import com.thinksoas.Report.StudentOutcome.PerformanceCriteria
+import com.thinksoas.Report.StudentOutcome.SO_Report
 import grails.plugin.springsecurity.annotation.Secured
-import com.thinksoas.*
+import grails.transaction.Transactional
 
-
+import static org.springframework.http.HttpStatus.*
 
 @Secured('ROLE_ADMIN')
 @Transactional(readOnly = true)

@@ -78,8 +78,14 @@
     </div>
 </nav>
 
+<g:if test="${request.getServletPath() == '/grails/courseReport/show.dispatch'}">
 
-<g:if test="${request.requestURI != '/soas/'}">
+
+</g:if>
+<g:elseif test="${request.requestURI == '/soas/'}">
+
+</g:elseif>
+<g:else>
     <sec:ifLoggedIn>
         <div class="container-fluid">
             <div class="row">
@@ -99,7 +105,8 @@
         </ul>
     </div>
     </sec:ifLoggedIn>
-</g:if>
+</g:else>
+
 
 <g:layoutBody/>
 <div class="footer" role="contentinfo"></div>

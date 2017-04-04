@@ -1,4 +1,4 @@
-<%@ page import="com.thinksoas.PerformanceCriteria" %>
+<%@ page import="com.thinksoas.Report.StudentOutcome.PerformanceCriteria" %>
 <!DOCTYPE html>
 <html>
 	<head>

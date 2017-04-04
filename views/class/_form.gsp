@@ -1,7 +1,7 @@
-<%@ page import="com.thinksoas.Class" %>
+<%@ page import="com.thinksoas.User; com.thinksoas.Class" %>
 
 
-${activeSemester}
+Current semester ${activeSemester}
 <div class="fieldcontain ${hasErrors(bean: classInstance, field: 'semester', 'error')} required">
 	<g:hiddenField id="semester" name="semester.id" value="${activeSemester}" />
 </div>

@@ -1,5 +1,5 @@
 
-<%@ page import="com.thinksoas.SO_Report" %>
+<%@ page import="com.thinksoas.Report.StudentOutcome.SO_Report" %>
 <!DOCTYPE html>
 <html>
 	<head>

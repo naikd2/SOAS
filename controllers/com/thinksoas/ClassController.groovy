@@ -1,9 +1,9 @@
 package com.thinksoas
 
 import grails.plugin.springsecurity.annotation.Secured
+import grails.transaction.Transactional
 
 import static org.springframework.http.HttpStatus.*
-import grails.transaction.Transactional
 
 @Secured(['ROLE_ADMIN', 'ROLE_USER'])
 @Transactional(readOnly = true)
@@ -28,6 +28,10 @@ class ClassController {
         respond new Class(params), model:[activeSemester : semesterService.getActiveSemester()]
     }
 
+    def test() {
+
+    }
+
     @Transactional
     def save(Class classInstance) {
         if (classInstance == null) {
@@ -45,11 +49,10 @@ class ClassController {
         // Create Class
         classInstance.save flush:true
         // Create Report
-        def report = classService.generateCourseReport(classInstance.getId())
-        report.save()
+        def report = classService.generateCourseReport2(classInstance.getId())
+        report.save flush:true
         // Create Message for user input
-        messageService.createMessagesForClassReport(classInstance.getId(), classInstance.professor)
-        flush:true
+       // messageService.createMessagesForClassReport(classInstance.getId(), classInstance.professor)
 
         request.withFormat {
             form multipartForm {

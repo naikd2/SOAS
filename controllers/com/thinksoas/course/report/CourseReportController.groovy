@@ -1,9 +1,11 @@
 package com.thinksoas.course.report
 
+import com.thinksoas.Report.Couse.CourseReport
+import com.thinksoas.Report.Couse.CourseReportObjective
 import grails.plugin.springsecurity.annotation.Secured
+import grails.transaction.Transactional
 
 import static org.springframework.http.HttpStatus.*
-import grails.transaction.Transactional
 
 @Secured(['ROLE_ADMIN'])
 @Transactional(readOnly = true)
@@ -17,7 +19,9 @@ class CourseReportController {
     }
 
     def show(CourseReport courseReportInstance) {
-        respond courseReportInstance
+        println(com.thinksoas.StudentOutcome.list().size())
+
+        respond courseReportInstance, model:[report: courseReportInstance, objectives: courseReportInstance.objectives]
     }
 
     def create() {
@@ -47,12 +51,13 @@ class CourseReportController {
         }
     }
 
-    def edit(CourseReport courseReportInstance) {
-        respond courseReportInstance
+    def edit(CourseReportObjective objective) {
+        respond objective, model:[objective: objective]
     }
 
     @Transactional
-    def update(CourseReport courseReportInstance) {
+    def update(CourseReportObjective courseReportInstance) {
+        println(courseReportInstance)
         if (courseReportInstance == null) {
             notFound()
             return
@@ -63,7 +68,7 @@ class CourseReportController {
             return
         }
 
-        courseReportInstance.save flush:true
+     //   courseReportInstance.save flush:true
 
         request.withFormat {
             form multipartForm {

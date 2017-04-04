@@ -1,8 +1,9 @@
 package com.thinksoas
 
-import static org.springframework.http.HttpStatus.*
-import grails.transaction.Transactional
 import grails.plugin.springsecurity.annotation.Secured
+import grails.transaction.Transactional
+
+import static org.springframework.http.HttpStatus.*
 
 @Secured(['ROLE_ADMIN'])
 @Transactional(readOnly = true)
@@ -20,7 +21,13 @@ class CourseController {
     }
 
     def create() {
-        respond new Course(params)
+        def settings = com.thinksoas.Programs.findBySettings("SETTINGS")
+        def s = "Faculty Evaluations"
+        settings.methods.add(s)
+        def s1 = "Student Surveys"
+        settings.methods.add(s1)
+        println(settings.methods)
+        respond new Course(params), model:[methods : settings.methods]
     }
 
     @Transactional
@@ -40,7 +47,7 @@ class CourseController {
         request.withFormat {
             form multipartForm {
                 flash.message = message(code: 'default.created.message', args: [message(code: 'course.label', default: 'Course'), courseInstance.id])
-                redirect courseInstance
+                redirect action:"index", method:"GET"
             }
             '*' { respond courseInstance, [status: CREATED] }
         }

@@ -11,7 +11,7 @@
 	<div class="container-fluid">
 		<div class="row">
 			<div class="col-sm-10 main">
-				<h2>Semester List</h2>
+				<h2>Current Semester ${activeSemester}</h2>
 				<g:link controller="Semester" action="create">
 					Add Semester <span class="glyphicon glyphicon-plus"></span>
 				</g:link><br>

@@ -5,6 +5,8 @@ class CourseObjective {
 	Course course
 	String prefix
 	String description
+	String method1
+	String method2
 
 	List<StudentOutcome> introduceOutcomes = []
 	List<StudentOutcome> reinforceOutcomes = []

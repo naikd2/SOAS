@@ -1,8 +1,5 @@
 package com.thinksoas
 
-import com.thinksoas.Class
-import com.thinksoas.CourseObjective
-
 class Course {
 
 	String subject

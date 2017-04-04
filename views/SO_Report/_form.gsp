@@ -1,4 +1,4 @@
-<%@ page import="com.thinksoas.SO_Report" %>
+<%@ page import="com.thinksoas.StudentOutcome.StudentOutcome; com.thinksoas.Report.StudentOutcome.SO_Report" %>
 
 
 

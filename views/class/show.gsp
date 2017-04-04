@@ -8,19 +8,12 @@
 		<title><g:message code="default.show.label" args="[entityName]" /></title>
 	</head>
 	<body>
-		<a href="#show-class" class="skip" tabindex="-1"><g:message code="default.link.skip.label" default="Skip to content&hellip;"/></a>
-		<div class="nav" role="navigation">
-			<ul>
-				<li><a class="home" href="${createLink(uri: '/')}"><g:message code="default.home.label"/></a></li>
-				<li><g:link class="list" action="index"><g:message code="default.list.label" args="[entityName]" /></g:link></li>
-				<li><g:link class="create" action="create"><g:message code="default.new.label" args="[entityName]" /></g:link></li>
-			</ul>
-		</div>
-		<div id="show-class" class="content scaffold-show" role="main">
-			<h1><g:message code="default.show.label" args="[entityName]" /></h1>
-			<g:if test="${flash.message}">
-			<div class="message" role="status">${flash.message}</div>
-			</g:if>
+	<div class="container-fluid">
+		<div class="row">
+
+			<div class="col-sm-10 main">
+
+				<h2>Class List</h2>
 			<ol class="property-list class">
 			
 				<g:if test="${classInstance?.semester}">
@@ -45,7 +38,7 @@
 				<li class="fieldcontain">
 					<span id="professor-label" class="property-label"><g:message code="class.professor.label" default="Professor" /></span>
 					
-						<span class="property-value" aria-labelledby="professor-label"><g:link controller="user" action="show" id="${classInstance?.professor?.id}">${classInstance?.professor?.encodeAsHTML()}</g:link></span>
+						<span class="property-value" aria-labelledby="professor-label"><g:link controller="user" action="show" id="${classInstance?.professor?.id}">${classInstance?.professor?.username}</g:link></span>
 					
 				</li>
 				</g:if>

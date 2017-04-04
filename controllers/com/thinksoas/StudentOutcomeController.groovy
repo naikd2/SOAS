@@ -1,10 +1,9 @@
 package com.thinksoas
 
-
+import grails.plugin.springsecurity.annotation.Secured
+import grails.transaction.Transactional
 
 import static org.springframework.http.HttpStatus.*
-import grails.transaction.Transactional
-import grails.plugin.springsecurity.annotation.Secured
 
 @Secured('ROLE_ADMIN')
 @Transactional(readOnly = true)
@@ -39,6 +38,8 @@ class StudentOutcomeController {
 
         studentOutcomeInstance.save flush:true
 
+        def report = new com.thinksoas.Report.StudentOutcome.SO_Report(outcome: studentOutcomeInstance)
+        report.save()
         request.withFormat {
             form multipartForm {
                 flash.message = message(code: 'default.created.message', args: [message(code: 'studentOutcome.label', default: 'StudentOutcome'), studentOutcomeInstance.id])

@@ -1,11 +1,9 @@
 package com.thinksoas
 
-
+import grails.plugin.springsecurity.annotation.Secured
+import grails.transaction.Transactional
 
 import static org.springframework.http.HttpStatus.*
-import grails.transaction.Transactional
-import grails.plugin.springsecurity.annotation.Secured
-import com.thinksoas.*
 
 @Secured(['ROLE_ADMIN'])
 @Transactional(readOnly = true)
@@ -28,6 +26,8 @@ class CourseObjectiveController {
 
     @Transactional
     def save(CourseObjective courseObjectiveInstance) {
+        courseObjectiveInstance.method1 = "Faculty Evaluations"
+        courseObjectiveInstance.method2 = "Student Surveys"
         if (courseObjectiveInstance == null) {
             notFound()
             return

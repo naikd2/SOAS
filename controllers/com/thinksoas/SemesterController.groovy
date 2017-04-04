@@ -1,9 +1,9 @@
 package com.thinksoas
 
 import grails.plugin.springsecurity.annotation.Secured
+import grails.transaction.Transactional
 
 import static org.springframework.http.HttpStatus.*
-import grails.transaction.Transactional
 
 @Secured('ROLE_ADMIN')
 @Transactional(readOnly = true)
@@ -15,7 +15,7 @@ class SemesterController {
 
     def index(Integer max) {
         params.max = 100
-        respond Semester.list(params), model:[semesterInstanceCount: Semester.count()]
+        respond Semester.list(params), model:[semesterInstanceCount: Semester.count(), activeSemester : semesterService.getActiveSemester()]
     }
 
     def show(Semester semesterInstance) {

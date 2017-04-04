@@ -1,28 +1,18 @@
 package com.thinksoas
 
-import com.google.common.base.Strings
-import com.thinksoas.course.report.CourseReport
-import com.thinksoas.course.report.CourseReportDetail
+import com.thinksoas.Report.Couse.CourseReport
+import com.thinksoas.Report.Couse.CourseReportObjective
+import com.thinksoas.Report.Couse.CourseReportOutcome
+import com.thinksoas.Report.Couse.CourseReportMethod
 import grails.transaction.Transactional
 
 class ClassException extends RuntimeException {
-    // String message
-    // Class class
+
+
 }
 
 @Transactional
 class ClassService {
-
-	// Class createClass(String userId, String section, String name) {
-	// 	def user = User.findByUserId(userId)
-	// 	def course = Course.findByName(name)
-	// 	if (user) {
-	// 		def class = new Class(section: section)
-	// 		user.addToClass
-	// 	}
-
-
-	// }
 
     Semester getActiveSemester() {
         def semesterList = Semester.findAll();
@@ -41,47 +31,48 @@ class ClassService {
         }
     }
 
-    CourseReport generateCourseReport(Long classId) {
-        def s = Class.findById(classId)
-        if (s != null) {
-            def report = new CourseReport(section: s)
-            // now generate the details with course information
-            def c = getCourse(classId)
-            def cObjs = c.getObjectives()
-            def details = []
-            for (CourseObjective o : cObjs) {
-                def d = new CourseReportDetail(report: report, objective: o)
-                d.max = BigDecimal.ZERO
-                d.min = BigDecimal.ZERO
-                d.instrument = ""
-                details.add(d)
-            }
-            report.details = details
+    CourseReport generateCourseReport2(Long classId) {
+        def courseSection = Class.findById(classId)
+        def report = new CourseReport(section: courseSection)
+        println(report)
+        def course = getCourse(classId)
+        def courseObjectives = course.getObjectives()
+        def reportObjectives = []
+        for (CourseObjective courseObjective : courseObjectives) {
+            def reportObjective = new CourseReportObjective(report: report, objective: courseObjective)
+            reportObjective.max = BigDecimal.ZERO
+            reportObjective.min = BigDecimal.ZERO
+            reportObjective.instrument = ""
+            println(reportObjective)
 
-            return report
+            def reportOutcomes = []
+            def combinedList = courseObjective.reinforceOutcomes + courseObjective.emphasizeOutcomes
+            for (StudentOutcome so : combinedList) {
+                def reportOutcome = new CourseReportOutcome(objective: reportObjective, outcome: so)
+                def reportDetails = []
+
+                def detail1 = new CourseReportMethod(outcome: reportOutcome)
+                detail1.method = courseObjective.method1
+                detail1.percentage = BigDecimal.ZERO
+                reportDetails.add(detail1)
+
+                def detail2 = new CourseReportMethod(outcome: reportOutcome)
+                detail2.method = courseObjective.method2
+                detail2.percentage = BigDecimal.ZERO
+                reportDetails.add(detail2)
+
+                reportOutcome.methods = reportDetails
+                reportOutcomes.add(reportOutcome)
+            }
+            reportObjective.outcomes = reportOutcomes
+            reportObjectives.add(reportObjective)
         }
+        report.objectives = reportObjectives
+        return report
     }
 
+    List<String> getReportRow(CourseReport report) {
 
-
-
+    }
 
 }
-
-
-
-
-   // Post createPost(String loginId, String content) {
-   //      def user = User.findByLoginId(loginId)
-   //      if (user) {
-   //          def post = new Post(content: content)
-   //          user.addToPosts(post)
-   //          if (post.validate() && user.save()) {
-   //              return post
-   //          } else {
-   //              throw new PostException(
-   //                  message: "Invalid or empty post", post: post)
-   //          }
-   //      }
-   //      throw new PostException(message: "Invalid User Id")
-   //  }

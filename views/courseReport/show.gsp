@@ -1,5 +1,5 @@
 
-<%@ page import="com.thinksoas.course.report.CourseReport" %>
+<%@ page import="com.thinksoas.Report.Couse.CourseReport; com.thinksoas.StudentOutcome" %>
 <!DOCTYPE html>
 <html>
 	<head>
@@ -10,102 +10,64 @@
 	<body>
 
 	<div class="container-fluid">
-		<div class="row">
-			<div class="col-sm-8">
-				<ul class="list-group">
-					<li class="list-group-item active"> Course Report -
-					<g:fieldValue bean="${courseReportInstance}" field="section"/>:
-					</li>
-					<li class="list-group-item">Details:</li>
-					<li class="list-group-item">
-						<g:each in="${courseReportInstance.details}" status="i" var="d">
-							<tr class="${(i % 2) == 0 ? 'even' : 'odd'}">
-								<dl>
-									<dt><span class="property-value" aria-labelledby="objectives-label">Detail</span></dt>
-									<g:link controller="courseReportDetail" action="edit" id="${d.id}">edit</g:link>
-									<div>
-									<h5>Outcome</h5>
-									<div>
-										<span class="property-value" aria-labelledby="articles-label">${d.objective.encodeAsHTML()}</span>
-									</div>
 
-									<div>
-										<h6>Introduce Outcomes</h6>
-										<g:each in="${d.objective.introduceOutcomes}" var="intro">
-											<div>
-												<span class="property-value" aria-labelledby="articles-label">${intro?.encodeAsHTML()}</span>
-											</div>
-										</g:each>
-									</div>
-									<div>
-										<h6>Reinforce Outcomes</h6>
-										<g:each in="${d.objective.reinforceOutcomes}" var="intro">
-											<div>
-												<span class="property-value" aria-labelledby="articles-label">${intro?.encodeAsHTML()}</span>
-											</div>
-										</g:each>
-									</div>
-									<div>
-										<h6>Emphasize Outcomes</h6>
-										<g:each in="${d.objective.emphasizeOutcomes}" var="intro">
-											<div>
-												<span class="property-value" aria-labelledby="articles-label">${intro?.encodeAsHTML()}</span>
-											</div>
-										</g:each>
-									</div>
+		<h6>
+			Student Performance Assessment Data Form
+		</h6>
+		<h6>
+			Instructor: ${courseReportInstance.section.professor.username}
+		</h6>
+		<h6>
+			Course: ${courseReportInstance.section}
+		</h6>
+		<h6>
+			Semester: ${courseReportInstance.section.semester}
+		</h6>
+		<h6>
+			Students: ${courseReportInstance.section.students}
+		</h6>
 
-									<h5>Instrument</h5>
-									<div>
-										<span class="property-value" aria-labelledby="articles-label">${d.instrument.encodeAsHTML()}</span>
-									</div>
-									<h5>Min Grade</h5>
-									<div>
-										<span class="property-value" aria-labelledby="articles-label">${d.min.encodeAsHTML()}</span>
-									</div>
-									<h5>Max Grade</h5>
-									<div>
-										<span class="property-value" aria-labelledby="articles-label">${d.max.encodeAsHTML()}</span>
-									</div>
-
-
-								</div>
-								</dl>
-							</tr>
-						</g:each>
-					</li>
-					</ul>
-			</div>
-		</div>
-		<div class="row">
-			<div class="col-sm-4">
-				<g:each in="${courseReportInstance.details}" status="i" var="d">
-					<tr class="${(i % 2) == 0 ? 'even' : 'odd'}">
-					<span class="property-value" aria-labelledby="articles-label">${d.instrument.encodeAsHTML()}</span>
-					<div>
-						<div id="graphDiv1" style="float: left; width: 200px"></div> <div id="graphDiv2" style="float: left"></div>
-						<!--[if IE]><script src="excanvas.js"></script><![endif]-->
-						<g:javascript src="BarGraph.js" />
-						<script>(function () {
-						function createCanvas(divName) {
-							var div = document.getElementById(divName);
-							var canvas = document.createElement('canvas');
-							div.appendChild(canvas);
-							if (typeof G_vmlCanvasManager !== 'undefined') {
-								canvas = G_vmlCanvasManager.initElement(canvas);
-							}
-							var ctx = canvas.getContext("2d");
-							return ctx;
-						}
-						var ctx = createCanvas("graphDiv1");
-						var ctx2 = createCanvas("graphDiv2");
-						var graph = new BarGraph(ctx);
-						graph.xAxisLabelArr = ["Max", "Min", ""];
-						graph.update([${d.max}, ${d.min},0]);
-					}());</script>
-					</div>
+	<table class="table table-striped table-hover ">
+			<thead>
+			<tr>
+				<th>Objective</th>
+				<th>Instrument</th>
+				<g:each in="${StudentOutcome.list()}" var="so">
+					<th>${so.prefix}</th>
 				</g:each>
-			</div>
-		</div>
+				<th>Max/Min</th>
+			</tr>
+			</thead>
+			<tbody>
+			<g:each in="${objectives}" var="o">
+				<tr>
+					<td><g:link controller="courseReportObjective" action="edit" id="${o.id}">${o.objective.prefix}</g:link></td>
+					<td>${o.instrument}</td>
+					<g:each in="${StudentOutcome.list()}" var="so">
+						<g:set var="found" value="${false}"/>
+						<g:each in="${o.outcomes}" var="outs">
+							<g:if test="${outs.outcome == so}" >
+								<g:set var="found" value="${true}"/>
+								<td>
+								<g:each in="${outs.methods}" var="m">
+									<g:link controller="courseReportMethod" action="edit" id="${m.id}">
+										${m.method}: ${m.percentage}%
+									</g:link>
+								</g:each>
+								</td>
+							</g:if>
+						</g:each>
+							<g:if test="${found == false}" >
+								<td>N/A</td>
+							</g:if>
+						</g:each>
+					<td>
+						${o.max}/${o.min}
+					</td>
+				</tr>
+			</g:each>
+			</tbody>
+		</table>
 	</div>
 	</body>
 </html>
