@@ -1,8 +1,7 @@
-<%@ page import="com.thinksoas.StudentOutcome; com.thinksoas.Course; com.thinksoas.CourseObjective" %>
+<%@ page import="com.thinksoas.data.StudentOutcome; com.thinksoas.data.Course; com.thinksoas.data.CourseObjective" %>
 
 <r:script>
 jQuery(document).ready( function() {
-
  	 $( "#sortable1, #sortable2, #sortable3, #sortable4" ).sortable({
       connectWith: ".connectedSortable"
     }).disableSelection();
@@ -88,7 +87,7 @@ jQuery(document).ready( function() {
 			'<tbody>'+
 		  	'<div class="col-xs-4">'+
 			'<h5 class="text-center">Introduce</h5>'+
-			'<g:each in="${com.thinksoas.StudentOutcome.list(sort: 'id', order: 'asc')}" var="outcome" status="i">'+
+			'<g:each in="${com.thinksoas.data.StudentOutcome.list(sort: 'id', order: 'asc')}" var="outcome" status="i">'+
 			'<div class="list-group-item">'+
 			'<g:checkBox class="pull-right" name="objectives[' + rowId + '].introduceOutcomes" value="${outcome.id}" checked="false" />'+
 			'<label for="outcome" > ${outcome.prefix}   </label>'+
@@ -97,7 +96,7 @@ jQuery(document).ready( function() {
 			'</div>'+
 			'<div class="col-xs-4">'+
 			'<h5 class="text-center">Reinforce</h5>'+
-			'<g:each in="${com.thinksoas.StudentOutcome.list(sort: 'id', order: 'asc')}" var="outcome" status="i">'+
+			'<g:each in="${com.thinksoas.data.StudentOutcome.list(sort: 'id', order: 'asc')}" var="outcome" status="i">'+
 			'<div class="list-group-item">'+
 			'<g:checkBox class="pull-right" name="objectives[' + rowId + '].reinforceOutcomes" value="${outcome.id}" checked="false" />'+
 			'<label for="outcome" > ${outcome.prefix}   </label>'+
@@ -106,7 +105,7 @@ jQuery(document).ready( function() {
 			'</div>'+
 			'<div class="col-xs-4">'+
 			'<h5 class="text-center">Emphasize</h5>'+
-			'<g:each in="${com.thinksoas.StudentOutcome.list(sort: 'id', order: 'asc')}" var="outcome" status="i">'+
+			'<g:each in="${com.thinksoas.data.StudentOutcome.list(sort: 'id', order: 'asc')}" var="outcome" status="i">'+
 			'<div class="list-group-item">'+
 			'<g:checkBox class="pull-right" name="objectives[' + rowId + '].emphasizeOutcomes" value="${outcome.id}" checked="false" />'+
 			'<label for="outcome" > ${outcome.prefix}   </label>'+
@@ -294,3 +293,4 @@ jQuery(document).ready( function() {
 	 
 </div>
 
+</div>

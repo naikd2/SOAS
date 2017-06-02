@@ -1,4 +1,4 @@
-<%@ page import="com.thinksoas.StudentOutcome" %>
+<%@ page import="com.thinksoas.data.StudentOutcome" %>
 
 
 <div class="col-md-10 main">

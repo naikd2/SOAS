@@ -1,4 +1,4 @@
-<%@ page import="com.thinksoas.Class" %>
+<%@ page import="com.thinksoas.data.Class" %>
 <!DOCTYPE html>
 <html>
 	<head>

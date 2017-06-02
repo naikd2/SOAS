@@ -1,5 +1,5 @@
 
-<%@ page import="com.thinksoas.CourseObjective" %>
+<%@ page import="com.thinksoas.data.CourseObjective" %>
 <!DOCTYPE html>
 <html>
 	<head>
@@ -24,23 +24,11 @@
 			<thead>
 					<tr>
 					
-						<g:sortableColumn property="prefix" title="${message(code: 'courseObjective.prefix.label', default: 'Prefix')}" />
-					
-						<g:sortableColumn property="description" title="${message(code: 'courseObjective.description.label', default: 'Description')}" />
-					
-						<th><g:message code="courseObjective.course.label" default="Course" /></th>
-					
 					</tr>
 				</thead>
 				<tbody>
 				<g:each in="${courseObjectiveInstanceList}" status="i" var="courseObjectiveInstance">
 					<tr class="${(i % 2) == 0 ? 'even' : 'odd'}">
-					
-						<td><g:link action="show" id="${courseObjectiveInstance.id}">${fieldValue(bean: courseObjectiveInstance, field: "prefix")}</g:link></td>
-					
-						<td>${fieldValue(bean: courseObjectiveInstance, field: "description")}</td>
-					
-						<td>${fieldValue(bean: courseObjectiveInstance, field: "course")}</td>
 					
 					</tr>
 				</g:each>

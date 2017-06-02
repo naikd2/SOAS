@@ -1,5 +1,5 @@
 
-<%@ page import="com.thinksoas.Report.Couse.CourseReportObjective" %>
+<%@ page import="com.thinksoas.report.course.CourseReportObjective" %>
 <!DOCTYPE html>
 <html>
 	<head>

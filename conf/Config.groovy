@@ -89,10 +89,12 @@ grails.hibernate.osiv.readonly = false
 environments {
     development {
         grails.logging.jul.usebridge = true
+        uploadFolder = "/Users/dhruvit/Desktop/tmp/docs/"
     }
     production {
         grails.logging.jul.usebridge = false
         // TODO: grails.serverURL = "http://www.changeme.com"
+        uploadFolder = "/workspace/soasUploads/"
     }
 }
 
@@ -120,9 +122,9 @@ log4j.main = {
 
 // Added by the Spring Security Core plugin:
 grails.plugin.springsecurity.logout.postOnly = false
-grails.plugin.springsecurity.userLookup.userDomainClassName = 'com.thinksoas.User'
-grails.plugin.springsecurity.userLookup.authorityJoinClassName = 'com.thinksoas.UserRole'
-grails.plugin.springsecurity.authority.className = 'com.thinksoas.Role'
+grails.plugin.springsecurity.userLookup.userDomainClassName = 'com.thinksoas.system.User'
+grails.plugin.springsecurity.userLookup.authorityJoinClassName = 'com.thinksoas.system.UserRole'
+grails.plugin.springsecurity.authority.className = 'com.thinksoas.system.Role'
 grails.plugin.springsecurity.controllerAnnotations.staticRules = [
 	'/':                ['permitAll'],
 	'/index':           ['permitAll'],
@@ -133,5 +135,3 @@ grails.plugin.springsecurity.controllerAnnotations.staticRules = [
 	'/**/images/**':    ['permitAll'],
 	'/**/favicon.ico':  ['permitAll']
 ]
-
-

@@ -1,11 +1,24 @@
-import com.thinksoas.Role
-import com.thinksoas.User
-import com.thinksoas.UserRole
+import com.thinksoas.system.*
+import com.thinksoas.data.*
 
 class BootStrap {
     def init = { servletContext ->
+        def adminRole = new Role(authority: 'ROLE_ADMIN').save()
         def userRole = new Role('ROLE_USER').save()
-        def faculty = new User('faculty', 'password').save()
-        UserRole.create faculty, userRole, true
+        def admin = new User('admin', 'password').save()
+        def user = new User('user', 'password').save()
+        UserRole.create admin, adminRole, true
+        UserRole.create user, userRole, true
+
+        if (Program.list().size() > 0) {
+
+        } else {
+            def program = new Program()
+            program.performanceTarget = 0.0
+            program.assessmentPeriod = 0.0
+            program.performanceThreshold = 0.0
+            program.deltaValue = 0.0
+            program.save()
+        }
     }
 }

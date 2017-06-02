@@ -1,5 +1,5 @@
 
-<%@ page import="com.thinksoas.Report.Couse.CourseReport" %>
+<%@ page import="com.thinksoas.report.course.CourseReport" %>
 <!DOCTYPE html>
 <html>
 	<head>

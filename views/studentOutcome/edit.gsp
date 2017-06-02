@@ -1,4 +1,4 @@
-<%@ page import="com.thinksoas.StudentOutcome" %>
+<%@ page import="com.thinksoas.data.StudentOutcome" %>
 <!DOCTYPE html>
 <html>
 	<head>

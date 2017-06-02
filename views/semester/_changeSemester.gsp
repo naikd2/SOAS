@@ -1,4 +1,4 @@
-<%@ page import="com.thinksoas.Semester" %>
+<%@ page import="com.thinksoas.data.Semester" %>
 
 <g:form url="[resource:semesterId, action:'changeSemesterAction']" >
         <div class="newSemester">

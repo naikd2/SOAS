@@ -1,5 +1,5 @@
 
-<%@ page import="com.thinksoas.Message" %>
+<%@ page import="com.thinksoas.data.Message" %>
 <!DOCTYPE html>
 <html>
 	<head>

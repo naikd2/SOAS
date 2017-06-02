@@ -1,3 +1,5 @@
+<%@ page import="com.thinksoas.data.*" %>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -43,7 +45,7 @@
 		<div class="col-md-4">
 			<h2>Outcome Assessment Plan</h2>
 			<p>Brief Description</p>
-			<p><a class="btn btn-default" href="${createLink(controller:'SO_Report', action:'index')}"  role="button">Go To &raquo;</a></p>
+			<p><a class="btn btn-default" href="${createLink(controller:'OutcomeReport', action:'index')}"  role="button">Go To &raquo;</a></p>
 		</div>
 
 

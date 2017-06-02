@@ -1,0 +1,583 @@
+package com.thinksoas.report.course
+
+import com.thinksoas.data.Course
+import com.thinksoas.data.CourseObjective
+
+import java.math.MathContext
+
+import static org.springframework.http.HttpStatus.*
+import grails.transaction.Transactional
+import grails.plugin.springsecurity.annotation.Secured
+import com.thinksoas.data.Class
+
+import com.thinksoas.data.StudentOutcome
+
+@Secured(['ROLE_ADMIN', 'ROLE_USER'])
+@Transactional(readOnly = true)
+class CourseReportController {
+
+    static allowedMethods = [save: "POST", update: "PUT", delete: "DELETE"]
+
+    def modal() {
+
+    }
+
+    def modal2() {
+        println("hello")
+        redirect action: "index"
+    }
+
+    def index(Integer max) {
+        params.max = Math.min(max ?: 10, 100)
+        respond CourseReport.list(params), model:[courseReportInstanceCount: CourseReport.count()]
+    }
+
+    def show(CourseReport courseReportInstance) {
+
+        respond courseReportInstance, model:[report: courseReportInstance, objectives: courseReportInstance.objectives]
+    }
+
+    def create() {
+        respond new CourseReport(params)
+    }
+
+    def report(CourseReport courseReportInstance) {
+        String report = createTable(courseReportInstance)
+        [courseReportInstance: courseReportInstance, report: report]
+    }
+
+    def SO() {
+        String report = "<div class=\"tab\" style=\"text-align: center\">" + createFullButtonOverlay() + "</div>"
+        report += createSOReport()
+        [report: report]
+    }
+
+    @Transactional
+    def save(CourseReport courseReportInstance) {
+        if (courseReportInstance == null) {
+            notFound()
+            return
+        }
+
+        if (courseReportInstance.hasErrors()) {
+            respond courseReportInstance.errors, view:'create'
+            return
+        }
+
+        courseReportInstance.save flush:true
+
+        request.withFormat {
+            form multipartForm {
+                flash.message = message(code: 'default.created.message', args: [message(code: 'courseReport.label', default: 'CourseReport'), courseReportInstance.id])
+                redirect courseReportInstance
+            }
+            '*' { respond courseReportInstance, [status: CREATED] }
+        }
+    }
+
+    def edit(CourseReportObjective objective) {
+        respond objective, model:[objective: objective]
+    }
+
+    @Transactional
+    def update(CourseReportObjective courseReportInstance) {
+        println(courseReportInstance)
+        if (courseReportInstance == null) {
+            notFound()
+            return
+        }
+
+        if (courseReportInstance.hasErrors()) {
+            respond courseReportInstance.errors, view:'edit'
+            return
+        }
+
+        //   courseReportInstance.save flush:true
+
+        request.withFormat {
+            form multipartForm {
+                flash.message = message(code: 'default.updated.message', args: [message(code: 'CourseReport.label', default: 'CourseReport'), courseReportInstance.id])
+                redirect courseReportInstance
+            }
+            '*'{ respond courseReportInstance, [status: OK] }
+        }
+    }
+
+    @Transactional
+    def delete(CourseReport courseReportInstance) {
+
+        if (courseReportInstance == null) {
+            notFound()
+            return
+        }
+
+        courseReportInstance.delete flush:true
+
+        request.withFormat {
+            form multipartForm {
+                flash.message = message(code: 'default.deleted.message', args: [message(code: 'CourseReport.label', default: 'CourseReport'), courseReportInstance.id])
+                redirect action:"index", method:"GET"
+            }
+            '*'{ render status: NO_CONTENT }
+        }
+    }
+
+    protected void notFound() {
+        request.withFormat {
+            form multipartForm {
+                flash.message = message(code: 'default.not.found.message', args: [message(code: 'courseReport.label', default: 'CourseReport'), params.id])
+                redirect action: "index", method: "GET"
+            }
+            '*'{ render status: NOT_FOUND }
+        }
+    }
+    def createReinforceOutcomes(CourseReport courseReportInstance) {
+        String table = ""
+
+        table += "<div style=\"text-align: center; font-size: 200%;\"></br><span style=\"font-weight:bold\">Reinforce Outcomes</span></br>"
+
+        for (int i = 0; i < courseReportInstance.details[0].objective.reinforceOutcomes.size(); i++) {
+            table += "Student Performance (" + courseReportInstance.details[0].objective.reinforceOutcomes[i].prefix + ")</br>"
+
+            table += "<span style= \"font-size: 50%; font-style: italic;\">" + courseReportInstance.details[0].objective.reinforceOutcomes[i].description + "</span></br>"
+
+            int delta = courseReportInstance.details[0].max - courseReportInstance.details[0].min
+
+            table += "<table style=\"text-align: center; font-size: 75%;  width:50%; margin-left:25%; margin-right:25%;\" border=\"1\" class=\"fixed\"><tr><td></td><th>" + courseReportInstance.details[0].instrument + "</th><th>" + courseReportInstance.details[0].instrument + "</th><th>Delta</th></tr>"
+
+            delta = courseReportInstance.details[0].max - courseReportInstance.details[0].min
+
+            table += "<tr><td>Objective " + courseReportInstance.details[0].objective.prefix + "</td><td>" + courseReportInstance.details[0].max + "</td><td>" + courseReportInstance.details[0].min + "</td><td>" + String.valueOf(delta) + "</td></tr>"
+
+            for (int j = 1; j < courseReportInstance.details.size(); j++) {
+                if (objectiveHasOutcome(courseReportInstance.details[j].objective, courseReportInstance.details[0].objective.reinforceOutcomes[i].prefix)) {
+                    delta = courseReportInstance.details[j].max - courseReportInstance.details[j].min
+                    table += "<tr><td>Objective " + courseReportInstance.details[j].objective.prefix + "</td><td>" + courseReportInstance.details[j].max + "</td><td>" + courseReportInstance.details[j].min + "</td><td>" + String.valueOf(delta) + "</td></tr>"
+                }
+            }
+            table += "</table></br>"
+
+            table += createBarGraph(graph_number, "Objective " + courseReportInstance.details[0].objective.prefix, courseReportInstance.details[0].max, courseReportInstance.details[0].min, courseReportInstance.details[0].max - courseReportInstance.details[0].min)
+            graph_number = graph_number + 1
+        }
+
+        return table
+    }
+
+    def createEmphasizeOutcomes(CourseReport courseReportInstance) {
+        String table = ""
+
+        table += "</br><span style=\"font-weight:bold\">Emphasize Outcomes</span></br>"
+
+        for (int i = 0; i < courseReportInstance.details[0].objective.emphasizeOutcomes.size(); i++) {
+            table += "Student Performance (" + courseReportInstance.details[0].objective.emphasizeOutcomes[i].prefix + ")</br>"
+
+            table += "<span style= \"font-size: 50%; font-style: italic;\">" + courseReportInstance.details[0].objective.emphasizeOutcomes[i].description + "</span></br>"
+
+            table += "<table style=\"text-align: center; font-size: 75%;  width:50%; margin-left:25%; margin-right:25%;\" border=\"1\" class=\"fixed\"><tr><td></td><th>" + courseReportInstance.details[0].instrument + "</th><th>" + courseReportInstance.details[0].instrument + "</th><th>Delta</th></tr>"
+
+            int delta = courseReportInstance.details[0].max - courseReportInstance.details[0].min
+
+            table += "<tr><td>Objective " + courseReportInstance.details[0].objective.prefix + "</td><td>" + courseReportInstance.details[0].max + "</td><td>" + courseReportInstance.details[0].min + "</td><td>" + String.valueOf(delta) + "</td></tr>"
+
+            for (int j = 1; j < courseReportInstance.details.size(); j++) {
+                if (objectiveHasOutcome(courseReportInstance.details[j].objective, courseReportInstance.details[0].objective.emphasizeOutcomes[i].prefix)) {
+                    delta = courseReportInstance.details[j].max - courseReportInstance.details[j].min
+                    table += "<tr><td>Objective " + courseReportInstance.details[j].objective.prefix + "</td><td>" + courseReportInstance.details[j].max + "</td><td>" + courseReportInstance.details[j].min + "</td><td>" + String.valueOf(delta) + "</td></tr>"
+                }
+            }
+            table += "</table></br>"
+
+            table += createBarGraph(graph_number, "Objective " + courseReportInstance.details[0].objective.prefix, courseReportInstance.details[0].max, courseReportInstance.details[0].min, courseReportInstance.details[0].max - courseReportInstance.details[0].min)
+            graph_number = graph_number + 1
+        }
+
+        return table
+    }
+
+    def createTable(CourseReport courseReportInstance) {
+        String table = ""
+
+        //int graph_number = 0
+
+        // Emphasize outcomes
+        table += createOutcomes(courseReportInstance)
+
+        return table
+    }
+
+    def createOutcomes(CourseReport courseReportInstance) {
+        String table = ""
+        String buttons = "<div class=\"tab\" style=\"text-align: center\">"
+
+        int graph_number = 0
+
+        //table+= "</br><div id=\"Report\" style=\"text-align: center\"><span style=\"font-weight:bold; font-size: 24px\">Outcomes</span></br></br>"
+
+        for (StudentOutcome studentOutcome : StudentOutcome.getAll()) { // Iterate through all outcomes
+            buttons += createButtons(courseReportInstance, studentOutcome)
+            table += addMethodData(courseReportInstance, studentOutcome, graph_number)
+            graph_number = graph_number + 100
+        }
+
+        // table += "</div>"
+
+        buttons += "</div></br>" + table
+
+        return buttons
+    }
+
+    def createButtons(CourseReport courseReportInstance, StudentOutcome outcome) {
+
+        String buttons = ""
+
+        for (CourseReportObjective reportObjective : courseReportInstance.objectives) {
+            if (objectiveHasOutcome(reportObjective, outcome)) {
+                buttons += "<button class=\"tablinks\" onclick=\"SetupTabs(event, 'Student Performance " + outcome.prefix + "')\">Student Performance " + outcome.prefix + "</button>"
+                return buttons
+            }
+        }
+
+        return buttons
+    }
+
+    def addMethodData(CourseReport courseReportInstance, StudentOutcome outcome, int graph_number) {
+        String returner = ""
+
+        String graph = "<div id=\"graphs\">"
+        boolean table_started = false // To make sure headers aren't created multiple times
+
+        boolean create_score_subnote = false // whether or not to make a footnote about a low %
+        boolean create_delta_subnote = false // whether or not to make a footnote about a high delta
+
+        for (CourseReportObjective reportObjective : courseReportInstance.objectives) {
+            if (objectiveHasOutcome(reportObjective, outcome)) {
+
+                if (!table_started) { // If table header hasn't been generated yet.
+                    returner += "<div id=\"Student Performance " + outcome.prefix + "\" class=\"tabcontent\" style=\"font-size: 20px; text-align: center; padding-top: 65px\">Student Performance " + outcome + "</span></br></br>"
+                    // Create title
+                    returner += "<div id=\"ReportTable\"><table style=\"font-size: 16px; text-align: center; width:70%; margin-left:15%; margin-right:15%;\" border=\"1\" class=\"fixed\"><tr><th>Objective</th><th>Faculty Evaluations</th><th>Student Surveys</th><th>Delta</th></tr>"
+                    // Begin table
+                    table_started = true
+                }
+
+
+                returner += "<tr><td>" + reportObjective.objective.prefix + "</td>"
+                for (CourseReportOutcome reportOutcome : reportObjective.outcomes) {
+                    if (reportOutcome.outcome == outcome) {
+
+                        int score1 = -1
+                        int score2 = -1
+
+                        for (CourseReportMethod reportMethod : reportOutcome.methods) {
+                            if (reportMethod.percentage < 70) {
+                                returner += "<td><span style=\"font-weight:bold; color: red\">" + reportMethod.percentage + "%</span> <sup>1</sup></td>"
+                                create_score_subnote = true
+                            } else {
+                                returner += "<td>" + reportMethod.percentage + "%</td>"
+                            }
+                            if (score1 == -1) {
+                                score1 = reportMethod.percentage
+                            } else {
+                                score2 = reportMethod.percentage
+                            }
+                        }
+
+                        BigDecimal delta = findDelta(reportOutcome)
+
+                        if (delta > 15) {
+                            returner += "<td><span style=\"font-weight:bold; color: red\">" + delta.toString() + "%</span> <sup>2</sup></td></tr>"
+                            create_delta_subnote = true
+                        } else {
+                            returner += "<td>" + delta.toString() + "%</td></tr>"
+                        }
+
+                        graph += createBarGraph(graph_number, reportObjective.objective.prefix, score1, score2, delta, "Method 1", "Method 2")
+                        graph_number++
+                    }
+                }
+            }
+        }
+
+        if (table_started) {
+            graph += "</br><span style=\"text-align: center; color: blue; font-weight:bold; font-size: 16px\">Faculty Evaluation</span></br>"
+            graph += "<span style=\"text-align: center; color: Orange; font-weight:bold; font-size: 16px\">Student Surveys</span></br>"
+            graph += "<span style=\"text-align: center; color: Green; font-weight:bold; font-size: 16px\">Delta</span></br>"
+
+            returner += "</table>"
+
+
+
+            if (create_score_subnote) {
+                returner += "<span style=\"font-size: 12px\">1: This result does not meet expectations of 70% or greater.</span></br>"
+            }
+
+            if (create_delta_subnote) {
+                returner += "<span style=\"font-size: 12px\">2: In all cases delta must be 15% or less.</span></br>"
+            }
+
+            returner += "</br>" + graph + "</div>"
+
+            returner += "</br><form>Notes:</br><textarea style=\"width: 75%; height: 96px; word-wrap: break-word;\"></textarea>"
+            returner += "</br><form>Action Items:</br><textarea style=\"width: 75%; height: 96px; word-wrap: break-word;\"></textarea>"
+
+
+
+            returner += "</div></div>"
+
+        }
+
+        return returner
+    }
+
+    def createBarGraph(int graph_number, String label, BigDecimal score1, BigDecimal score2, BigDecimal delta, String Method1Label, String Method2Label) {
+        String graph = ""
+        graph += "<div id=\"graphDiv" + graph_number
+        graph += "\" style=\"top: 50%; left: 50%; display: inline-block; padding-right: 50px; padding-left: 50px; text-align: center\"><script>(function () {function createCanvas(divName) {var div = document.getElementById(divName);var canvas = document.createElement('canvas');div.appendChild(canvas);if (typeof G_vmlCanvasManager !== 'undefined') {canvas = G_vmlCanvasManager.initElement(canvas);}var ctx = canvas.getContext(\"2d\");return ctx;}var ctx = createCanvas(\"graphDiv" + graph_number
+        graph += "\");var graph = new BarGraph(ctx);graph.xAxisLabelArr = [\"\",\"" + label
+        graph += "\", \"\"];graph.update([" + score1
+        graph += ", " + score2
+        graph += ", " + delta
+        graph += "]);}());  </script></div>"
+
+        // Labels under graph
+
+
+        return graph
+    }
+
+
+    def findDelta(CourseReportOutcome outcome) {
+        BigDecimal delta = 0.0
+        for (CourseReportMethod reportMethod : outcome.methods) {
+            delta = reportMethod.percentage - delta
+        }
+        if (delta < 0) {
+            delta = delta * -1
+        }
+        return delta
+    }
+
+    def findDeltaFromScores(BigDecimal score1, BigDecimal score2) {
+        BigDecimal delta = 0.0
+        delta = score1 - score2
+        if (delta < 0) {
+            delta = delta * -1
+        }
+        return delta
+    }
+
+
+    def objectiveHasOutcome(CourseReportObjective reportObjective, StudentOutcome outcome) {
+        for (CourseReportOutcome reportOutcome : reportObjective.outcomes) {
+            if (reportOutcome.getOutcome() == outcome) {
+                return true
+            }
+        }
+        return false
+    }
+
+    def createStudentOutcomeReport() {
+
+    }
+
+    def createFullButtonOverlay() {
+        String buttons = ""
+
+        for (StudentOutcome studentOutcome : StudentOutcome.getAll()) { // Iterate through all outcomes
+            buttons += "<button class=\"tablinks\" onclick=\"SetupTabs(event, 'Student Performance " + studentOutcome.prefix + "')\">Student Performance " + studentOutcome.prefix + "</button>"
+        }
+
+        return buttons
+    }
+
+    def checkIfCourseHasOutcome(Course course, StudentOutcome outcome) {
+        for (CourseObjective Objective : course.objectives) {
+            for (StudentOutcome otcm : Objective.reinforceOutcomes) {
+                if (otcm == outcome) {
+                    return true
+                }
+            }
+            for (StudentOutcome otcm : Objective.emphasizeOutcomes) {
+                if (otcm == outcome) {
+                    return true
+                }
+            }
+        }
+
+        return false
+    }
+
+    def checkIfCourseReportHasCourse(Course course, CourseReport csreport) {
+        if (csreport.section.course == course) {
+            return true
+        }
+
+        return false
+    }
+
+    def createSOReport() {
+
+        def graph_number = 0
+        String returner = ""
+        StudentOutcome.list().each { StudentOutcome so ->
+            List<SOReportData> DataForSO = []
+            Course.list().each { Course course ->
+                if (checkIfCourseHasOutcome(course, so)) {
+                    List<CourseReport> lister = []
+                    for (CourseReport csreport : CourseReport.list()) {
+                        if (checkIfCourseReportHasCourse(course, csreport)) {
+                            lister.add(csreport)
+                            graph_number += 100
+                        }
+                    }
+                    DataForSO.add(createSOReportData(lister, so))
+                }
+
+
+            }
+
+            returner += createSOReportDetails(DataForSO, graph_number, so)
+
+        }
+
+        return returner
+    }
+
+    def createSOReportDetails(List<SOReportData> Datas, Integer graph_number, StudentOutcome outcome) {
+        String returner = ""
+        String graph = "<div id=\"graphs\">"
+
+        def create_score_subnote = false
+        def create_delta_subnote = false
+
+
+        returner += "<div id=\"Student Performance " + outcome.prefix + "\" class=\"tabcontent\" style=\"font-size: 20px; text-align: center; padding-top: 65px\">Student Performance " + outcome + "</span></br></br>"
+
+        if (Datas.size() == 0) {
+            returner += "<span style=\"font-style: italic; font-size: 16px;\">There doesn't seem to be any courses assigned to this outcome in the system.</span></div>"
+            return returner
+        }
+
+        // Create title
+        returner += "<div id=\"ReportTable\"><table style=\"font-size: 16px; text-align: center; width:70%; margin-left:15%; margin-right:15%;\" border=\"1\" class=\"fixed\"><tr><th>Course</th><th>Faculty Evaluations</th><th>Student Surveys</th><th>Delta</th></tr>"
+
+
+
+        Datas.each { SOReportData datas ->
+            returner += "<tr><td>" + datas.name + "</td>"
+            if (datas.score1 < 70) {
+                returner += "<td><span style=\"font-weight:bold; color: red\">" + datas.score1 + "%</span> <sup>1</sup></td>"
+                create_score_subnote = true
+            } else {
+                returner += "<td>" + datas.score1 + "%</td>"
+            }
+
+            if (datas.score2 < 70) {
+                returner += "<td><span style=\"font-weight:bold; color: red\">" + datas.score2 + "%</span> <sup>1</sup></td>"
+                create_score_subnote = true
+            } else {
+                returner += "<td>" + datas.score2 + "%</td>"
+            }
+
+            if (datas.delta > 15) {
+                returner += "<td><span style=\"font-weight:bold; color: red\">" + datas.delta + "%</span> <sup>2</sup></td></tr>"
+                create_delta_subnote = true
+            } else {
+                returner += "<td>" + datas.delta + "%</td></tr>"
+            }
+
+
+            graph += createBarGraph(graph_number, datas.name, datas.score1, datas.score2, datas.delta, "Method 1", "Method 2")
+            graph_number++
+        }
+
+
+
+
+        graph += "</br><span style=\"text-align: center; color: blue; font-weight:bold; font-size: 16px\">Faculty Evaluation</span></br>"
+        graph += "<span style=\"text-align: center; color: Orange; font-weight:bold; font-size: 16px\">Student Surveys</span></br>"
+        graph += "<span style=\"text-align: center; color: Green; font-weight:bold; font-size: 16px\">Delta</span></br>"
+
+
+        returner += "</table>"
+
+        if (create_score_subnote) {
+            returner += "<span style=\"font-size: 12px\">1: This result does not meet expectations of 70% or greater.</span></br>"
+        }
+
+        if (create_delta_subnote) {
+            returner += "<span style=\"font-size: 12px\">2: In all cases delta must be 15% or less.</span></br>"
+        }
+
+        returner += "</br>" + graph + "</div>"
+
+        returner += "</br><form>Notes:</br><textarea style=\"width: 75%; height: 96px; word-wrap: break-word;\"></textarea>"
+        returner += "</br><form>Action Items:</br><textarea style=\"width: 75%; height: 96px; word-wrap: break-word;\"></textarea>"
+        returner += "</div></div>"
+
+
+
+        return returner
+
+    }
+
+    def createSOReportData(List<CourseReport> lister, StudentOutcome StudentOutcomeToBeAssessed) {
+
+        def scores1 = 0
+        def scores2 = 0
+
+        def studentcount1 = 0
+        def studentcount2 = 0
+
+        def avg1 = 0
+        def avg2 = 0
+
+        def coursename = ""
+
+        lister.each { CourseReport csreport ->
+            csreport.objectives.each { CourseReportObjective obj ->
+                if (objectiveHasOutcome(obj, StudentOutcomeToBeAssessed)) {
+                    obj.outcomes.each { CourseReportOutcome stdo ->
+                        if (stdo.outcome == StudentOutcomeToBeAssessed) {
+                            scores1 += (stdo.methods[0].percentage * csreport.section.students)
+                            scores2 += (stdo.methods[1].percentage * csreport.section.students)
+
+                            studentcount1 += csreport.section.students
+                            studentcount2 += csreport.section.students
+
+                            coursename = csreport.section.course.name
+                        }
+                    }
+                }
+
+
+            }
+        }
+
+        avg1 = scores1/studentcount1
+        avg2 = scores2/studentcount2
+
+        avg1 = avg1.round(new MathContext(4))
+        avg2 = avg2.round(new MathContext(4))
+
+        def returner = new SOReportData()
+
+        returner.name = coursename
+        returner.score1 = avg1
+        returner.score2 = avg2
+        returner.delta = findDeltaFromScores(avg1, avg2)
+
+
+        return returner
+    }
+
+
+    private class SOReportData {
+        String name = ""
+        def score1 = 0
+        def score2 = 0
+        def delta = 0
+    }
+
+}

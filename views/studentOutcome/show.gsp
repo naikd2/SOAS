@@ -1,5 +1,5 @@
 
-<%@ page import="com.thinksoas.StudentOutcome" %>
+<%@ page import="com.thinksoas.data.StudentOutcome" %>
 <!DOCTYPE html>
 <html>
 	<head>
@@ -15,6 +15,7 @@
 
 
 
+
 	<div class="col-md-10 main">
 		<ul class="list-group">
   			<li class="list-group-item active">
@@ -27,7 +28,6 @@
 
 		</ul>
 
-			</ol>
 			<g:form url="[resource:studentOutcomeInstance, action:'delete']" method="DELETE">
 				<fieldset class="buttons">
 					<g:link class="edit" action="edit" resource="${studentOutcomeInstance}"><g:message code="default.button.edit.label" default="Edit" /></g:link>

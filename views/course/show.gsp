@@ -1,7 +1,7 @@
 
-<%@ page import="com.thinksoas.Course" %>
-<%@ page import="com.thinksoas.Class" %>
-<%@ page import="com.thinksoas.Programs" %>
+<%@ page import="com.thinksoas.data.Course" %>
+<%@ page import="com.thinksoas.data.Class" %>
+<%@ page import="com.thinksoas.data.Program" %>
 
 <!DOCTYPE html>
 <html>
@@ -13,8 +13,8 @@
 	<body>
 
 <g:if test="${errorMessage}">
-  <div class="alert alert-danger alert-dismissable" >
-  </div>
+  %{--<div class="alert alert-danger alert-dismissable" >--}%
+  %{--</div>--}%
 </g:if>
 
 <div class="container-fluid">

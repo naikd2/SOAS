@@ -1,5 +1,5 @@
-<%@ page import="com.thinksoas.Course" %>
-<%@ page import="com.thinksoas.Programs" %>
+<%@ page import="com.thinksoas.data.Course" %>
+<%@ page import="com.thinksoas.data.Program" %>
 
 <!DOCTYPE html>
 <html>
@@ -10,10 +10,9 @@
 	</head>
 	<body>
 
-<div class="container-fluid">
       <div class="row">
 
-		  <div class="col-sm-10 main">
+		  <div class="col-sm-10">
 
           <h2>Course List</h2>
 		  <g:link controller="Course" action="create">
@@ -61,5 +60,8 @@
 			<div class="pagination">
 				%{-- <g:paginate total="${courseInstanceCount ?: 0}" /> --}%
 			</div>
+			  </div>
+		  </div>
+	  </div>
 	</body>
 </html>
