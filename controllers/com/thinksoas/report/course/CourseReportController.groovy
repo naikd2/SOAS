@@ -11,6 +11,8 @@ import grails.plugin.springsecurity.annotation.Secured
 import com.thinksoas.data.Class
 
 import com.thinksoas.data.StudentOutcome
+import com.thinksoas.data.Program
+import com.thinksoas.report.improvement.ImprovementReportService
 
 @Secured(['ROLE_ADMIN', 'ROLE_USER'])
 @Transactional(readOnly = true)
@@ -18,12 +20,13 @@ class CourseReportController {
 
     static allowedMethods = [save: "POST", update: "PUT", delete: "DELETE"]
 
+    def improvementReportService
+
     def modal() {
 
     }
 
     def modal2() {
-        println("hello")
         redirect action: "index"
     }
 
@@ -43,13 +46,25 @@ class CourseReportController {
 
     def report(CourseReport courseReportInstance) {
         String report = createTable(courseReportInstance)
-        [courseReportInstance: courseReportInstance, report: report]
+
+        def tabs = []
+
+        for (StudentOutcome outcome : StudentOutcome.findAll()) {
+            for (CourseReportObjective reportObjective : courseReportInstance.objectives) {
+                if (objectiveHasOutcome(reportObjective, outcome)) {
+                    tabs.add(outcome)
+                    break;
+                }
+            }
+        }
+
+
+        [courseReportInstance: courseReportInstance, report: report, tabs: tabs]
     }
 
+    @Transactional
     def SO() {
-        String report = "<div class=\"tab\" style=\"text-align: center\">" + createFullButtonOverlay() + "</div>"
-        report += createSOReport()
-        [report: report]
+        improvementReportService.calculate()
     }
 
     @Transactional
@@ -131,69 +146,6 @@ class CourseReportController {
             '*'{ render status: NOT_FOUND }
         }
     }
-    def createReinforceOutcomes(CourseReport courseReportInstance) {
-        String table = ""
-
-        table += "<div style=\"text-align: center; font-size: 200%;\"></br><span style=\"font-weight:bold\">Reinforce Outcomes</span></br>"
-
-        for (int i = 0; i < courseReportInstance.details[0].objective.reinforceOutcomes.size(); i++) {
-            table += "Student Performance (" + courseReportInstance.details[0].objective.reinforceOutcomes[i].prefix + ")</br>"
-
-            table += "<span style= \"font-size: 50%; font-style: italic;\">" + courseReportInstance.details[0].objective.reinforceOutcomes[i].description + "</span></br>"
-
-            int delta = courseReportInstance.details[0].max - courseReportInstance.details[0].min
-
-            table += "<table style=\"text-align: center; font-size: 75%;  width:50%; margin-left:25%; margin-right:25%;\" border=\"1\" class=\"fixed\"><tr><td></td><th>" + courseReportInstance.details[0].instrument + "</th><th>" + courseReportInstance.details[0].instrument + "</th><th>Delta</th></tr>"
-
-            delta = courseReportInstance.details[0].max - courseReportInstance.details[0].min
-
-            table += "<tr><td>Objective " + courseReportInstance.details[0].objective.prefix + "</td><td>" + courseReportInstance.details[0].max + "</td><td>" + courseReportInstance.details[0].min + "</td><td>" + String.valueOf(delta) + "</td></tr>"
-
-            for (int j = 1; j < courseReportInstance.details.size(); j++) {
-                if (objectiveHasOutcome(courseReportInstance.details[j].objective, courseReportInstance.details[0].objective.reinforceOutcomes[i].prefix)) {
-                    delta = courseReportInstance.details[j].max - courseReportInstance.details[j].min
-                    table += "<tr><td>Objective " + courseReportInstance.details[j].objective.prefix + "</td><td>" + courseReportInstance.details[j].max + "</td><td>" + courseReportInstance.details[j].min + "</td><td>" + String.valueOf(delta) + "</td></tr>"
-                }
-            }
-            table += "</table></br>"
-
-            table += createBarGraph(graph_number, "Objective " + courseReportInstance.details[0].objective.prefix, courseReportInstance.details[0].max, courseReportInstance.details[0].min, courseReportInstance.details[0].max - courseReportInstance.details[0].min)
-            graph_number = graph_number + 1
-        }
-
-        return table
-    }
-
-    def createEmphasizeOutcomes(CourseReport courseReportInstance) {
-        String table = ""
-
-        table += "</br><span style=\"font-weight:bold\">Emphasize Outcomes</span></br>"
-
-        for (int i = 0; i < courseReportInstance.details[0].objective.emphasizeOutcomes.size(); i++) {
-            table += "Student Performance (" + courseReportInstance.details[0].objective.emphasizeOutcomes[i].prefix + ")</br>"
-
-            table += "<span style= \"font-size: 50%; font-style: italic;\">" + courseReportInstance.details[0].objective.emphasizeOutcomes[i].description + "</span></br>"
-
-            table += "<table style=\"text-align: center; font-size: 75%;  width:50%; margin-left:25%; margin-right:25%;\" border=\"1\" class=\"fixed\"><tr><td></td><th>" + courseReportInstance.details[0].instrument + "</th><th>" + courseReportInstance.details[0].instrument + "</th><th>Delta</th></tr>"
-
-            int delta = courseReportInstance.details[0].max - courseReportInstance.details[0].min
-
-            table += "<tr><td>Objective " + courseReportInstance.details[0].objective.prefix + "</td><td>" + courseReportInstance.details[0].max + "</td><td>" + courseReportInstance.details[0].min + "</td><td>" + String.valueOf(delta) + "</td></tr>"
-
-            for (int j = 1; j < courseReportInstance.details.size(); j++) {
-                if (objectiveHasOutcome(courseReportInstance.details[j].objective, courseReportInstance.details[0].objective.emphasizeOutcomes[i].prefix)) {
-                    delta = courseReportInstance.details[j].max - courseReportInstance.details[j].min
-                    table += "<tr><td>Objective " + courseReportInstance.details[j].objective.prefix + "</td><td>" + courseReportInstance.details[j].max + "</td><td>" + courseReportInstance.details[j].min + "</td><td>" + String.valueOf(delta) + "</td></tr>"
-                }
-            }
-            table += "</table></br>"
-
-            table += createBarGraph(graph_number, "Objective " + courseReportInstance.details[0].objective.prefix, courseReportInstance.details[0].max, courseReportInstance.details[0].min, courseReportInstance.details[0].max - courseReportInstance.details[0].min)
-            graph_number = graph_number + 1
-        }
-
-        return table
-    }
 
     def createTable(CourseReport courseReportInstance) {
         String table = ""
@@ -233,6 +185,7 @@ class CourseReportController {
 
         for (CourseReportObjective reportObjective : courseReportInstance.objectives) {
             if (objectiveHasOutcome(reportObjective, outcome)) {
+                println("Hello")
                 buttons += "<button class=\"tablinks\" onclick=\"SetupTabs(event, 'Student Performance " + outcome.prefix + "')\">Student Performance " + outcome.prefix + "</button>"
                 return buttons
             }
@@ -243,12 +196,18 @@ class CourseReportController {
 
     def addMethodData(CourseReport courseReportInstance, StudentOutcome outcome, int graph_number) {
         String returner = ""
+        String returner2 = ""
 
         String graph = "<div id=\"graphs\">"
         boolean table_started = false // To make sure headers aren't created multiple times
 
         boolean create_score_subnote = false // whether or not to make a footnote about a low %
         boolean create_delta_subnote = false // whether or not to make a footnote about a high delta
+        def settings = com.thinksoas.data.Program.findBySettings("SETTINGS")
+
+
+        BigDecimal target = settings.performanceTarget
+        BigDecimal deltaTarget = settings.deltaValue
 
         for (CourseReportObjective reportObjective : courseReportInstance.objectives) {
             if (objectiveHasOutcome(reportObjective, outcome)) {
@@ -270,7 +229,7 @@ class CourseReportController {
                         int score2 = -1
 
                         for (CourseReportMethod reportMethod : reportOutcome.methods) {
-                            if (reportMethod.percentage < 70) {
+                            if (reportMethod.percentage < target) {
                                 returner += "<td><span style=\"font-weight:bold; color: red\">" + reportMethod.percentage + "%</span> <sup>1</sup></td>"
                                 create_score_subnote = true
                             } else {
@@ -285,7 +244,7 @@ class CourseReportController {
 
                         BigDecimal delta = findDelta(reportOutcome)
 
-                        if (delta > 15) {
+                        if (delta > deltaTarget) {
                             returner += "<td><span style=\"font-weight:bold; color: red\">" + delta.toString() + "%</span> <sup>2</sup></td></tr>"
                             create_delta_subnote = true
                         } else {
@@ -294,6 +253,14 @@ class CourseReportController {
 
                         graph += createBarGraph(graph_number, reportObjective.objective.prefix, score1, score2, delta, "Method 1", "Method 2")
                         graph_number++
+                        returner2 += "<form action=\"/soas/courseReport/myExampleAction/${reportOutcome.id}\">"
+                       // returner2 += "</br>Objective ${reportObjective.objective.prefix}:</br><a href=\"${createLink(action: 'myExampleAction', id: "")}\">save</a>"
+
+                        returner2 += "</br>Notes/Action Items: Objective ${reportOutcome.objective.objective.prefix}</br>" +
+                                "<textarea class=\"form-control\" rows=\"5\" name=\"notes\">${reportOutcome.notes} </textarea>"
+                        returner2 += "<input type=\"submit\" name=\"create\" class=\"btn btn-primary btn-block\" value=\"Save\" id=\"create\">"
+                        returner2 += "</form>"
+
                     }
                 }
             }
@@ -309,25 +276,49 @@ class CourseReportController {
 
 
             if (create_score_subnote) {
-                returner += "<span style=\"font-size: 12px\">1: This result does not meet expectations of 70% or greater.</span></br>"
+                returner += "<span style=\"font-size: 12px\">1: This result does not meet expectations of " +
+                        target +
+                        "% or greater.</span></br>"
             }
 
             if (create_delta_subnote) {
-                returner += "<span style=\"font-size: 12px\">2: In all cases delta must be 15% or less.</span></br>"
+                returner += "<span style=\"font-size: 12px\">2: In all cases delta must be " +
+                        deltaTarget +
+                        "% or less.</span></br>"
             }
 
             returner += "</br>" + graph + "</div>"
-
-            returner += "</br><form>Notes:</br><textarea style=\"width: 75%; height: 96px; word-wrap: break-word;\"></textarea>"
-            returner += "</br><form>Action Items:</br><textarea style=\"width: 75%; height: 96px; word-wrap: break-word;\"></textarea>"
-
-
+            returner += returner2
 
             returner += "</div></div>"
 
         }
 
         return returner
+    }
+
+    @Transactional
+    def myExampleAction(long id) {
+        def rOutcome = CourseReportOutcome.findById(id)
+        rOutcome.setNotes(params.notes)
+        rOutcome.setActionItems(params.notes)
+        rOutcome.save(flush: true)
+        println(rOutcome)
+        println("my action:" + params.notes)
+        println("my id:" + id)
+        redirect(action: index())
+    }
+
+    @Transactional
+    def myExampleAction2(long id) {
+        def rImprovement = com.thinksoas.report.improvement.ImprovementReport.findById(id)
+        rImprovement.setNotes(params.notes)
+        rImprovement.setActionItem(params.actionitems)
+        rImprovement.save(flush: true)
+        println(rImprovement)
+        println("my action:" + params.notes)
+        println("my id:" + id)
+        redirect(action: SO())
     }
 
     def createBarGraph(int graph_number, String label, BigDecimal score1, BigDecimal score2, BigDecimal delta, String Method1Label, String Method2Label) {
@@ -418,28 +409,8 @@ class CourseReportController {
 
     def createSOReport() {
 
-        def graph_number = 0
-        String returner = ""
-        StudentOutcome.list().each { StudentOutcome so ->
-            List<SOReportData> DataForSO = []
-            Course.list().each { Course course ->
-                if (checkIfCourseHasOutcome(course, so)) {
-                    List<CourseReport> lister = []
-                    for (CourseReport csreport : CourseReport.list()) {
-                        if (checkIfCourseReportHasCourse(course, csreport)) {
-                            lister.add(csreport)
-                            graph_number += 100
-                        }
-                    }
-                    DataForSO.add(createSOReportData(lister, so))
-                }
-
-
-            }
 
             returner += createSOReportDetails(DataForSO, graph_number, so)
-
-        }
 
         return returner
     }
@@ -524,14 +495,14 @@ class CourseReportController {
 
     def createSOReportData(List<CourseReport> lister, StudentOutcome StudentOutcomeToBeAssessed) {
 
-        def scores1 = 0
-        def scores2 = 0
+        BigDecimal scores1 = 0
+        BigDecimal scores2 = 0
 
-        def studentcount1 = 0
-        def studentcount2 = 0
+        BigDecimal studentcount1 = 0
+        BigDecimal studentcount2 = 0
 
-        def avg1 = 0
-        def avg2 = 0
+        BigDecimal avg1 = 0
+        BigDecimal avg2 = 0
 
         def coursename = ""
 
@@ -555,8 +526,8 @@ class CourseReportController {
             }
         }
 
-        avg1 = scores1/studentcount1
-        avg2 = scores2/studentcount2
+        avg1 =  scores1.divide(studentcount1)
+        avg2 = scores2.divide(studentcount2)
 
         avg1 = avg1.round(new MathContext(4))
         avg2 = avg2.round(new MathContext(4))

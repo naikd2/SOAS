@@ -44,7 +44,7 @@ class ClassController {
         classInstance.save flush:true
         // Create Report
         def report = classService.generateCourseReport2(classInstance.getId())
-        report.save flush:true
+        def v = report.save flush:true
         // Create Message for user input
         // messageService.createMessagesForClassReport(classInstance.getId(), classInstance.professor)
 

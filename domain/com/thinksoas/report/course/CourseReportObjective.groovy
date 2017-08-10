@@ -21,8 +21,4 @@ class CourseReportObjective {
     }
     static constraints = {
     }
-
-    String toString() {
-        "$report - $objective"
-    }
 }

@@ -165,7 +165,7 @@ jQuery(document).ready( function() {
 
 <div class="form-group ${hasErrors(bean: courseInstance, field: 'units', 'error')} required">
 	<label for="units">
-		<g:message code="course.units.label" default="Units" />
+		<g:message code="course.units.label" default="Units/Credits" />
 		<span class="required-indicator">*</span>
 	</label>
 	<input type="text" class="form-control" name="units" required="" value="${courseInstance?.units}"/>

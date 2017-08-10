@@ -13,12 +13,19 @@ class OutcomeReportController {
 
     static allowedMethods = [save: "POST", update: "PUT", delete: "DELETE"]
 
+    def outcomeReportService
+
+
     def index(Integer max) {
         params.max = Math.min(max ?: 10, 100)
         respond OutcomeReport.list(params), model:[outcomeReportInstanceCount: OutcomeReport.count()]
     }
 
     def show(OutcomeReport outcomeReportInstance) {
+
+
+
+
         def program = Program.findBySettings("SETTINGS")
         respond outcomeReportInstance,   model:[settings: program]
     }
@@ -29,6 +36,7 @@ class OutcomeReportController {
 
     @Transactional
     def save(OutcomeReport outcomeReportInstance) {
+
         if (outcomeReportInstance == null) {
             notFound()
             return
@@ -49,6 +57,80 @@ class OutcomeReportController {
             '*' { respond outcomeReportInstance, [status: CREATED] }
         }
     }
+
+    def createCriteria() {
+        def report = OutcomeReport.findById(params.reportId)
+
+        def selectedOutcome = report.outcome
+
+        def queryReinforce = com.thinksoas.data.CourseObjective.findAll {
+            reinforceOutcomes.prefix == selectedOutcome.prefix
+        }
+        def queryEmpasized = com.thinksoas.data.CourseObjective.findAll {
+            emphasizeOutcomes.prefix == selectedOutcome.prefix
+        }
+        def objectives = queryReinforce + queryEmpasized
+
+        respond new OutcomeReportCriteria(params), model:[objectiveQuery: objectives, soReport: report.id]
+    }
+
+    @Transactional
+    def saveCriteria(OutcomeReportCriteria outcomeReportCriteriaInstance) {
+
+        if (outcomeReportCriteriaInstance == null) {
+            notFound()
+            return
+        }
+
+        if (outcomeReportCriteriaInstance.hasErrors()) {
+            respond outcomeReportCriteriaInstance.errors, view:'create'
+            return
+        }
+
+        def reportId = outcomeReportCriteriaInstance.reportId
+
+        outcomeReportCriteriaInstance.save()
+        saveMethodsToObjectives(outcomeReportCriteriaInstance)
+
+        outcomeReportService.updateImprovementReport(outcomeReportCriteriaInstance.report)
+
+        redirect (controller: "outcomeReport", action: "show", id: reportId)
+
+    }
+
+    @Transactional
+    def saveMethodsToObjectives(OutcomeReportCriteria outcomeReportCriteriaInstance) {
+        com.thinksoas.data.CourseObjective obj = outcomeReportCriteriaInstance.objective
+        obj.method1 = params.objMethodOne
+        obj.method2 = params.objMethodTwo
+
+        obj.save()
+    }
+
+
+    @Transactional
+    def deleteCriteria(OutcomeReportCriteria outcomeReportCriteriaInstance) {
+        if (outcomeReportCriteriaInstance == null) {
+            notFound()
+            return
+        }
+        def reportId = outcomeReportCriteriaInstance.reportId
+
+        outcomeReportCriteriaInstance.delete flush:true
+
+
+        outcomeReportService.updateImprovementReport(OutcomeReport.findById(reportId))
+
+
+        redirect (controller: "outcomeReport", action: "show", id: reportId)
+    }
+
+    def objectiveChanged() {
+        com.thinksoas.data.CourseObjective objective = com.thinksoas.data.CourseObjective.findById(params.objective)
+        def settings = Program.findBySettings("SETTINGS")
+        render(view: "_objectiveChanged", model: [desc: objective.description, methods: settings.methods])
+    }
+
 
     def edit(OutcomeReport outcomeReportInstance) {
         respond outcomeReportInstance

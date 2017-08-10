@@ -6,15 +6,15 @@ class OutcomeReportCriteria {
 
     OutcomeReport report
     CourseObjective objective
-    List<OutcomeReportAssessment> assessments = []
+    String description
 
     static belongsTo = [report: OutcomeReport]
-    static hasMany = [assessments: OutcomeReportAssessment]
 
     static constraints = {
     }
 
-    String toString() {
-        "$report"
+    static mapping = {
+        description sqlType:"text"
     }
+
 }

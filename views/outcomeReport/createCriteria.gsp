@@ -21,13 +21,15 @@
 							</g:eachError>
 						</ul>
 					</g:hasErrors>
-					<g:form url="[resource:performanceCriteriaInstance, action:'save']" >
+					<g:form url="[resource:performanceCriteriaInstance, action:'saveCriteria']" >
 						<fieldset class="form">
-							<g:render template="form"/>
+							<g:render template="formCriteria"/>
 						</fieldset>
-						<fieldset class="buttons">
-							<g:submitButton name="create" class="save" value="${message(code: 'default.button.create.label', default: 'Create')}" />
-						</fieldset>
+						<div class="col-sm-10">
+							<fieldset class="buttons">
+								<g:submitButton name="create" class="btn btn-primary btn-block" value="${message(code: 'default.button.create.label', default: 'Create')}" />
+							</fieldset>
+						</div>
 					</g:form>
 				</div>
 			</div>

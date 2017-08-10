@@ -6,6 +6,8 @@ class CourseReportOutcome {
 
     CourseReportObjective objective
     StudentOutcome outcome
+    String notes = ""
+    String actionItems = ""
     List<CourseReportMethod> methods = []
 
     static belongsTo = [objective: CourseReportObjective]
@@ -17,7 +19,14 @@ class CourseReportOutcome {
         this.outcome = outcome
     }
 
+    static mapping = {
+        notes sqlType:"text"
+        actionItems sqlType:"text"
+    }
+
     static constraints = {
+        notes(nullable: true)
+        actionItems(nullable: true)
     }
 
     String toString() {

@@ -12,6 +12,8 @@ class StudentOutcomeController {
 
     static allowedMethods = [save: "POST", update: "PUT"]
 
+    def studentOutcomeService
+
     def index(Integer max) {
         params.max = 100
         respond StudentOutcome.list(params), model:[studentOutcomeInstanceCount: StudentOutcome.count()]
@@ -40,8 +42,9 @@ class StudentOutcomeController {
         }
 
         studentOutcomeInstance.save flush:true
-        def report = new OutcomeReport(outcome: studentOutcomeInstance)
-        report.save()
+
+        studentOutcomeService.createReports(studentOutcomeInstance)
+
         request.withFormat {
             form multipartForm {
                 flash.message = message(code: 'default.created.message', args: [message(code: 'studentOutcome.label', default: 'StudentOutcome'), studentOutcomeInstance.id])

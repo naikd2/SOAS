@@ -30,10 +30,8 @@ class CourseWorkController {
         CourseReport report = CourseReport.findById(id)
         println(report.section)
         if (report != null) {
-            def file = request.getFile('file')
-            if(file.empty) {
-                flash.message = "File cannot be empty"
-            } else {
+            def files = request.getFiles("file[]")
+            for (def file : files) {
                 def work = new CourseWork(report: report)
                 work.filename = file.originalFilename
                 work.fullPath = grailsApplication.config.uploadFolder + work.filename

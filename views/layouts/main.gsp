@@ -124,10 +124,9 @@
     <div class="row">
 
         <g:if test="${request.requestURI != '/soas/'}">
-
             <div class="col-sm-1">
                 <ul class="nav nav-pills nav-stacked">
-                    <li class="active"><a href="..">Return</a></li>
+                    <li class="active"><a href="${request.getHeader('referer')}">Return</a></li>
                     <li><a href="${createLink(controller:'StudentOutcome', action:'index')}">Student Outcomes</a></li>
                     <li><a href="${createLink(controller:'Course', action:'index')}">Courses</a></li>
                     <li><a href="${createLink(controller:'Class', action:'index')}">Classes</a></li>
@@ -153,6 +152,13 @@
 
     </div>
 </div>
+
+<script>
+    function goBack() {
+        window.history.back()
+    }
+</script>
+
 <div class="footer" role="contentinfo"></div>
 <div id="spinner" class="spinner" style="display:none;"><g:message code="spinner.alt" default="Loading&hellip;"/></div>
 <r:layoutResources/>

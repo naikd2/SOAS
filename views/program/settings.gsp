@@ -6,7 +6,7 @@
 <html>
   <head>
     <meta name="layout" content="main">
-    <title><g:message code="default.show.label" args="[entityName]" /></title>
+    <title>Settings</title>
   </head>
   <body>
     <div class="container-fluid">
@@ -17,14 +17,14 @@
 
         <div class="main">
           <div class="table-responsive">
-          <h2 class="sub-header">Program Settings</h2>
-            <g:form url="[resource:programsInstance, action:'update']" method="PUT" >
+          <h2 class="sub-header">Program Settings </h2>
+            <g:form url="[resource:program, action:'update']" method="PUT" >
               <g:hiddenField name="version" value="${programsInstance?.version}" />
               <fieldset class="form">
                 <g:render template="form"/>
               </fieldset>
               <fieldset class="buttons">
-                <g:actionSubmit class="save" action="update" value="${message(code: 'default.button.update.label', default: 'Update')}" />
+                <g:actionSubmit class="btn btn-primary btn-block" action="update" value="${message(code: 'default.button.update.label', default: 'Update')}" />
               </fieldset>
             </g:form>
           </div>

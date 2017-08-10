@@ -1,7 +1,5 @@
 package com.thinksoas.data
 
-
-
 import static org.springframework.http.HttpStatus.*
 import grails.transaction.Transactional
 import grails.plugin.springsecurity.annotation.Secured
@@ -12,92 +10,41 @@ class ProgramController {
 
     static allowedMethods = [save: "POST", update: "PUT", delete: "DELETE"]
 
-    def index(Integer max) {
-        params.max = Math.min(max ?: 10, 100)
-        respond Program.list(params), model:[programInstanceCount: Program.count()]
-    }
-
     def show(Program programInstance) {
         respond programInstance
     }
 
-    def create() {
-        respond new Program(params)
-    }
-
     def settings() {
         def programsInstance = Program.findBySettings("SETTINGS")
-
-        respond programsInstance
+        respond programsInstance, model:[program: programsInstance]
     }
 
     @Transactional
-    def save(Program programInstance) {
-        if (programInstance == null) {
+    def update(Program program) {
+        println("Before..")
+
+        if (program == null) {
+            println("null..")
             notFound()
             return
         }
-
-        if (programInstance.hasErrors()) {
-            respond programInstance.errors, view:'create'
+        if (program.hasErrors()) {
+            println("errors..")
+            respond program.errors, view:'edit'
             return
         }
+//        println("Updating..")
+//        program.setAssessmentPeriod(params.assessmentPeriod)
+//        program.setPerformanceThreshold(params.performanceThreshold)
+//        program.setPerformanceTarget(params.performanceTarget)
+//        program.setDeltaValue(params.deltaValue)
+//        println("Saving..")
 
-        programInstance.save flush:true
+        program.save(flush: true)
 
-        request.withFormat {
-            form multipartForm {
-                flash.message = message(code: 'default.created.message', args: [message(code: 'program.label', default: 'Program'), programInstance.id])
-                redirect programInstance
-            }
-            '*' { respond programInstance, [status: CREATED] }
-        }
-    }
+        println("Saved")
 
-    def edit(Program programInstance) {
-        respond programInstance
-    }
-
-    @Transactional
-    def update(Program programInstance) {
-        if (programInstance == null) {
-            notFound()
-            return
-        }
-
-        if (programInstance.hasErrors()) {
-            respond programInstance.errors, view:'edit'
-            return
-        }
-
-        programInstance.save flush:true
-
-        request.withFormat {
-            form multipartForm {
-                flash.message = message(code: 'default.updated.message', args: [message(code: 'Program.label', default: 'Program'), programInstance.id])
-                redirect programInstance
-            }
-            '*'{ respond programInstance, [status: OK] }
-        }
-    }
-
-    @Transactional
-    def delete(Program programInstance) {
-
-        if (programInstance == null) {
-            notFound()
-            return
-        }
-
-        programInstance.delete flush:true
-
-        request.withFormat {
-            form multipartForm {
-                flash.message = message(code: 'default.deleted.message', args: [message(code: 'Program.label', default: 'Program'), programInstance.id])
-                redirect action:"index", method:"GET"
-            }
-            '*'{ render status: NO_CONTENT }
-        }
+        redirect(uri:'/')
     }
 
     @Transactional

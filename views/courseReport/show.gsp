@@ -19,7 +19,32 @@
         Instructor: ${courseReportInstance.section.professor.username}
     </h6>
     <h6>
-        Course: ${courseReportInstance.section}
+            <a href="#courseDetails" data-toggle="modal"
+               data-target="#courseDetails">
+                <span class="glyphicon glyphicon-book" aria-hidden="true"></span>
+                Course: ${courseReportInstance.section}
+            </a>
+
+        <div class="modal fade" id="courseDetails" tabindex="-1"
+             role="dialog"
+             aria-labelledby="myModalLabelCourse">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal"
+                                aria-label="Close"><span
+                                aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title" id="myModalLabelCourse">${courseReportInstance.section.course}</h4>
+                    </div>
+                        <div class="modal-body">
+                            <g:render template="/course/quickView" collection="${courseReportInstance.section.course}" var="course"/>
+                        </div>
+
+                        <div class="modal-footer">
+                        </div>
+                </div>
+            </div>
+        </div>
     </h6>
     <h6>
         Semester: ${courseReportInstance.section.semester}
@@ -203,10 +228,10 @@
                         aria-hidden="true">&times;</span></button>
                 <h4 class="modal-title" id="myModalLabel3">Upload Course Work</h4>
             </div>
-            <g:uploadForm controller="courseWork" action="upload" id="${courseReportInstance.id}" >
+            <g:uploadForm enctype='multipart/form-data' controller="courseWork" action="upload" id="${courseReportInstance.id}" >
                 <div class="modal-body">
                     <fieldset class="form">
-                        <input type="file" name="file"/>
+                        <input type="file" name="file[]" multiple />
                     </fieldset>
                 </div>
                 <div class="modal-footer">

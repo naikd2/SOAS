@@ -50,6 +50,12 @@
 
 
 		<div class="col-md-4">
+			<h2>Outcome Assessment Report</h2>
+			<p>Continuous Improvement Plan</p>
+			<p><a class="btn btn-default" href="${createLink(controller:'CourseReport', action:'SO')}"  role="button">Go To &raquo;</a></p>
+		</div>
+
+		<div class="col-md-4">
 			<h2>Course Report</h2>
 			<p>End of Semester Report</p>
 			<p><a class="btn btn-default" href="${createLink(controller:'CourseReport', action:'index')}"  role="button">Go To &raquo;</a></p>

@@ -78,13 +78,10 @@
 
 <div class="container-fluid">
     <div class="row">
-        <div class="col-sm-8">
+        <div class="col-sm-11">
             <ul class="list-group">
-                <li class="list-group-item active"> Course Report -
-                <g:fieldValue bean="${courseReportInstance}" field="section"/>:
+                <li class="list-group-item active"> Improvement Reports
                 </li>
-                <li class="list-group-item">Details:</li>
-                <li class="list-group-item">
                     <script>function SetupTabs(evt, cityName) {
                         // Declare all variables
                         var i, tabcontent, tablinks;
@@ -105,22 +102,114 @@
                         document.getElementById(cityName).style.display = "block";
                         evt.currentTarget.className += " active";
                     }</script>
-                    ${raw(report)}
+                <div class="tab" style="text-align: center">
+                    <g:each in="${com.thinksoas.data.StudentOutcome.findAll()}" var="studentOutcome" >
+                        <button class="tablinks" onclick="SetupTabs(event, '${studentOutcome.prefix}')">Student Performance ${studentOutcome.prefix}</button>
+                    </g:each>
+                </div>
+                    <g:each in="${com.thinksoas.data.StudentOutcome.findAll()}" var="studentOutcome" >
+                        <div id="${studentOutcome.prefix}" class="tabcontent" style="font-size: 20px; text-align: center; padding-top: 65px">Student Performance ${studentOutcome} </span></br></br>
+                        <g:set var="impReport" value="${com.thinksoas.report.improvement.ImprovementReport.findByOutcome(studentOutcome)}" />
+                        <g:set var="settings" value="${com.thinksoas.data.Program.findBySettings("SETTINGS")}" />
+                        ${settings}
+                        <g:if test="${impReport.courses.size() == 0}">
+                           <span style="font-style: italic; font-size: 16px;">Outcome plan has yet to be created.</span>
+                        </g:if>
+                        <g:else>
+                            <div>
+                                <div id="ReportTable">
+                                    <table style="font-size: 16px; text-align: center; width:70%; margin-left:15%; margin-right:15%;" border="1" class="fixed">
+                                        <tr>
+                                            <th>Course</th><th>Faculty Evaluations</th><th>Student Surveys</th>
+                                            <th>Delta</th>
+                                        </tr>
+                                        <g:each in="${impReport.courses}" var="course">
+                                            <tr>
+                                                <td> ${course.course}</td>
+                                                <g:set var="delta" value="${0}" />
 
+                                                <g:each in="${course.methods}" var="method">
+                                                    <g:set var="delta" value="${(delta - method.percentage).abs()}" />
 
-                </li>
+                                                    <g:if test="${method.percentage > settings.performanceTarget}" >
+                                                        <td>${method.percentage}</td>
+                                                    </g:if>
+                                                    <g:else>
+                                                        <td>
+                                                            <span style="font-weight:bold; color: red">
+                                                                ${method.percentage}
+                                                            </span><sup>1</sup>
+                                                        </td>
+                                                    </g:else>
+                                                </g:each>
+                                                <g:if test="${delta <= settings.deltaValue}" >
+                                                    <td>
+                                                        ${delta}
+                                                    </td>
+                                                </g:if>
+                                                <g:else>
+                                                    <td>
+                                                        <span style="font-weight:bold; color: red">
+                                                            ${delta}
+                                                        </span><sup>2</sup>
+                                                    </td>
+                                                </g:else>
+                                            </tr>
+                                        </g:each>
+                                    </table>
+                                </div>
+                                <span style="font-size: 12px">1: This result does not meet expectations of ${settings.performanceTarget}% or greater.</span><br>
+                                <span style="font-size: 12px">2: In all cases delta must be ${settings.deltaValue}% or less.</span><br>
+                                <g:each in="${impReport.courses}" var="course">
+                                    <g:set var="graph_number" value="${0}" />
+                                    <g:set var="method1" value="${course.methods.get(0).percentage}" />
+                                    <g:set var="method2" value="${course.methods.get(1).percentage}" />
+                                    <g:set var="delta" value="${(method1 - method2).abs()}" />
+                                    <div id="graphs">
+                                        <div id="graphDiv_SO${studentOutcome.prefix}_${graph_number}" style="top: 50%; left: 50%; display: inline-block; padding-right: 50px; padding-left: 50px; text-align: center">
+                                            <script>
+                                                (function () {
+                                                    function createCanvas(divName) {
+                                                        var div = document.getElementById(divName);
+                                                        var canvas = document.createElement('canvas');
+                                                        div.appendChild(canvas);
+                                                        if (typeof G_vmlCanvasManager !== 'undefined') {
+                                                            canvas = G_vmlCanvasManager.initElement(canvas);
+                                                        }
+                                                        var ctx = canvas.getContext("2d");
+                                                        return ctx;
+                                                    }
+                                                    var ctx = createCanvas("graphDiv_SO${studentOutcome.prefix}_${graph_number}");
+                                                    var graph = new BarGraph(ctx);
+                                                    graph.xAxisLabelArr = ["", "${course.course}", ""];
+                                                    graph.update(["${method1}", "${method2}", "${delta}"]);
+                                                }());
+                                            </script>
+                                        </div>
+                                        <g:set var="graph_number" value="${graph_number + 1}" />
+                                    </div>
+                                </g:each>
+
+                                <span style="text-align: center; color: blue; font-weight:bold; font-size: 16px">Faculty Evaluation</span><br>
+                                <span style="text-align: center; color: Orange; font-weight:bold; font-size: 16px">Student Surveys</span><br>
+                                <span style="text-align: center; color: Green; font-weight:bold; font-size: 16px">Delta</span><br>
+
+                                <form action="/soas/courseReport/myExampleAction2/${impReport.id}">
+                                    Notes
+                                    <textarea class="form-control" rows="5" name="notes">${impReport.notes}</textarea>
+                                    Action Items
+                                    <textarea class="form-control" rows="5" name="actionitems">${impReport.actionItem}</textarea>
+
+                                    <input type="submit" name="create" class="btn btn-primary btn-block" value="Save" id="create">
+                                </form>
+                            </div>
+                        </g:else>
+                        </div>
+                    </g:each>
             </ul>
         </div>
     </div>
-    <div class="row">
-        <div class="col-sm-4">
-
-        </div>
-    </div>
 </div>
-
-
-
-
 </body>
 </html>
+

@@ -7,11 +7,14 @@ import grails.transaction.Transactional
 import grails.plugin.springsecurity.annotation.Secured
 import com.thinksoas.data.*
 
+
 @Secured(['ROLE_ADMIN', 'ROLE_USER'])
 @Transactional(readOnly = true)
 class OutcomeReportCriteriaController {
 
     static allowedMethods = [save: "POST", update: "PUT"]
+    def outcomeReportService
+
 
     def index(Integer max) {
         params.max = Math.min(max ?: 10, 100)
@@ -50,15 +53,12 @@ class OutcomeReportCriteriaController {
             return
         }
 
-        outcomeReportCriteriaInstance.save flush:true
+        outcomeReportCriteriaInstance.save()
 
-        request.withFormat {
-            form multipartForm {
-                flash.message = message(code: 'default.created.message', args: [message(code: 'outcomeReportCriteria.label', default: 'OutcomeReportCriteria'), outcomeReportCriteriaInstance.id])
-                redirect (controller: "outcomeReport", action: "show", id: outcomeReportCriteriaInstance.report.id)
-            }
-            '*' { respond outcomeReportCriteriaInstance, [status: CREATED] }
-        }
+        println("REPORT SAVED ")
+        outcomeReportService.updateImprovementReport(outcomeReportCriteriaInstance.report)
+        println("REPORT SAVED ")
+        //redirect (controller: "outcomeReport", action: "index")
     }
 
     def edit(OutcomeReportCriteria outcomeReportCriteriaInstance) {
@@ -98,6 +98,10 @@ class OutcomeReportCriteriaController {
 
         outcomeReportCriteriaInstance.report.removeFromCriteria(outcomeReportCriteriaInstance)
         outcomeReportCriteriaInstance.delete flush:true
+
+        outcomeReportService.updateImprovementReport(OutcomeReport.findById(reportId))
+
+
         redirect (controller: "outcomeReport", action: "show", id: reportId)
     }
 

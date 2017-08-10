@@ -51,26 +51,26 @@
 		%{--Launch demo modal--}%
 	%{--</button>--}%
 
-	<div class="modal fade" id="addMethods" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-		<div class="modal-dialog" role="document">
-			<div class="modal-content">
-				<div class="modal-header">
-					<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-					<h4 class="modal-title" id="myModalLabel">Modal title</h4>
-				</div>
-				<div class="modal-body">
-					<label for="newMethod">
-						Methods
-					</label>
-					<g:textField name="newMethod" required="" value=""/>
-				</div>
-				<div class="modal-footer">
-					<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-					<a class="btn btn-primary" href="${createLink(controller:'program', action:'newMethod', params: [name: newMethod])}" role="button">Go To Your Messages &raquo;</a>
-				</div>
-			</div>
-		</div>
-	</div>
+	%{--<div class="modal fade" id="addMethods" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">--}%
+		%{--<div class="modal-dialog" role="document">--}%
+			%{--<div class="modal-content">--}%
+				%{--<div class="modal-header">--}%
+					%{--<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>--}%
+					%{--<h4 class="modal-title" id="myModalLabel">Modal title</h4>--}%
+				%{--</div>--}%
+				%{--<div class="modal-body">--}%
+					%{--<label for="newMethod">--}%
+						%{--Methods--}%
+					%{--</label>--}%
+					%{--<g:textField name="newMethod" required="" value=""/>--}%
+				%{--</div>--}%
+				%{--<div class="modal-footer">--}%
+					%{--<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>--}%
+					%{--<a class="btn btn-primary" href="${createLink(controller:'program', action:'newMethod', params: [name: newMethod])}" role="button">Go To Your Messages &raquo;</a>--}%
+				%{--</div>--}%
+			%{--</div>--}%
+		%{--</div>--}%
+	%{--</div>--}%
 
 </div>
 
