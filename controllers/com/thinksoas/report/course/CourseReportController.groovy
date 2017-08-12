@@ -2,6 +2,11 @@ package com.thinksoas.report.course
 
 import com.thinksoas.data.Course
 import com.thinksoas.data.CourseObjective
+import org.docx4j.Docx4J
+import org.docx4j.XmlUtils
+import org.docx4j.jaxb.Context
+import org.docx4j.openpackaging.packages.WordprocessingMLPackage
+import org.docx4j.wml.TblPr
 
 import java.math.MathContext
 
@@ -549,6 +554,80 @@ class CourseReportController {
         def score1 = 0
         def score2 = 0
         def delta = 0
+    }
+
+    def exportWord(CourseReport courseReportInstance) {
+        WordprocessingMLPackage wordMLPackage = WordprocessingMLPackage.createPackage()
+        def mainPart = wordMLPackage.getMainDocumentPart()
+        def factory = Context.getWmlObjectFactory()
+
+        for (StudentOutcome outcome : StudentOutcome.findAll()) {
+
+            // Heading
+            mainPart.addStyledParagraphOfText("Title", "SOAS Course Report" + courseReportInstance.section + " - " + Calendar.getInstance().getTime().toString())
+            mainPart.addStyledParagraphOfText("Subtitle", "Student Performance Outcome: " + outcome.prefix)
+
+            mainPart.addStyledParagraphOfText("Centered", "Student Performance Outcome: " + outcome.prefix + ": " + outcome.description)
+            //mainPart.addParagraphOfText("Student Performance Outcome: " + outcome.prefix + ": " + outcome.description)
+
+            String table = "<w:p xmlns:w=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\">"
+            table += "<w:r><w:rPr><w:b/></w:rPr><w:tbl><w:tr><w:tc><w:t>Objective</w:t></w:tc><w:tc><w:t>Faculty Evaluations</w:t></w:tc><w:tc><w:t>Student Surveys</w:t></w:tc><w:tc><w:t>Delta</w:t></w:tc></w:tr>"
+
+            for (CourseReportObjective reportObjective : courseReportInstance.objectives) {
+                if (objectiveHasOutcome(reportObjective, outcome)) {
+
+                    table += "<w:tr><w:tc><w:t>" + reportObjective.objective.prefix + "</w:t></w:tc>"
+                    for (CourseReportOutcome reportOutcome : reportObjective.outcomes) {
+                        if (reportOutcome.outcome == outcome) {
+
+                            int score1 = -1
+                            int score2 = -1
+
+                            boolean create_score_subnote = false // whether or not to make a footnote about a low %
+                            boolean create_delta_subnote = false // whether or not to make a footnote about a high delta
+
+                            BigDecimal target = settings.performanceTarget
+                            BigDecimal deltaTarget = settings.deltaValue
+
+                            for (CourseReportMethod reportMethod : reportOutcome.methods) {
+                                if (reportMethod.percentage < target) {
+                                    table += "<w:tc><w:t>" + reportMethod.percentage + "</w:t></w:tc>" // should be red
+                                    create_score_subnote = true
+                                } else {
+                                    table += "<w:tc><w:t>" + reportMethod.percentage + "</w:t></w:tc>"
+                                }
+                                if (score1 == -1) {
+                                    score1 = reportMethod.percentage
+                                } else {
+                                    score2 = reportMethod.percentage
+                                }
+                            }
+
+                            BigDecimal delta = findDelta(reportOutcome)
+
+                            if (delta > deltaTarget) {
+                                table += "<w:tc><w:t>" + delta.toString() + "</w:t></w:tc>"// should be red
+                                create_delta_subnote = true
+                            } else {
+                                table += "<w:tc><w:t>" + delta.toString() + "</w:t></w:tc>"
+                            }
+
+                            //graph += createBarGraph(graph_number, reportObjective.objective.prefix, score1, score2, delta, "Method 1", "Method 2")
+
+                        }
+                    }
+
+                    table += "</w:tr>"
+                }
+            }
+            table += "</w:tbl></w:r></w:p><w:br/>"
+
+            mainPart.addObject(XmlUtils.unmarshalString(table))
+
+            //factory.createBr()
+        }
+
+        wordMLPackage.save(new java.io.File("../../../assets/report.docx"))
     }
 
 }
