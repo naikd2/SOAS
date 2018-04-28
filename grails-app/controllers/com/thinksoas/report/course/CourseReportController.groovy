@@ -75,30 +75,31 @@ class CourseReportController {
         [courseReportInstance: courseReportInstance, report: report, tabs: tabs, reportSemester : courseReportInstance.section.semester]
     }
 
-    def prevSemester(long semesterId) {
+    def prevSemester(CourseReport courseReportInstance) {
         // Previous Semester to show
-        def prevSemesterInstance = semesterId - 1
+        def prevSemesterInstance = courseReportInstance.section.semester.id - 1
 
         // Cycle through reports, find reports for the current course and the semester determined above
         for (CourseReport report : CourseReport.findAll()) {
-            // If statements to find course report instance?
-
+            if (report.section.semester.id == prevSemesterInstance && report.section.course.id == courseReportInstance.section.course.id) {
+                redirect(action: "report", courseReportInstance.id)
+            }
         }
 
-        report(courseReportInstance)
+        redirect(action: "report", courseReportInstance.id)
     }
 
-    def nextSemester(long semesterId) {
-        def nextSemesterInstance = semesterId + 1
-        def courseReportInstance = null;
+    def nextSemester(CourseReport courseReportInstance) {
+        def nextSemesterInstance = courseReportInstance.section.semester.id + 1
+
         // Cycle through reports, find reports for the current course and the semester determined above
         for (CourseReport report : CourseReport.findAll()) {
+            if (report.section.semester.id == nextSemesterInstance && report.section.course.id == courseReportInstance.section.course.id) {
+                redirect(action: "report", courseReportInstance.id)
+            }
+        }
 
-        }
-        if (courseReportInstance == null) {
-            respond CourseReport.list(params), model: [courseReportInstanceCount: CourseReport.count()]
-        }
-        report(courseReportInstance)
+        redirect(action: "report", courseReportInstance.id)
     }
 
     @Transactional
