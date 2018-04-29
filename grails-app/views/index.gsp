@@ -72,7 +72,7 @@
 
 
 <footer>
-	<p>&copy; 2016 ThinkSOAS, Inc.</p>
+	<p>&copy; 2018 ThinkSOAS, Inc.</p>
 </footer>
 
 </div> <!-- /container -->
