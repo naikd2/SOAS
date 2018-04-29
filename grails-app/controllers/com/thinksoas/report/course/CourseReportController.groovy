@@ -155,8 +155,8 @@ class CourseReportController {
 
             // Heading
 
-            mainPart.addStyledParagraphOfText("Centered", "Student Performance Outcome: " + outcome.prefix + ": " + outcome.description)
-            //mainPart.addParagraphOfText("Student Performance Outcome: " + outcome.prefix + ": " + outcome.description)
+            //mainPart.addStyledParagraphOfText("Student Performance Outcome: " + outcome.prefix + ": " + outcome.description)
+            mainPart.addParagraphOfText("Student Performance Outcome: " + outcome.prefix + ": " + outcome.description)
             def tbl = Context.getWmlObjectFactory().createTbl();
 
             def strTblPr =  "<w:tblPr " + Namespaces.W_NAMESPACE_DECLARATION + "><w:tblStyle w:val=\"TableGrid\"/><w:tblW w:w=\"0\" w:type=\"auto\"/><w:tblLook w:val=\"04A0\"/></w:tblPr>"
