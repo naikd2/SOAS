@@ -18,46 +18,46 @@
         <input  id="term" type="text" class="form-control" name="term" required="" value="${semesterInstance?.term}"/>
 	</div>
 
-	<div class="fieldcontain ${hasErrors(bean: semesterInstance, field: 'startDate', 'error')} required">
-		<label for="startDate">
-			<g:message code="semester.term.startDate" default="Start Date" />
-			<span class="required-indicator">*</span>
-		</label>
-		<div class='input-group'>
-			<span class="input-group-addon">
-				<span class="glyphicon glyphicon-calendar"></span>
-			</span>
+	%{--<div class="fieldcontain ${hasErrors(bean: semesterInstance, field: 'startDate', 'error')} required">--}%
+		%{--<label for="startDate">--}%
+			%{--<g:message code="semester.term.startDate" default="Start Date" />--}%
+			%{--<span class="required-indicator">*</span>--}%
+		%{--</label>--}%
+		%{--<div class='input-group'>--}%
+			%{--<span class="input-group-addon">--}%
+				%{--<span class="glyphicon glyphicon-calendar"></span>--}%
+			%{--</span>--}%
 
-			<input  id="startDate" type="text" class="form-control" name="startDate" required="" value="${semesterInstance?.startDate}"/>
-		</div>
+			%{--<input  id="startDate" type="text" class="form-control" name="startDate" required="" value="${semesterInstance?.startDate}"/>--}%
+		%{--</div>--}%
 
-		<script type="text/javascript">
-            $(function () {
-                $('#startDate').datepicker();
-            });
-		</script>
-	</div>
+		%{--<script type="text/javascript">--}%
+            %{--$(function () {--}%
+                %{--$('#startDate').datepicker();--}%
+            %{--});--}%
+		%{--</script>--}%
+	%{--</div>--}%
 
-	<div class="fieldcontain ${hasErrors(bean: semesterInstance, field: 'endDate', 'error')} required">
+	%{--<div class="fieldcontain ${hasErrors(bean: semesterInstance, field: 'endDate', 'error')} required">--}%
 
-		<label for="endDate">
-			<g:message code="semester.term.endDate" default="End Date" />
-			<span class="required-indicator">*</span>
-		</label>
+		%{--<label for="endDate">--}%
+			%{--<g:message code="semester.term.endDate" default="End Date" />--}%
+			%{--<span class="required-indicator">*</span>--}%
+		%{--</label>--}%
 
-		<div class='input-group'>
-			<span class="input-group-addon">
-				<span class="glyphicon glyphicon-calendar"></span>
-			</span>
-			<input  id="endDate" type="text" class="form-control" name="endDate" required="" value="${semesterInstance?.endDate}"/>
-		</div>
+		%{--<div class='input-group'>--}%
+			%{--<span class="input-group-addon">--}%
+				%{--<span class="glyphicon glyphicon-calendar"></span>--}%
+			%{--</span>--}%
+			%{--<input  id="endDate" type="text" class="form-control" name="endDate" required="" value="${semesterInstance?.endDate}"/>--}%
+		%{--</div>--}%
 
-		<script type="text/javascript">
-            $(function () {
-                $('#endDate').datepicker();
-            });
-		</script>
-	</div>
+		%{--<script type="text/javascript">--}%
+            %{--$(function () {--}%
+                %{--$('#endDate').datepicker();--}%
+            %{--});--}%
+		%{--</script>--}%
+	%{--</div>--}%
 
 
 	<div class="fieldcontain ${hasErrors(bean: semesterInstance, field: 'active', 'error')} ">
