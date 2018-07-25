@@ -10,7 +10,9 @@ class SemesterService {
         def newS = Semester.findById(key)
         if (newS != null) {
             def oldS = Semester.findByActive(Boolean.TRUE)
-            oldS.setActive(Boolean.FALSE)
+            if (oldS != null) {
+                oldS.setActive(Boolean.FALSE)
+            }
             newS.setActive(Boolean.TRUE)
         }
     }

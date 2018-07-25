@@ -23,7 +23,6 @@
     <asset:javascript src="jquery.ui.writetable.js"/>
 
 
-
     %{--<asset:stylesheet src="bootstrap.css"/>--}%
     %{--<script src="/soas/static/plugins/jquery-1.11.1/js/jquery/jquery-1.11.1.min.js" type="text/javascript" ></script>--}%
     %{--<link href="/soas/static/plugins/jquery-ui-1.10.4/jquery-ui/themes/ui-lightness/jquery-ui-1.10.4.custom.css" type="text/css" rel="stylesheet" media="screen, projection" />--}%

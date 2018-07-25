@@ -12,7 +12,7 @@
 
         <div class="container">
             <h1>Create a Course</h1>
-
+            &nbsp
             <div id="create-course" class="content scaffold-create" role="main">
                 <g:if test="${flash.message}">
                     <div class="message" role="status">${flash.message}</div>

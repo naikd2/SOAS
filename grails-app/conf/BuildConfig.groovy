@@ -73,6 +73,9 @@ grails.project.dependency.resolution = {
         compile "org.grails.plugins:resources:1.2.14"
         compile "org.grails.plugins:spring-security-core:2.0.0"
         //compile "org.grails.plugins:settings:1.4"
+        compile ":cdn-asset-pipeline:0.4.1"
+        compile ":karman:0.6.1"
+
 
         //compile ":webflow:2.1.0"
         // plugins needed at runtime but not for compilation

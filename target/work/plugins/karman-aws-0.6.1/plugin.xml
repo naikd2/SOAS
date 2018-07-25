@@ -1,0 +1,9 @@
+<plugin name='karman-aws' version='0.6.1' grailsVersion='2.0 &gt; *'>
+  <author>David Estes</author>
+  <authorEmail>destes@bcap.com</authorEmail>
+  <title>Karman AWS Plugin</title>
+  <description>Karman AWS provides an Amazon S3 Interface to the Karman API</description>
+  <documentation>http://github.com/bertramdev/karman-aws</documentation>
+  <type>KarmanAwsGrailsPlugin</type>
+  <resources />
+</plugin>

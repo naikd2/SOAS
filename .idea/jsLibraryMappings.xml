@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="JavaScriptLibraryMappings">
+    <file url="file://$PROJECT_DIR$" libraries="{bootstrap, bootstrap-multiselect, bootstrap-select, defaults-en_US, jquery, jquery-3.2.1.slim, popper, popper-utils}" />
+    <file url="file://$PROJECT_DIR$/target/work/plugins/asset-pipeline-2.2.3" libraries="{bootstrap, bootstrap-multiselect, bootstrap-select, defaults-en_US, jquery, jquery-3.2.1.slim, popper, popper-utils}" />
+    <file url="file://$PROJECT_DIR$/target/work/plugins/cache-1.1.8" libraries="{bootstrap, bootstrap-multiselect, bootstrap-select, defaults-en_US, jquery, jquery-3.2.1.slim, popper, popper-utils}" />
+    <file url="file://$PROJECT_DIR$/target/work/plugins/cdn-asset-pipeline-0.4.1" libraries="{bootstrap, bootstrap-multiselect, bootstrap-select, defaults-en_US, jquery, jquery-3.2.1.slim, popper, popper-utils}" />
+    <file url="file://$PROJECT_DIR$/target/work/plugins/database-migration-1.4.0" libraries="{bootstrap, bootstrap-multiselect, bootstrap-select, defaults-en_US, jquery, jquery-3.2.1.slim, popper, popper-utils}" />
+    <file url="file://$PROJECT_DIR$/target/work/plugins/hibernate4-4.3.10" libraries="{bootstrap, bootstrap-multiselect, bootstrap-select, defaults-en_US, jquery, jquery-3.2.1.slim, popper, popper-utils}" />
+    <file url="file://$PROJECT_DIR$/target/work/plugins/jquery-1.11.1" libraries="{bootstrap, bootstrap-multiselect, bootstrap-select, defaults-en_US, jquery, jquery-3.2.1.slim, popper, popper-utils}" />
+    <file url="file://$PROJECT_DIR$/target/work/plugins/jquery-ui-1.10.4" libraries="{bootstrap, bootstrap-multiselect, bootstrap-select, defaults-en_US, jquery, jquery-3.2.1.slim, popper, popper-utils}" />
+    <file url="file://$PROJECT_DIR$/target/work/plugins/karman-0.6.1" libraries="{bootstrap, bootstrap-multiselect, bootstrap-select, defaults-en_US, jquery, jquery-3.2.1.slim, popper, popper-utils}" />
+    <file url="file://$PROJECT_DIR$/target/work/plugins/karman-aws-0.6.1" libraries="{bootstrap, bootstrap-multiselect, bootstrap-select, defaults-en_US, jquery, jquery-3.2.1.slim, popper, popper-utils}" />
+    <file url="file://$PROJECT_DIR$/target/work/plugins/resources-1.2.14" libraries="{bootstrap, bootstrap-multiselect, bootstrap-select, defaults-en_US, jquery, jquery-3.2.1.slim, popper, popper-utils}" />
+    <file url="file://$PROJECT_DIR$/target/work/plugins/scaffolding-2.1.2" libraries="{bootstrap, bootstrap-multiselect, bootstrap-select, defaults-en_US, jquery, jquery-3.2.1.slim, popper, popper-utils}" />
+    <file url="file://$PROJECT_DIR$/target/work/plugins/spring-security-core-2.0.0" libraries="{bootstrap, bootstrap-multiselect, bootstrap-select, defaults-en_US, jquery, jquery-3.2.1.slim, popper, popper-utils}" />
+    <file url="file://$PROJECT_DIR$/target/work/plugins/tomcat-7.0.55.3" libraries="{bootstrap, bootstrap-multiselect, bootstrap-select, defaults-en_US, jquery, jquery-3.2.1.slim, popper, popper-utils}" />
+    <file url="file://$PROJECT_DIR$/target/work/plugins/twitter-bootstrap-3.3.5" libraries="{bootstrap, bootstrap-multiselect, bootstrap-select, defaults-en_US, jquery, jquery-3.2.1.slim, popper, popper-utils}" />
+    <file url="file://$PROJECT_DIR$/target/work/plugins/webxml-1.4.1" libraries="{bootstrap, bootstrap-multiselect, bootstrap-select, defaults-en_US, jquery, jquery-3.2.1.slim, popper, popper-utils}" />
+  </component>
+</project>

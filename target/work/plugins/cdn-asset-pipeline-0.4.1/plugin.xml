@@ -1,0 +1,13 @@
+<plugin name='cdn-asset-pipeline' version='0.4.1' grailsVersion='2.0 &gt; *'>
+  <author>Benoit Hediard</author>
+  <authorEmail>ben@benorama.com</authorEmail>
+  <title>CDN Asset Pipeline Plugin</title>
+  <description>
+Provides Gant scripts to automatically upload Grails app static assets to CDNs.
+Those scripts can easily be integrated to a build pipeline for continuous delivery/deployment.
+It uses Asset Pipeline Grails Plugin to precompile assets and Karman Grails Plugin to upload files to various Cloud Storage Services.
+</description>
+  <documentation>http://github.com/agorapulse/grails-cdn-asset-pipeline</documentation>
+  <type>CdnAssetPipelineGrailsPlugin</type>
+  <resources />
+</plugin>
