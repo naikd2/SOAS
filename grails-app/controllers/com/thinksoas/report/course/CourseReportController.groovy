@@ -143,6 +143,9 @@ class CourseReportController {
     def edit(CourseReportObjective objective) {
         respond objective, model: [objective: objective]
     }
+    def chartjs() {
+        respond view:'chartjs'
+    }
 
     def chartjs() {
         respond view:'chartjs'
@@ -227,7 +230,11 @@ class CourseReportController {
             rowNumber++
         }
 
+        def filename = courseReportInstance.section.toString() + ".docx"
+        wordMLPackage.save(new java.io.File(System.getProperty("user.home"), "Desktop/" + filename))
+        redirect action: "index", method: "GET"
     }
+
     @Transactional
     def update(CourseReportObjective courseReportInstance) {
         println(courseReportInstance)
