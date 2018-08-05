@@ -143,9 +143,6 @@ class CourseReportController {
     def edit(CourseReportObjective objective) {
         respond objective, model: [objective: objective]
     }
-    def chartjs() {
-        respond view:'chartjs'
-    }
 
     def chartjs() {
         respond view:'chartjs'
