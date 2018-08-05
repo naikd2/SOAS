@@ -6,7 +6,7 @@ grails.project.work.dir = "target/work"
 grails.project.target.level = 1.6
 grails.project.source.level = 1.6
 //grails.project.war.file = "target/${appName}-${appVersion}.war"
-grails.server.port.http = 8090
+grails.server.port.http = 8080
 
 grails.project.fork = [
         // configure settings for compilation JVM, note that if you alter the Groovy version forked compilation is required
@@ -61,7 +61,7 @@ grails.project.dependency.resolution = {
     plugins {
         // plugins for the build system only
         build ":tomcat:7.0.55.3" // or ":tomcat:8.0.22"
-
+        compile "org.grails.plugins:excel-export:0.2.1"
         //compile ":ckeditor:4.5.4.0"
         // plugins for the compile step
         compile "org.grails.plugins:scaffolding:2.1.2"
@@ -73,8 +73,7 @@ grails.project.dependency.resolution = {
         compile "org.grails.plugins:resources:1.2.14"
         compile "org.grails.plugins:spring-security-core:2.0.0"
         //compile "org.grails.plugins:settings:1.4"
-//        compile ":cdn-asset-pipeline:0.4.1"
-//        compile ":karman:0.6.1"
+        compile "org.grails.plugins:rest-client-builder:2.1.1"
         compile "org.grails.plugins:multi-select:0.2"
 
 

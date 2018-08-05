@@ -2,32 +2,21 @@ package com.thinksoas.report.course
 
 import com.thinksoas.data.Course
 import com.thinksoas.data.CourseObjective
-import com.thinksoas.data.Semester
+import com.thinksoas.data.StudentOutcome
+import grails.plugin.springsecurity.annotation.Secured
+import grails.transaction.Transactional
 
+import grails.plugins.rest.client.RestBuilder
 import java.math.MathContext
 
 import static org.springframework.http.HttpStatus.*
-import grails.transaction.Transactional
-import grails.plugin.springsecurity.annotation.Secured
-import com.thinksoas.data.Class
 
-import com.thinksoas.data.StudentOutcome
-import com.thinksoas.data.Program
-import com.thinksoas.report.improvement.ImprovementReportService
-import org.docx4j.Docx4J
-import org.docx4j.XmlUtils
-import org.docx4j.jaxb.Context
-import org.docx4j.openpackaging.packages.WordprocessingMLPackage
-import org.docx4j.wml.TblPr
-import org.docx4j.openpackaging.parts.relationships.Namespaces;
-import org.docx4j.wml.*
+import java.io.File;
 
-
-@Secured(['ROLE_ADMIN', 'ROLE_USER'])
 @Transactional(readOnly = true)
 class CourseReportController {
 
-    static allowedMethods = [save: "POST", update: "PUT", delete: "DELETE"]
+    static allowedMethods = [save: "POST", update: "PUT", delete: "DELETE", checkJquery: "POST"]
 
     def improvementReportService
 
@@ -44,12 +33,33 @@ class CourseReportController {
     }
 
     def index(Integer max) {
+        //exportChart()
+        def rest = new RestBuilder();
+
+
+        def response = rest.get("http://localhost:8080/soas/courseReport/chartjs"){
+            accept 'text/html'
+            contentType 'text/html'
+        }
+
+        println(response.body)
+
         params.max = Math.min(max ?: 10, 100)
         respond CourseReport.list(params), model: [courseReportInstanceCount: CourseReport.count()]
     }
 
-    def show(CourseReport courseReportInstance) {
+    def checkJquery() {
+        def jsonObj = request.JSON
 
+        println(jsonObj)
+        respond view:'chartjs'
+    }
+
+    def show(CourseReport courseReportInstance) {
+        def rest = new RestBuilder();
+
+        def response = rest.get("localhost:8080/soas/courseReport/chartjs")
+        println(response.body)
         respond courseReportInstance, model:[report: courseReportInstance, objectives: courseReportInstance.objectives]
     }
 
@@ -133,156 +143,91 @@ class CourseReportController {
     def edit(CourseReportObjective objective) {
         respond objective, model: [objective: objective]
     }
+    def chartjs() {
+        respond view:'chartjs'
+    }
 
-    def exportWord(long id) {
+    def chartjs() {
+        respond view:'chartjs'
+    }
 
-        def courseReportInstance = CourseReport.findById(id)
-        WordprocessingMLPackage wordMLPackage = WordprocessingMLPackage.createPackage()
-        def mainPart = wordMLPackage.getMainDocumentPart()
-        def factory = Context.getWmlObjectFactory()
+    def exportWord(CourseReport courseReportInstance) {
+        def objectives = courseReportInstance.getObjectives()
+        def filename ="test" + ".xlsx"
 
-        def settings = com.thinksoas.data.Program.findBySettings("SETTINGS")
-        def outcomes = courseReportService.findAllReleventOutcomes(id)
-        java.text.SimpleDateFormat sdf = new java.text.SimpleDateFormat("MM/dd/yyyy")
-        def dt = sdf.format(Calendar.getInstance().getTime())
-        mainPart.addStyledParagraphOfText("Subtitle", "SOAS Course Report " + courseReportInstance.section + " - " + dt)
+        Map<StudentOutcome, Map<CourseObjective, ObjectiveRow>> excelmap = new HashMap<StudentOutcome, Map<CourseObjective, ObjectiveRow>>()
 
-        for (StudentOutcome outcome : outcomes) {
-
-
-            // Create Map
-            def objectives = courseReportInstance.objectives
-
-            // Heading
-
-            //mainPart.addStyledParagraphOfText("Student Performance Outcome: " + outcome.prefix + ": " + outcome.description)
-            mainPart.addParagraphOfText("Student Performance Outcome: " + outcome.prefix + ": " + outcome.description)
-            def tbl = Context.getWmlObjectFactory().createTbl();
-
-            def strTblPr =  "<w:tblPr " + Namespaces.W_NAMESPACE_DECLARATION + "><w:tblStyle w:val=\"TableGrid\"/><w:tblW w:w=\"0\" w:type=\"auto\"/><w:tblLook w:val=\"04A0\"/></w:tblPr>"
-            def tblPr = XmlUtils.unmarshalString(strTblPr);
-            tbl.setTblPr(tblPr)
-
-            TblGrid tblGrid = Context.getWmlObjectFactory().createTblGrid();
-            tbl.setTblGrid(tblGrid);
-
-            int writableWidthTwips = wordMLPackage.getDocumentModel().getSections().get(0).getPageDimensions().getWritableWidthTwips();
-            int cols = 4;
-            int cellWidthTwips = new Double(
-                    Math.floor( (writableWidthTwips/cols))
-            ).intValue();
-
-            def titles = ["Objective", "Method 1", "Method 2", "Delta"]
-            Tr trTitle = Context.getWmlObjectFactory().createTr();
-            tbl.getEGContentRowContent().add(trTitle);
-            for (String str : titles) {
-                Tc tc = Context.getWmlObjectFactory().createTc();
-                tc.getEGBlockLevelElts().add(wordMLPackage.getMainDocumentPart().createParagraphOfText(str) );
-                trTitle.getEGContentCellContent().add(tc);
-                TcPr tcPr = Context.getWmlObjectFactory().createTcPr();
-                tc.setTcPr(tcPr);
-                // <w:tcW w:w="4788" w:type="dxa"/>
-                TblWidth cellWidth = Context.getWmlObjectFactory().createTblWidth();
-                tcPr.setTcW(cellWidth);
-                cellWidth.setType("dxa");
-                cellWidth.setW(BigInteger.valueOf(cellWidthTwips));
-                // Cell content - an empty <w:p/>
-                tc.getEGBlockLevelElts().add(
-                        Context.getWmlObjectFactory().createP()
-                );
-            }
-
-            // Now the rows
-            for (CourseReportObjective obj : objectives) {
-                if (objectiveHasOutcome(obj, outcome)) {
-                    Tr tr = Context.getWmlObjectFactory().createTr();
-                    tbl.getEGContentRowContent().add(tr);
-
-                    def cells = new ArrayList()
-                    cells.add(obj.objective.prefix)
-
-                    CourseReportOutcome reportOutcome = courseReportService.getReportOutcomeBySO(outcome.id, obj.id)
-                    def delta = 0
-                    for (CourseReportMethod m : reportOutcome.methods) {
-                        cells.add(m.percentage)
-                        delta = (delta - m.percentage).abs()
+        for (CourseReportObjective objective : objectives) {
+            def outcomes = objective.outcomes
+            def courseObj = objective.objective
+            for (CourseReportOutcome outcome : outcomes) {
+                def methods = outcome.methods
+                def so = outcome.outcome
+                for (CourseReportMethod method : methods) {
+                    def sheet
+                    def rows
+                    if (excelmap.containsKey(so)) {
+                        sheet = excelmap.get(so)
+                    } else {
+                        sheet = new HashMap<CourseObjective, ObjectiveRow>()
+                        excelmap.put(so, sheet)
                     }
-                    cells.add(delta)
-
-                    for (String str : cells) {
-
-                        Tc tc = Context.getWmlObjectFactory().createTc();
-                        tc.getEGBlockLevelElts().add(wordMLPackage.getMainDocumentPart().createParagraphOfText(str) );
-                        tr.getEGContentCellContent().add(tc);
-
-                        TcPr tcPr = Context.getWmlObjectFactory().createTcPr();
-                        tc.setTcPr(tcPr);
-                        // <w:tcW w:w="4788" w:type="dxa"/>
-                        TblWidth cellWidth = Context.getWmlObjectFactory().createTblWidth();
-                        tcPr.setTcW(cellWidth);
-                        cellWidth.setType("dxa");
-                        cellWidth.setW(BigInteger.valueOf(cellWidthTwips));
-
-                        // Cell content - an empty <w:p/>
-                        tc.getEGBlockLevelElts().add(
-                                Context.getWmlObjectFactory().createP()
-                        );
+                    if (sheet.containsKey(courseObj)) {
+                        rows = sheet.get(courseObj)
+                    } else {
+                        rows = new ObjectiveRow()
+                        sheet.put(courseObj, rows)
+                    }
+                    if (rows.a == null) {
+                        rows.setA(method.percentage/100.00)
+                    } else {
+                        rows.setB(method.percentage/100.00)
+                        rows.setDelta(Math.abs(rows.a - rows.b))
+                        rows.setOutcome(so)
                     }
                 }
             }
-
-            mainPart.addObject(tbl)
-
-
-            for (CourseReportObjective reportObjective : courseReportInstance.objectives) {
-                if (objectiveHasOutcome(reportObjective, outcome)) {
-
-                    for (CourseReportOutcome reportOutcome : reportObjective.outcomes) {
-                        if (reportOutcome.outcome == outcome) {
-
-                            int score1 = -1
-                            int score2 = -1
-
-                            boolean create_score_subnote = false // whether or not to make a footnote about a low %
-                            boolean create_delta_subnote = false // whether or not to make a footnote about a high delta
-
-                            BigDecimal target = settings.performanceTarget
-                            BigDecimal deltaTarget = settings.deltaValue
-
-                            for (CourseReportMethod reportMethod : reportOutcome.methods) {
-                                if (reportMethod.percentage < target) {
+        }
 
 
-                                    create_score_subnote = true
-                                } else {
+        new pl.touk.excel.export.WebXlsxExporter('/workspace/templates/OutcomeReportTemplate.xlsx').with {
+            setResponseHeaders(response)
+            int i = 1
 
-                                }
-                                if (score1 == -1) {
-                                    score1 = reportMethod.percentage
-                                } else {
-                                    score2 = reportMethod.percentage
-                                }
-                            }
+            for (Map<CourseObjective, ObjectiveRow> r : excelmap.values()) {
+                def rows = r.values()
+                def sheetname = 'Outcome ' + i
 
-                            BigDecimal delta = findDelta(reportOutcome)
+                ObjectiveRow row0 = rows[0]
+                ObjectiveRow row1 = rows[1]
+                sheet(sheetname).with {
+                    putCellValue(0, 1, row0.outcome.prefix)
+                    putCellValue(1, 1, row0.outcome.description)
 
-                            if (delta > deltaTarget) {
-
-                                create_delta_subnote = true
-                            } else {
-
-
-                            }
-
-
-
-                        }
-                    }
+                    putCellValue(3, 1, row0.a)
+                    putCellValue(3, 2, row0.b)
+                    putCellValue(3, 3, row1.delta)
+                    putCellValue(4, 1, row1.a)
+                    putCellValue(4, 2, row1.b)
+                    putCellValue(4, 3, row1.delta)
 
                 }
+                i++
             }
 
+                save(response.outputStream)
+        }
 
+    }
+
+    def createRows(List<ObjectiveRow> rows) {
+        int rowNumber = 3
+
+        for (ObjectiveRow row : rows) {
+            println(row)
+            putCellValue(rowNumber, 1, 10)
+            putCellValue(rowNumber, 2, 10)
+            rowNumber++
         }
 
         def filename = courseReportInstance.section.toString() + ".docx"
@@ -783,4 +728,11 @@ class SingleMethodCommand {
 
 class MultipleMethodCommand {
     List<SingleMethodCommand> method = [].withDefault({ new SingleMethodCommand() })
+}
+
+class ObjectiveRow {
+    BigDecimal a = null
+    BigDecimal b = null
+    BigDecimal delta = null
+    StudentOutcome outcome = null
 }
