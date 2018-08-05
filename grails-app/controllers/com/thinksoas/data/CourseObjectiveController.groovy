@@ -49,7 +49,8 @@ class CourseObjectiveController {
     }
 
     def edit(CourseObjective courseObjectiveInstance) {
-        respond courseObjectiveInstance
+        def settings = Program.findBySettings("SETTINGS")
+        respond courseObjectiveInstance, model:[methods : settings.methods]
     }
 
     @Transactional
@@ -63,45 +64,46 @@ class CourseObjectiveController {
             respond courseObjectiveInstance.errors, view:'edit'
             return
         }
-
-        def newIntroduce = params.introduceOutcomes
-        def newReinforce = params.reinforceOutcomes
-        def newEmphasize = params.emphasizeOutcomes
+//
+//        def newIntroduce = params.introduceOutcomes
+//        def newReinforce = params.reinforceOutcomes
+//        def newEmphasize = params.emphasizeOutcomes
 
         // clear lists before updating....
+//
+//        courseObjectiveInstance.introduceOutcomes.clear()
+//        courseObjectiveInstance.reinforceOutcomes.clear()
+//        courseObjectiveInstance.emphasizeOutcomes.clear()
+////
+//        // now update Introduce Outcomes
+//        if (newIntroduce != null) {
+//            def list = new ArrayList();
+//            for(def id : newIntroduce) {
+//                def outcome = StudentOutcome.get(id);
+//                list.add(outcome);
+//            }
+//            courseObjectiveInstance.introduceOutcomes.addAll(list)
+//        }
+//        // update Reinforce Outcomes
+//        if (newReinforce != null) {
+//            def list = new ArrayList();
+//            for(def id : newReinforce) {
+//                def outcome = StudentOutcome.get(id);
+//                list.add(outcome);
+//            }
+//            courseObjectiveInstance.reinforceOutcomes.addAll(list)
+//        }
+//        // update Emphasize Outcomes
+//        if (newEmphasize != null) {
+//            def list = new ArrayList();
+//            for(def id : newEmphasize) {
+//                def outcome = StudentOutcome.get(id);
+//                list.add(outcome);
+//            }
+//            courseObjectiveInstance.emphasizeOutcomes.addAll(list)
+//        }
 
-        courseObjectiveInstance.introduceOutcomes.clear()
-        courseObjectiveInstance.reinforceOutcomes.clear()
-        courseObjectiveInstance.emphasizeOutcomes.clear()
-
-        // now update Introduce Outcomes
-        if (newIntroduce != null) {
-            def list = new ArrayList();
-            for(def id : newIntroduce) {
-                def outcome = StudentOutcome.get(id);
-                list.add(outcome);
-            }
-            courseObjectiveInstance.introduceOutcomes.addAll(list)
-        }
-        // update Reinforce Outcomes
-        if (newReinforce != null) {
-            def list = new ArrayList();
-            for(def id : newReinforce) {
-                def outcome = StudentOutcome.get(id);
-                list.add(outcome);
-            }
-            courseObjectiveInstance.reinforceOutcomes.addAll(list)
-        }
-        // update Emphasize Outcomes
-        if (newEmphasize != null) {
-            def list = new ArrayList();
-            for(def id : newEmphasize) {
-                def outcome = StudentOutcome.get(id);
-                list.add(outcome);
-            }
-            courseObjectiveInstance.emphasizeOutcomes.addAll(list)
-        }
-
+        courseObjectiveInstance.properties = params;
         courseObjectiveInstance.save flush:true
 
         def courseId = courseObjectiveInstance.course.id

@@ -27,7 +27,6 @@ class CourseController {
 //        settings.methods.add(s)
 //        def s1 = "Student Surveys"
 //        settings.methods.add(s1)
-        println(settings.methods)
         respond new Course(params), model:[methods : settings.methods]
     }
 

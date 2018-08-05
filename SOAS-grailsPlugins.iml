@@ -13,6 +13,7 @@
           <root url="file://$MODULE_DIR$/target/work/plugins/spring-security-core-2.0.0/grails-app/views" relative="/" />
           <root url="file://$MODULE_DIR$/target/work/plugins/jquery-1.11.1/web-app" relative="/" />
           <root url="file://$MODULE_DIR$/target/work/plugins/resources-1.2.14/web-app" relative="/" />
+          <root url="file://$MODULE_DIR$/target/work/plugins/multi-select-0.2/web-app" relative="/" />
         </webroots>
         <sourceRoots />
       </configuration>
@@ -37,9 +38,6 @@
       <sourceFolder url="file://$MODULE_DIR$/target/work/plugins/cache-1.1.8/grails-app/services" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/target/work/plugins/cache-1.1.8/grails-app/taglib" isTestSource="false" />
     </content>
-    <content url="file://$MODULE_DIR$/target/work/plugins/cdn-asset-pipeline-0.4.1">
-      <sourceFolder url="file://$MODULE_DIR$/target/work/plugins/cdn-asset-pipeline-0.4.1/src/groovy" isTestSource="false" />
-    </content>
     <content url="file://$MODULE_DIR$/target/work/plugins/database-migration-1.4.0">
       <sourceFolder url="file://$MODULE_DIR$/target/work/plugins/database-migration-1.4.0/src/groovy" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/target/work/plugins/database-migration-1.4.0/grails-app/controllers" isTestSource="false" />
@@ -55,11 +53,10 @@
     <content url="file://$MODULE_DIR$/target/work/plugins/jquery-ui-1.10.4">
       <sourceFolder url="file://$MODULE_DIR$/target/work/plugins/jquery-ui-1.10.4/grails-app/taglib" isTestSource="false" />
     </content>
-    <content url="file://$MODULE_DIR$/target/work/plugins/karman-0.6.1">
-      <sourceFolder url="file://$MODULE_DIR$/target/work/plugins/karman-0.6.1/src/java" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/target/work/plugins/karman-0.6.1/grails-app/controllers" isTestSource="false" />
+    <content url="file://$MODULE_DIR$/target/work/plugins/multi-select-0.2">
+      <sourceFolder url="file://$MODULE_DIR$/target/work/plugins/multi-select-0.2/grails-app/i18n" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/target/work/plugins/multi-select-0.2/grails-app/taglib" isTestSource="false" />
     </content>
-    <content url="file://$MODULE_DIR$/target/work/plugins/karman-aws-0.6.1" />
     <content url="file://$MODULE_DIR$/target/work/plugins/resources-1.2.14">
       <sourceFolder url="file://$MODULE_DIR$/target/work/plugins/resources-1.2.14/src/java" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/target/work/plugins/resources-1.2.14/src/groovy" isTestSource="false" />
@@ -91,6 +88,22 @@
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
+    <orderEntry type="library" name="bootstrap" level="application" />
+    <orderEntry type="library" name="jquery" level="application" />
+    <orderEntry type="library" name="bootstrap-multiselect" level="application" />
+    <orderEntry type="library" name="popper" level="application" />
+    <orderEntry type="library" name="bootstrap-select" level="application" />
+    <orderEntry type="library" name="defaults-en_US" level="application" />
+    <orderEntry type="library" name="popper-utils" level="application" />
+    <orderEntry type="library" name="jquery-3.2.1.slim" level="application" />
+    <orderEntry type="library" scope="PROVIDED" name="bootstrap" level="application" />
+    <orderEntry type="library" scope="PROVIDED" name="jquery" level="application" />
+    <orderEntry type="library" scope="PROVIDED" name="bootstrap-multiselect" level="application" />
+    <orderEntry type="library" scope="PROVIDED" name="popper" level="application" />
+    <orderEntry type="library" scope="PROVIDED" name="bootstrap-select" level="application" />
+    <orderEntry type="library" scope="PROVIDED" name="defaults-en_US" level="application" />
+    <orderEntry type="library" scope="PROVIDED" name="popper-utils" level="application" />
+    <orderEntry type="library" scope="PROVIDED" name="jquery-3.2.1.slim" level="application" />
     <orderEntry type="module-library" exported="">
       <library name="Grails User Library (SOAS-grailsPlugins)">
         <CLASSES>
@@ -254,24 +267,10 @@
           <root url="jar:///usr/local/Cellar/grails/grails-2.5.1/lib/org.apache.ivy/ivy/jars/ivy-2.3.0.jar!/" />
           <root url="jar:///usr/local/Cellar/grails/grails-2.5.1/lib/net.java.dev.jna/jna/jars/jna-4.0.0.jar!/" />
           <root url="jar:///usr/local/Cellar/grails/grails-2.5.1/lib/org.apache.ant/ant-trax/jars/ant-trax-1.7.1.jar!/" />
-          <root url="jar://$MAVEN_REPOSITORY$/com/bertramlabs/plugins/karman-core/0.6.1/karman-core-0.6.1.jar!/" />
-          <root url="jar://$MAVEN_REPOSITORY$/org/apache/ant/ant-launcher/1.7.0/ant-launcher-1.7.0.jar!/" />
-          <root url="jar://$MAVEN_REPOSITORY$/org/apache/ant/ant/1.7.0/ant-1.7.0.jar!/" />
-          <root url="jar://$MAVEN_REPOSITORY$/com/bertramlabs/plugins/karman-aws-groovy/0.6.0/karman-aws-groovy-0.6.0.jar!/" />
-          <root url="jar://$MAVEN_REPOSITORY$/joda-time/joda-time/2.10/joda-time-2.10.jar!/" />
-          <root url="jar://$MAVEN_REPOSITORY$/com/amazonaws/aws-java-sdk/1.7.7/aws-java-sdk-1.7.7.jar!/" />
         </CLASSES>
         <JAVADOC />
         <SOURCES />
       </library>
     </orderEntry>
-    <orderEntry type="library" name="bootstrap" level="application" />
-    <orderEntry type="library" name="jquery" level="application" />
-    <orderEntry type="library" name="bootstrap-multiselect" level="application" />
-    <orderEntry type="library" name="popper" level="application" />
-    <orderEntry type="library" name="bootstrap-select" level="application" />
-    <orderEntry type="library" name="defaults-en_US" level="application" />
-    <orderEntry type="library" name="popper-utils" level="application" />
-    <orderEntry type="library" name="jquery-3.2.1.slim" level="application" />
   </component>
 </module>

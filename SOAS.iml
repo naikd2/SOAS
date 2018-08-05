@@ -214,12 +214,6 @@
           <root url="jar:///usr/local/Cellar/grails/grails-2.5.1/lib/net.java.dev.jna/jna/jars/jna-4.0.0.jar!/" />
           <root url="jar:///usr/local/Cellar/grails/grails-2.5.1/lib/org.apache.ant/ant-trax/jars/ant-trax-1.7.1.jar!/" />
           <root url="file://$MODULE_DIR$/lib" />
-          <root url="jar://$MAVEN_REPOSITORY$/com/bertramlabs/plugins/karman-core/0.6.1/karman-core-0.6.1.jar!/" />
-          <root url="jar://$MAVEN_REPOSITORY$/org/apache/ant/ant-launcher/1.7.0/ant-launcher-1.7.0.jar!/" />
-          <root url="jar://$MAVEN_REPOSITORY$/org/apache/ant/ant/1.7.0/ant-1.7.0.jar!/" />
-          <root url="jar://$MAVEN_REPOSITORY$/com/bertramlabs/plugins/karman-aws-groovy/0.6.0/karman-aws-groovy-0.6.0.jar!/" />
-          <root url="jar://$MAVEN_REPOSITORY$/joda-time/joda-time/2.10/joda-time-2.10.jar!/" />
-          <root url="jar://$MAVEN_REPOSITORY$/com/amazonaws/aws-java-sdk/1.7.7/aws-java-sdk-1.7.7.jar!/" />
         </CLASSES>
         <JAVADOC />
         <SOURCES>

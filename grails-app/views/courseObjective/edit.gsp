@@ -7,7 +7,7 @@
 		<title><g:message code="default.edit.label" args="[entityName]" /></title>
 	</head>
 	<body>
-		<div id="edit-courseObjective" class="content scaffold-edit list-group" role="main">
+		<div id="edit-courseObjective" class="content scaffold-edit list-group col-md-9" role="main">
 			<h1 class="list-group-item active">Edit objective for <g:fieldValue bean="${courseObjectiveInstance}" field="course.name"/></h1>
 
             <g:if test="${flash.message}">
@@ -28,7 +28,7 @@
 					<g:render template="form"/>
 				</fieldset>
 				<fieldset class="buttons">
-					<g:actionSubmit class="save" action="update" value="${message(code: 'default.button.update.label', default: 'Update')}" />
+					<g:actionSubmit class="btn btn-primary btn-bloc" action="update" value="${message(code: 'default.button.update.label', default: 'Update')}" />
 				</fieldset>
 			</g:form>
 		</div>

@@ -60,7 +60,7 @@
                     </g:link>
 
                     <g:if test="${o.introduceOutcomes.size() > 0}">
-                        <div>
+                        <div class="list-group">
                             <h5>Introduce Outcomes:</h5>
                             <g:each in="${o.introduceOutcomes}" var="intro">
                                 <div class="col-xs-offset-1">
@@ -71,7 +71,7 @@
                     </g:if>
 
                     <g:if test="${o.reinforceOutcomes.size() > 0}">
-                        <div>
+                        <div class="list-group">
                             <h5>Reinforce Outcomes:</h5>
                             <g:each in="${o.reinforceOutcomes}" var="rein">
                                 <div class="col-xs-offset-1">
@@ -95,6 +95,14 @@
                     <g:if test="${o.emphasizeOutcomes.size() < 1 && o.reinforceOutcomes.size() < 1 && o.introduceOutcomes.size() < 1}">
                         <h5>No Mapped Outcomes</h5>
                     </g:if>
+
+                    <div class="list-group">
+                        <h5>Collection Methods:</h5>
+                        <div class="col-xs-offset-1">
+                            <div class="row">${o.method1}</div>
+                            <div class="row">${o.method2}</div>
+                        </div>
+                    </div>
 
                 </div>
             </g:each>

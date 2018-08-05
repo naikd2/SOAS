@@ -5570,3 +5570,10 @@ n:2856:org/apache/http/impl/io/ContentLengthInputStream
 n:4320:org/apache/http/message/BasicTokenIterator
 n:297:org/apache/http/TokenIterator
 n:4381:org/eclipse/aether/util/ChecksumUtils
+n:3016:BuildConfig$_run_closure1$_closure5
+n:1383:org/eclipse/aether/internal/impl/DefaultArtifactResolver$ResolutionGroup
+n:1837:org/eclipse/aether/internal/impl/DefaultArtifactResolver$ResolutionItem
+n:5568:org/eclipse/aether/spi/connector/ArtifactDownload
+n:1554:org/eclipse/aether/spi/connector/ArtifactTransfer
+n:2241:org/eclipse/aether/connector/basic/ArtifactTransportListener
+n:4006:org/eclipse/aether/resolution/ArtifactResolutionException
