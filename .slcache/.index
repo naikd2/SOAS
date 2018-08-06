@@ -5764,3 +5764,6 @@ n:1134:org/codehaus/groovy/GroovyException
 n:1964:org/codehaus/groovy/control/messages/SyntaxErrorMessage
 n:1774:org/codehaus/groovy/control/messages/Message
 n:3175:org/codehaus/groovy/tools/ErrorReporter
+n:583:groovyjarjarantlr/TokenStreamRecognitionException
+n:523:groovyjarjarantlr/TokenStreamException
+n:3660:org/apache/log4j/NDC

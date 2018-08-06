@@ -31,12 +31,17 @@
                         <g:render template="form"/>
                     </fieldset>
 
-                    <div class="col-sm-10">
-                        <fieldset class="buttons">
+                    <div class="col-md-6">
+                        <fieldset class="buttons btn-group-justified">
+                            <div class="btn-group">
                                 <g:submitButton name="create" class="btn btn-primary btn-block"
                                                 value="Create Course"/>
+                            </div>
+                            <div class="btn-group">
+                                <g:actionSubmit name="cancel" class="btn"
+                                                value="Cancel" action="index"/>
+                            </div>
                         </fieldset>
-
                     </div>
 
                 </g:form>

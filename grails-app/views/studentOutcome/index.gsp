@@ -21,7 +21,8 @@
 						<thead>
 						<tr>
 							<g:sortableColumn property="prefix" title="${message(code: 'studentOutcome.prefix.label', default: 'Prefix')}" />
-							<g:sortableColumn property="description" title="${message(code: 'studentOutcome.description.label', default: 'Description')}" />
+							<th property="description" title="${message(code: 'studentOutcome.description.label', default: 'Description')}">${message(code: 'studentOutcome.description.label', default: 'Description')}</th>
+							<th></th>
 						</tr>
 						</thead>
 						<tbody>
@@ -32,6 +33,9 @@
 								</td>
 								<td>
 									${fieldValue(bean: studentOutcomeInstance, field: "description")}
+								</td>
+								<td>
+									<g:link class="delete" action="delete" resource="${studentOutcomeInstance}"  id="${studentOutcomeInstance.id}"><span class = "glyphicon glyphicon-trash pull-right"></span></g:link>
 								</td>
 							</tr>
 						</g:each>

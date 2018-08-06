@@ -22,9 +22,9 @@
     <div class="col-md-10 main">
           
 		<div class="list-group">
-  			<h1><div class="list-group-item active">
+  			<h1>
   					<g:fieldValue bean="${courseInstance}" field="subject"/>-<g:fieldValue bean="${courseInstance}" field="number"/>: <g:fieldValue bean="${courseInstance}" field="name"/>
-            </div></h1>
+            </h1>
 
             <div class="text-right">
                 <g:link controller="Course" action="edit" id="${courseInstance.id}">

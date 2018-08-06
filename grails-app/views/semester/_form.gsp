@@ -1,7 +1,7 @@
 <%@ page import="com.thinksoas.data.Semester" %>
 
 
-<div class="col-md-10 main">
+<div class="col-md-4 main well">
 	<div class="fieldcontain ${hasErrors(bean: semesterInstance, field: 'year', 'error')} required">
 		<label for="year">
 			<g:message code="semester.year.label" default="Year" />
@@ -63,6 +63,7 @@
 	<div class="fieldcontain ${hasErrors(bean: semesterInstance, field: 'active', 'error')} ">
 		<g:hiddenField name="active" value="${Boolean.FALSE}" />
 	</div>
+<div class="col-md-6"></div>
 
 
 

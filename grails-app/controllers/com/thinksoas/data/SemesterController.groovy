@@ -49,7 +49,8 @@ class SemesterController {
         request.withFormat {
             form multipartForm {
                 flash.message = message(code: 'default.created.message', args: [message(code: 'semester.label', default: 'Semester'), semesterInstance.id])
-                redirect semesterInstance
+//                redirect semesterInstance
+                redirect action:"index", method:"GET"
             }
             '*' { respond semesterInstance, [status: CREATED] }
         }
@@ -76,7 +77,7 @@ class SemesterController {
         request.withFormat {
             form multipartForm {
                 flash.message = message(code: 'default.updated.message', args: [message(code: 'Semester.label', default: 'Semester'), semesterInstance.id])
-                redirect semesterInstance
+                redirect action:"index", method:"GET"
             }
             '*'{ respond semesterInstance, [status: OK] }
         }
@@ -107,8 +108,8 @@ class SemesterController {
     }
 
     @Transactional
-    def changeSemesterAction(Long semesterId) {
-        semesterService.changeActiveSemester(semesterId)
+    def changeSemesterAction(Semester semesterInstance) {
+        semesterService.changeActiveSemester(semesterInstance.id)
 
         redirect action:"index", method:"GET"
     }

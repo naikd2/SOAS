@@ -22,8 +22,13 @@
     <asset:javascript src="jquery.metadata.js"/>
     <asset:javascript src="jquery.ui.writetable.js"/>
 
+    <asset:stylesheet src="bootstrap.min.css"/>
+    <asset:javascript src="bootstrap.min.js"/>
+    <asset:stylesheet src="navbar-fixed-side.css"/>
 
     %{--<asset:stylesheet src="bootstrap.css"/>--}%
+
+
     %{--<script src="/soas/static/plugins/jquery-1.11.1/js/jquery/jquery-1.11.1.min.js" type="text/javascript" ></script>--}%
     %{--<link href="/soas/static/plugins/jquery-ui-1.10.4/jquery-ui/themes/ui-lightness/jquery-ui-1.10.4.custom.css" type="text/css" rel="stylesheet" media="screen, projection" />--}%
     %{--<script src="/soas/static/plugins/jquery-ui-1.10.4/jquery-ui/js/jquery-ui-1.10.4.custom.min.js" type="text/javascript" ></script>--}%
@@ -56,11 +61,7 @@
         <div id="navbar" class="collapse navbar-collapse">
             <ul class="nav navbar-nav">
                 <li class="active"><a href="/soas">Home</a></li>
-                <li><a href="#about">About</a></li>
             </ul>
-
-
-
             <sec:ifLoggedIn>
                 <ul class="nav navbar-nav navbar-right">
                     <sec:ifAnyGranted roles="ROLE_ADMIN">
@@ -123,32 +124,39 @@
     <div class="row">
 
         <g:if test="${request.requestURI != '/soas/'}">
-            <div class="col-sm-1">
-                <ul class="nav nav-pills nav-stacked">
-                    <li class="active"><a href="${request.getHeader('referer')}">Return</a></li>
-                    <li><a href="${createLink(controller:'StudentOutcome', action:'index')}">Student Outcomes</a></li>
-                    <li><a href="${createLink(controller:'Course', action:'index')}">Courses</a></li>
-                    <li><a href="${createLink(controller:'Class', action:'index')}">Classes</a></li>
-                    <li><a href="${createLink(controller:'Semester', action:'index')}">Semesters</a></li>
-                    %{--<li class="dropdown">--}%
-                        %{--<a class="dropdown-toggle" data-toggle="dropdown" href="#">--}%
-                            %{--Reports <span class="caret"></span>--}%
-                        %{--</a>--}%
-                        %{--<ul class="dropdown-menu">--}%
-                            <li><a href="${createLink(controller:'OutcomeReport', action:'index')}">Outcome Plan</a></li>
-                            <li><a href="${createLink(controller:'CourseReport', action:'index')}">Course Report</a></li>
-                            <li><a href="${createLink(controller:'CourseReport', action:'SO')}">Outcome Report</a></li>
+            <sec:ifLoggedIn>
+                %{--<div class="col-md-1 well">--}%
+                %{--<ul class="nav nav-pills nav-stacked">--}%
+                <div class="col-sm-3 col-lg-2">
+                    <nav class="navbar navbar-default  navbar-fixed-side">
+                        <ul class="nav nav-pills nav-stacked">
+                            <li class="active "><a href="${request.getHeader('referer')}">Return</a></li>
                             %{--<li class="divider"></li>--}%
-                        %{--</ul>--}%
-                    %{--</li>--}%
-                </ul>
-            </div>
+                            <li><a href="${createLink(controller:'Semester', action:'index')}">Semesters</a></li>
+                            <li><a href="${createLink(controller:'StudentOutcome', action:'index')}">Student Outcomes</a></li>
+                            %{--<li class="divider"></li>--}%
+                            <li><a href="${createLink(controller:'Course', action:'index')}">Courses</a></li>
+                            <li><a href="${createLink(controller:'Class', action:'index')}">Classes</a></li>
+                            %{--<li class="divider"></li>--}%
+                            %{--<li class="dropdown">--}%
+                                %{--<a class="dropdown-toggle" data-toggle="dropdown" href="#">--}%
+                                    %{--Reports <span class="caret pull-right"></span>--}%
+                                %{--</a>--}%
+                                %{--<ul class="dropdown-menu">--}%
+                                    <li><a href="${createLink(controller:'OutcomeReport', action:'index')}">Outcome Plan</a></li>
+                                    <li><a href="${createLink(controller:'CourseReport', action:'index')}">Course Report</a></li>
+                                    <li><a href="${createLink(controller:'CourseReport', action:'SO')}">Outcome Report</a></li>
+                                %{--</ul>--}%
+                            %{--</li>--}%
+                        </ul>
+                    </nav>
+                </div>
+            </sec:ifLoggedIn>
         </g:if>
 
-        <div class="col-sm-11">
+        <div class="col-sm-9 col-lg-10">
             <g:layoutBody/>
         </div>
-
     </div>
 </div>
 

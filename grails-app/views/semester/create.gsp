@@ -24,15 +24,23 @@
 
             <g:form url="[resource: semesterInstance, action: 'save']">
                 <fieldset class="form">
+                    &nbsp;
                     <g:render template="form"/>
                 </fieldset>
 
-                <div class="col-sm-10">
-                    <fieldset class="buttons">
-                        <g:submitButton name="create" class="btn btn-primary btn-block"
-                                        value="${message(code: 'default.button.create.label', default: 'Create')}"/>
+                <div class="col-md-4">
+                    <fieldset class="buttons btn-group-justified">
+                        <div class="btn-group">
+                            <g:submitButton name="create" class=" btn-primary btn"
+                                            value="${message(code: 'default.button.create.label', default: 'Create')}"/>
+                        </div>
+                        <div class="btn-group">
+                        <g:actionSubmit name="cancel" class="btn"
+                                        value="Cancel" action="index"/>
+                        </div>
                     </fieldset>
                 </div>
+                <div class="col-md-6"></div>
             </g:form>
         </div>
     </div>

@@ -3,8 +3,6 @@
 
 <!-- Optional theme -->
 
-<asset:javascript src="bootstrap.min.js"/>
-<asset:stylesheet src="bootstrap.min.css"/>
 <asset:javascript src="bootstrap-select.min.js"/>
 <asset:stylesheet src="bootstrap-select.min.css"/>
 

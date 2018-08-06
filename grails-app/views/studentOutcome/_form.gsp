@@ -1,7 +1,7 @@
 <%@ page import="com.thinksoas.data.StudentOutcome" %>
 
 
-<div class="col-md-10 main">
+<div class="col-md-6 main well">
 
     <div class="form-group ${hasErrors(bean: studentOutcomeInstance, field: 'prefix', 'error')} required">
         <label for="prefix">

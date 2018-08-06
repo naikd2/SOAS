@@ -10,8 +10,11 @@
 
 
 	<body>
-<div class="container-fluid">
-      <div class="row">
+	<div class="container-fluid">
+		<div class="row">
+
+			<div class="container">
+				<h1>Edit Course: ${courseInstance.name}</h1>
 
 
         
@@ -29,13 +32,24 @@
 			</g:hasErrors> --}%
 			<g:form url="[resource:courseInstance, action:'update']" method="PUT" >
 				<g:hiddenField name="version" value="${courseInstance?.version}" />
-				<fieldset class="form">
+				<fieldset class="form well col-md-9">
 					<g:render template="formEdit"/>
 				</fieldset>
-				<fieldset class="buttons">
-					<g:actionSubmit class="save" action="update" value="${message(code: 'default.button.update.label', default: 'Update')}" />
-				</fieldset>
+
+				<div class="col-md-9">
+					<fieldset class="buttons btn-group-justified">
+						<div class="btn-group">
+							<g:actionSubmit class="save btn btn-primary" action="update" value="${message(code: 'default.button.update.label', default: 'Update')}" />
+						</div>
+						<div class="btn-group">
+							<g:actionSubmit name="cancel" class="btn"
+											value="Cancel" action="index"/>
+						</div>
+					</fieldset>
+				</div>
+
 			</g:form>
+		</div>
 		</div>
 </div>
 	</body>

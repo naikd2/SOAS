@@ -13,7 +13,7 @@
 
         
 <div class="container">
-<h1>Edit Student Outcome ${studentOutcomeInstance.prefix}</h1>
+<h1>Edit Student Outcome: ${studentOutcomeInstance.prefix}</h1>
 %{-- 		<div id="edit-studentOutcome" class="content scaffold-edit" role="main">
 			<h1><g:message code="default.edit.label" args="[entityName]" /></h1>
 			<g:if test="${flash.message}">
@@ -31,11 +31,17 @@
 				<fieldset class="form">
 					<g:render template="form"/>
 				</fieldset>
-				<div class="col-sm-10">
-					<fieldset class="buttons">
 
-					<g:actionSubmit class="btn btn-primary btn-block" action="update" value="${message(code: 'default.button.update.label', default: 'Update')}" />
-				</fieldset>
+				<div class="col-md-6">
+					<fieldset class="buttons btn-group-justified">
+						<div class="btn-group">
+							<g:actionSubmit class="btn btn-primary btn-block" action="update" value="${message(code: 'default.button.update.label', default: 'Update')}" />
+						</div>
+						<div class="btn-group">
+							<g:actionSubmit name="cancel" class="btn"
+											value="Cancel" action="index"/>
+						</div>
+					</fieldset>
 				</div>
 			</g:form>
 		</div>
