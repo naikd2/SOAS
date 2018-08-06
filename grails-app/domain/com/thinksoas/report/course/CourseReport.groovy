@@ -7,6 +7,7 @@ class CourseReport {
     Class section
     List<CourseReportObjective> objectives = []
     List<CourseWork> works = []
+    List<CourseGraph> graphs = []
 
     CourseReport(Class section) {
         this()
@@ -14,10 +15,9 @@ class CourseReport {
     }
 
     static belongsTo = [section: Class]
-    static hasMany = [objectives: CourseReportObjective, works:CourseWork]
+    static hasMany = [objectives: CourseReportObjective, works:CourseWork, graphs:CourseGraph]
 
     static constraints = {
-
     }
 
     String toString() {
