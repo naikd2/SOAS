@@ -25,45 +25,45 @@
 	<sec:ifAnyGranted roles="ROLE_ADMIN">
 		<div class="col-md-4">
 			<h2>Student Outcomes</h2>
-			<p>Brief Description </p>
+			<p>Add or edit Student Outcomes for your specific program.</p>
 			<p><a class="btn btn-default" href="${createLink(controller:'StudentOutcome', action:'index')}"  role="button">Go To &raquo;</a></p>
 		</div>
 
 
 		<div class="col-md-4">
 			<h2>Courses</h2>
-			<p>Brief Description </p>
+			<p>Add or edit course information for your program.</p>
 			<p><a class="btn btn-default" href="${createLink(controller:'Course', action:'index')}"  role="button">Go To &raquo;</a></p>
 		</div>
 	</sec:ifAnyGranted>
 	<div class="col-md-4">
 		<h2>Classes</h2>
-		<p>Brief Description</p>
+		<p>Add or edit specific classes for each individual course.</p>
 		<p><a class="btn btn-default" href="${createLink(controller:'Class', action:'index')}"  role="button">Go To &raquo;</a></p>
 	</div>
 	<sec:ifAnyGranted roles="ROLE_ADMIN">
 		<div class="col-md-4">
 			<h2>Outcome Assessment Plan</h2>
-			<p>Brief Description</p>
+			<p>View your Continuous Improvement Plan for any course.</p>
 			<p><a class="btn btn-default" href="${createLink(controller:'OutcomeReport', action:'index')}"  role="button">Go To &raquo;</a></p>
 		</div>
 
 
 		<div class="col-md-4">
 			<h2>Outcome Assessment Report</h2>
-			<p>Continuous Improvement Plan</p>
+			<p>View your Continuous Improvement Plan for a course.</p>
 			<p><a class="btn btn-default" href="${createLink(controller:'CourseReport', action:'SO')}"  role="button">Go To &raquo;</a></p>
 		</div>
 
 		<div class="col-md-4">
 			<h2>Course Report</h2>
-			<p>End of Semester Report</p>
+			<p>View your End of Semester Report for each of your courses.</p>
 			<p><a class="btn btn-default" href="${createLink(controller:'CourseReport', action:'index')}"  role="button">Go To &raquo;</a></p>
 		</div>
 
 		<div class="col-md-4">
 			<h2>Semester</h2>
-			<p>Brief Description</p>
+			<p>Add or edit semester information.</p>
 			<p><a class="btn btn-default" href="${createLink(controller:'Semester', action:'index')}"  role="button">Go To &raquo;</a></p>
 		</div>
 	</sec:ifAnyGranted>
