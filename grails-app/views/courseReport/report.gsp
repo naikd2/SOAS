@@ -7,7 +7,6 @@
 <head>
     <meta name="layout" content="main">
     <g:set var="entityName" value="${message(code: 'courseReport.label', default: 'CourseReport')}" />
-    <asset:javascript src="bootstrap-modal.js"/>
     <asset:javascript src="Chart.bundle.min.js"/>
 
     <title>
@@ -264,7 +263,7 @@
                                                 },
                                                 title: {
                                                     display: true,
-                                                    text: 'Chart.js Bar Chart'
+                                                    text: 'Student Performance'
                                                 },
                                                 scales: {
                                                     yAxes: [{
