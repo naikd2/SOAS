@@ -5,7 +5,6 @@
     <meta name="layout" content="main">
     <g:set var="entityName" value="Student Outcome Assessment"/>
     <title><g:message code="default.show.label" args="[entityName]"/></title>
-    <asset:javascript src="bootstrap-modal.js"/>
 </head>
 
 <body>
