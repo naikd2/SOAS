@@ -3,15 +3,17 @@ package com.thinksoas.report.course
 import com.thinksoas.data.Course
 import com.thinksoas.data.CourseObjective
 import com.thinksoas.data.StudentOutcome
-import grails.plugin.springsecurity.annotation.Secured
+import com.thinksoas.report.viewmodel.ChartModel
+import com.thinksoas.report.viewmodel.Dataset
+import com.thinksoas.report.viewmodel.ChartColor
+
 import grails.transaction.Transactional
 
-import grails.plugins.rest.client.RestBuilder
+import grails.converters.JSON
+
 import java.math.MathContext
 
 import static org.springframework.http.HttpStatus.*
-
-import java.io.File;
 
 @Transactional(readOnly = true)
 class CourseReportController {
@@ -34,16 +36,6 @@ class CourseReportController {
 
     def index(Integer max) {
         //exportChart()
-        def rest = new RestBuilder();
-
-
-        def response = rest.get("http://localhost:8080/soas/courseReport/chartjs"){
-            accept 'text/html'
-            contentType 'text/html'
-        }
-
-        println(response.body)
-
         params.max = Math.min(max ?: 10, 100)
         respond CourseReport.list(params), model: [courseReportInstanceCount: CourseReport.count()]
     }
@@ -56,10 +48,6 @@ class CourseReportController {
     }
 
     def show(CourseReport courseReportInstance) {
-        def rest = new RestBuilder();
-
-        def response = rest.get("localhost:8080/soas/courseReport/chartjs")
-        println(response.body)
         respond courseReportInstance, model:[report: courseReportInstance, objectives: courseReportInstance.objectives]
     }
 
@@ -71,18 +59,47 @@ class CourseReportController {
         String report = createTable(courseReportInstance)
 
         def tabs = []
+        Map<StudentOutcome, ChartModel> chartMap = new HashMap<>()
 
         for (StudentOutcome outcome : StudentOutcome.findAll()) {
             for (CourseReportObjective reportObjective : courseReportInstance.objectives) {
                 if (objectiveHasOutcome(reportObjective, outcome)) {
                     tabs.add(outcome)
-                    break;
+                    break
                 }
             }
         }
 
+        for (StudentOutcome outcome : courseReportService.findAllReleventOutcomes(courseReportInstance.getId())) {
+            chartMap.put(outcome, new ChartModel())
+        }
 
-        [courseReportInstance: courseReportInstance, report: report, tabs: tabs, reportSemester : courseReportInstance.section.semester]
+        Queue<ChartColor> colors = new LinkedList<>(Arrays.asList(ChartColor.BLUE, ChartColor.RED))
+        Map<String, ChartColor> methodToColor = new HashMap<>()
+
+        for (CourseReportObjective rObjective: courseReportInstance.objectives) {
+            for (CourseReportOutcome rOutcome : rObjective.outcomes) {
+                ChartModel chart = chartMap.get(rOutcome.outcome)
+                chart.addToLabels(rObjective.objective.prefix)
+                BigDecimal delta = 0.0
+                for (CourseReportMethod method : rOutcome.methods) {
+                    String methodLabel = method.getMethod()
+                    ChartColor color
+                    if (methodToColor.containsKey(methodLabel)) {
+                        color = methodToColor.get(methodLabel)
+                    } else {
+                        color = colors.pop()
+                        methodToColor.put(methodLabel, color)
+                    }
+                    BigDecimal value = method.percentage
+                    delta = delta.subtract(value).abs()
+                    chart.addToDataSet(methodLabel, value.toPlainString(), color)
+                }
+                chart.addToDataSet("Delta", delta.toPlainString(), ChartColor.YELLOW)
+            }
+        }
+
+        [courseReportInstance: courseReportInstance, report: report, tabs: tabs, reportSemester : courseReportInstance.section.semester, chartData: chartMap]
     }
 
     def prevSemester(CourseReport courseReportInstance) {
@@ -212,7 +229,7 @@ class CourseReportController {
                 i++
             }
 
-                save(response.outputStream)
+            save(response.outputStream)
         }
 
     }
