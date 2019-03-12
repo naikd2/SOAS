@@ -25,14 +25,27 @@
 					</g:hasErrors>
 
 			<g:form url="[resource:classInstance, action:'save']" >
-				<fieldset class="form">
+				<fieldset class="form well col-md-7">
 					<g:render template="form"/>
 				</fieldset>
-				<fieldset class="buttons">
-					<g:submitButton name="create" class="btn btn-primary btn-block" value="${message(code: 'default.button.create.label', default: 'Create')}" />
-				</fieldset>
+				<div class="col-md-6">
+
+					<fieldset class="buttons">
+						<div class="btn-group">
+							<g:submitButton name="create" class="btn btn-primary btn-block"
+											value="Create Class"/>
+						</div>
+						<div class="btn-group">
+							<g:actionSubmit name="cancel" class="btn"
+											value="Cancel" action="index"/>
+						</div>
+					</fieldset>
+				</div>
 			</g:form>
 
 		</div>
+			</div>
+		</div>
+	</div>
 	</body>
 </html>

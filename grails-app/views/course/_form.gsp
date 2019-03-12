@@ -34,7 +34,7 @@
 
 
     <g:hiddenField name="report" value="${courseInstance}" />
-
+<div class = "well ">
     <div class="form-group row">
         <div class="col-md-2 mb-3">
             <label for="subject">
@@ -85,10 +85,11 @@
                 <g:message code="course.offered.label" default="Semester" />
                 <span class="required-indicator">*</span>
             </label>
-            <g:textField type="text" class="form-control" id="offered" name="offered" value="${courseInstance?.offered}" placeholder="Fall" required=""/>
+            %{--<g:textField type="text" class="form-control" id="offered" name="offered" value="${courseInstance?.offered}" placeholder="Fall" required=""/>--}%
+            <g:select id="offered" name="offered" class="form-control" from="${['Fall', 'Winter', 'Spring', 'Summer']}" value="${courseInstance?.offered}" required=""/>
         </div>
     </div>
-
+</div>
     &nbsp;
 
     <div class="input-group control-group dynamic-objectives">

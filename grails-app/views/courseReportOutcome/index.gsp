@@ -15,6 +15,12 @@
 				<li><g:link class="create" action="create"><g:message code="default.new.label" args="[entityName]" /></g:link></li>
 			</ul>
 		</div>
+
+	<g:if test="${courseReportOutcomeInstanceList.isEmpty()}">
+		<a href="/soas/studentOutcome/index">First Create Outcome</a>
+	</g:if>
+	<g:else>
+
 		<div id="list-courseReportOutcome" class="content scaffold-list" role="main">
 			<h1><g:message code="default.list.label" args="[entityName]" /></h1>
 			<g:if test="${flash.message}">
@@ -27,16 +33,18 @@
 					</tr>
 				</thead>
 				<tbody>
-				<g:each in="${courseReportOutcomeInstanceList}" status="i" var="courseReportOutcomeInstance">
-					<tr class="${(i % 2) == 0 ? 'even' : 'odd'}">
-					
-					</tr>
-				</g:each>
+					<g:each in="${courseReportOutcomeInstanceList}" status="i" var="courseReportOutcomeInstance">
+						<tr class="${(i % 2) == 0 ? 'even' : 'odd'}">
+
+						</tr>
+					</g:each>
 				</tbody>
 			</table>
 			<div class="pagination">
 				<g:paginate total="${courseReportOutcomeInstanceCount ?: 0}" />
 			</div>
 		</div>
+	</g:else>
+
 	</body>
 </html>

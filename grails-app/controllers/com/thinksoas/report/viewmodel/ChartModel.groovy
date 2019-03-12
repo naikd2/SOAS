@@ -24,6 +24,10 @@ class ChartModel {
             dataset.pushData(value)
         }
 
+//        Dataset dataset = new Dataset(borderColor: color.getValue(), backgroundColor: color.getValue(), borderWidth: 1, label: method)
+//        this.datasets.add(dataset)
+//        dataset.pushData(value)
+
 
     }
 

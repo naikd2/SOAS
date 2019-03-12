@@ -11,7 +11,7 @@
 	<div class="row">
 		<div class="container">
 			<h1>Edit Course Objective: <g:fieldValue bean="${courseObjectiveInstance}" field="course.name"/></h1>
-			<div id="edit-courseObjective" class="content scaffold-edit" role="main">
+			%{--<div id="edit-courseObjective" class="content scaffold-edit" role="main">--}%
 
 				<g:if test="${flash.message}">
 					<div class="message" role="status">${flash.message}</div>
@@ -34,7 +34,7 @@
 						<g:actionSubmit class="btn btn-primary btn-bloc" action="update" value="${message(code: 'default.button.update.label', default: 'Update')}" />
 					</fieldset>
 				</g:form>
-			</div>
+			%{--</div>--}%
 		</div>
 	</div>
 </div>

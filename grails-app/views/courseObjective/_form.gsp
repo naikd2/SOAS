@@ -11,8 +11,8 @@
     });
 </script>
 
-    <div class="control-group input-group">
-        <div class="row">
+    %{--<div class="control-group input-group">--}%
+        <div class="form-group row">
             <div class="col-md-3 mb-3">
                 <label for="prefix">
                     Prefix
@@ -29,7 +29,7 @@
             </div>
         </div>
 
-        <div class="row">
+        <div class="form-group row">
             <div class="col-md-3">
                 <label for="introduce">
                     Introduce
@@ -67,7 +67,7 @@
                           data-actions-box="true"/>
             </div>
         </div>
-        <div class="row">
+        <div class="form-group  row">
             <div class="col-md-3">
                 <label for="method1">
                     Method 1
@@ -87,5 +87,5 @@
                           from="${methods}"/>
             </div>
         </div>
-    </div>
+    %{--</div>--}%
     &nbsp;

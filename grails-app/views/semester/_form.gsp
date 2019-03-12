@@ -15,7 +15,7 @@
 			<g:message code="semester.term.label" default="Term" />
 			<span class="required-indicator">*</span>
 		</label>
-        <input  id="term" type="text" class="form-control" name="term" required="" value="${semesterInstance?.term}"/>
+		<g:select id="term" name="term" class="form-control" from="${['Fall', 'Winter', 'Spring', 'Summer']}" value="${semesterInstance?.term}" required=""/>
 	</div>
 
 	%{--<div class="fieldcontain ${hasErrors(bean: semesterInstance, field: 'startDate', 'error')} required">--}%
